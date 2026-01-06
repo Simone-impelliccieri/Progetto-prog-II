@@ -8,6 +8,7 @@ public enum Taglia {
     M,
     L;
 
+    //da carattere
     public static Optional<Taglia> daCarattere(char carattere) {
         return switch (carattere) {
             case 'S' -> Optional.of(S);
@@ -17,6 +18,7 @@ public enum Taglia {
         };
     }
 
+    //da stringa
     public static Optional<Taglia> daStringa(String stringa) {
         if (stringa == null) {
             return Optional.empty();
@@ -28,10 +30,7 @@ public enum Taglia {
         return daCarattere(testo.charAt(0));
     }
 
-    public char comeCarattere() {
-        return name().charAt(0);
-    }
-
+    // se superiore a un altra taglia
     public boolean nonSuperioreA(Taglia altra) {
         Objects.requireNonNull(altra, "taglia nulla");
         return this.compareTo(altra) <= 0;
@@ -39,6 +38,6 @@ public enum Taglia {
 
     @Override
     public String toString() {
-        return String.valueOf(comeCarattere());
+        return String.valueOf(name().charAt(0));
     }
 }

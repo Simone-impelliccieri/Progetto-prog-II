@@ -17,7 +17,7 @@ public final class Importo implements Comparable<Importo> {
         return totaleCentesimi % 100;
     }
 
-    // da unità centesimi a importo
+    // da unità centesimi a importo COSTRUTTORE
     public Importo(int unita, int centesimi) {
         if (unita < 0) {
             throw new IllegalArgumentException("unita negative");
@@ -33,7 +33,7 @@ public final class Importo implements Comparable<Importo> {
     }
 
 
-    // da centesimi totali PRIVATE
+    // da centesimi totali PRIVATE  COSTRUTTORE PRIVATO
     private Importo(int totaleCentesimi) {
         if (totaleCentesimi < 0) {
             throw new IllegalArgumentException("importo negativo");
@@ -118,7 +118,7 @@ public final class Importo implements Comparable<Importo> {
 
     @Override
     public int compareTo(Importo o) {
-        Objects.requireNonNull(o, "importo non può essere valido");
+        Objects.requireNonNull(o, "importo non può essere null");
         return Integer.compare(this.totaleCentesimi, o.totaleCentesimi);
     }
 

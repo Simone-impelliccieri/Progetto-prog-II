@@ -29,7 +29,7 @@ import macchinette.Importo;
 
 public class OperazioniImporti {
 
-    private static final Pattern operazione = Pattern.compile("^\\s*(.+?)\\s*( [+\\-*/])\\s*(.+?)\\s*$");
+    private static final Pattern operazione = Pattern.compile("^\\s*(.+?)\\s*([+\\-*/])\\s*(.+?)\\s*$");
 
     public static void main(String[] args) {
 

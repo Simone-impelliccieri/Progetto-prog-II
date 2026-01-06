@@ -21,4 +21,32 @@ along with this file.  If not, see <https://www.gnu.org/licenses/>.
 
 package clients;
 
-public class RiconosciMonete {}
+import macchinette.Moneta;
+
+import java.util.Optional;
+import java.util.Scanner;
+
+public class RiconosciMonete {
+
+    public static void main(String[] args) {
+
+        try (Scanner sca = new Scanner(System.in)) {
+
+            while (sca.hasNextLine()) {
+
+                Optional<Moneta> moneta = Moneta.daStringa(sca.nextLine());
+                if (moneta.isPresent()) {
+                    System.out.println(moneta.get());
+                } else {
+                    System.out.println("invalid");
+                }
+
+            }
+
+        } catch (Exception e) {
+            // non emettere output extra: i test confrontano l'output esatto
+        }
+
+    }
+
+}

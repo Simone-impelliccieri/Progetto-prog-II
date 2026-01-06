@@ -40,8 +40,10 @@ public enum Moneta {
         }
     }
 
+
+    // NON SO SE FARLO PRIVATE O PUBLIC
     // converte importo in moneta
-    public static Optional<Moneta> daImporto(Importo importo) {
+    private static Optional<Moneta> daImporto(Importo importo) {
         if (importo == null)
             return Optional.empty();
 

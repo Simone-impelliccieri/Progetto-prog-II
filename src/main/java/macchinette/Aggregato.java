@@ -13,7 +13,7 @@ import macchinette.eccezioni.ValoreInsufficienteException;
 public class Aggregato implements Iterable<Moneta> {
 
     //espressione regolare che serve per daStringa (10 x .20 --> 10 monete da 20c)
-    private static final Pattern PATTERN_PEZZO = Pattern.compile("\\s*(\\d+)\\s*x\\s*(.+)\\s*");
+    private static final Pattern espressione = Pattern.compile("\\s*(\\d+)\\s*x\\s*(.+)\\s*");
 
     //L'aggregato è rappresentato come mappa moneta-intero
     private final Map<Moneta, Integer> contenuto;
@@ -23,8 +23,10 @@ public class Aggregato implements Iterable<Moneta> {
         this.contenuto = new EnumMap<>(Moneta.class); //dici che monete possono essere solo di tipo moneta
     }
 
+
+    // NON SO SE FARLO PRIVATE O PUBLIC
     // aggiunge all'aggregato una moneta quantità volte
-    public void aggiungi(Moneta m, int quantita) {
+    private void aggiungi(Moneta m, int quantita) {
         Objects.requireNonNull(m, "Moneta nulla");
         if (quantita <= 0)
             throw new IllegalArgumentException("Quantità non positiva");
@@ -117,7 +119,7 @@ public class Aggregato implements Iterable<Moneta> {
             if (pezzo.isBlank())
                 continue;
 
-            Matcher m = PATTERN_PEZZO.matcher(pezzo);
+            Matcher m = espressione.matcher(pezzo);
             if (!m.matches())
                 throw new IllegalArgumentException("Formato non valido: " + pezzo);
 

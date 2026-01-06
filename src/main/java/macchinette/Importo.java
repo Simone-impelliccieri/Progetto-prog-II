@@ -8,12 +8,12 @@ public final class Importo implements Comparable<Importo> {
     private final int totaleCentesimi;
 
     //unità
-    public int unita() {
+    private int unita() {
         return totaleCentesimi / 100;
     }
 
     //centesimi
-    public int centesimi() {
+    private int centesimi() {
         return totaleCentesimi % 100;
     }
 
@@ -32,7 +32,6 @@ public final class Importo implements Comparable<Importo> {
         this.totaleCentesimi = (int) cents;
     }
 
-
     // da centesimi totali PRIVATE  COSTRUTTORE PRIVATO
     private Importo(int totaleCentesimi) {
         if (totaleCentesimi < 0) {
@@ -46,13 +45,12 @@ public final class Importo implements Comparable<Importo> {
         return new Importo(totaleCentesimi);
     }
 
-
     // per alcuni clients, da stringa a importo
     public static Importo stringaToImporto(String str) {
         if (str == null) {
             throw new IllegalArgumentException("stringa nulla");
         }
-        String s = str.trim();  
+        String s = str.trim();
         if (s.isEmpty()) {
             throw new IllegalArgumentException("stringa vuota");
         }
@@ -69,11 +67,11 @@ public final class Importo implements Comparable<Importo> {
 
     //METODI
 
-
+    // MEGLIO TOGLIERLO
     // metodo comodità per avere centisimi totali
-    public int inCentesimi() {
-        return totaleCentesimi;
-    }
+    //public int inCentesimi() {
+    //    return totaleCentesimi;
+    // }
 
     // metodo per somma
     public Importo somma(Importo altro) {

@@ -79,7 +79,6 @@ public class OperazioniAggregati {
             }
 
         } catch (Exception e) {
-            // non emettere output extra: i test confrontano l'output esatto
         }
 
     }

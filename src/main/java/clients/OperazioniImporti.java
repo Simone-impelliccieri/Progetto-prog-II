@@ -21,4 +21,103 @@ along with this file.  If not, see <https://www.gnu.org/licenses/>.
 
 package clients;
 
-public class OperazioniImporti {}
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.Scanner;
+
+import macchinette.Importo;
+
+public class OperazioniImporti {
+
+    private static final Pattern operazione = Pattern.compile("^\\s*(.+?)\\s*( [+\\-*/])\\s*(.+?)\\s*$");
+
+    public static void main(String[] args) {
+
+        try (Scanner sca = new Scanner(System.in)) {
+
+            while (sca.hasNextLine()) {
+
+                String riga = sca.nextLine();
+                if (riga == null) {
+                    continue;
+                }
+                String rigaPulita = riga.trim();
+                if (rigaPulita.isEmpty()) {
+                    continue;
+                }
+
+                Matcher matcher = operazione.matcher(rigaPulita);
+                if (!matcher.matches()) {
+                    System.out.println("invalid");
+                    continue;
+                }
+
+                String sinistra = matcher.group(1).trim();
+                String operatore = matcher.group(2);
+                String destra = matcher.group(3).trim();
+
+                Importo importoSinistro;
+                try {
+                    importoSinistro = Importo.stringaToImporto(sinistra);
+                } catch (IllegalArgumentException e) {
+                    System.out.println("invalid");
+                    continue;
+                }
+
+                switch (operatore) {
+                    case "+" -> {
+                        try {
+                            Importo importoDestro = Importo.stringaToImporto(destra);
+                            System.out.println(importoSinistro.somma(importoDestro));
+                        } catch (IllegalArgumentException e) {
+                            System.out.println("invalid");
+                        }
+                    }
+                    case "-" -> {
+                        try {
+                            Importo importoDestro = Importo.stringaToImporto(destra);
+                            if (importoSinistro.compareTo(importoDestro) < 0) {
+                                System.out.println("negative");
+                            } else {
+                                System.out.println(importoSinistro.sottrai(importoDestro));
+                            }
+                        } catch (IllegalArgumentException e) {
+                            System.out.println("invalid");
+                        }
+                    }
+                    case "*" -> {
+                        int moltiplicatore;
+                        try {
+                            moltiplicatore = Integer.parseInt(destra);
+                        } catch (NumberFormatException e) {
+                            System.out.println("invalid");
+                            continue;
+                        }
+                        if (moltiplicatore < 0) {
+                            System.out.println("negative");
+                            continue;
+                        }
+                        try {
+                            System.out.println(importoSinistro.moltiplica(moltiplicatore));
+                        } catch (IllegalArgumentException e) {
+                            System.out.println("invalid");
+                        }
+                    }
+                    case "/" -> {
+                        try {
+                            Importo importoDestro = Importo.stringaToImporto(destra);
+                            System.out.println(importoSinistro.divIntera(importoDestro));
+                        } catch (IllegalArgumentException e) {
+                            System.out.println("invalid");
+                        }
+                    }
+                    default -> System.out.println("invalid");
+                }
+            }
+
+        } catch (Exception e) {
+        }
+
+    }
+
+}

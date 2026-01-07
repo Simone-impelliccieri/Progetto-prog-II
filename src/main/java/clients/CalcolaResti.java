@@ -27,6 +27,7 @@ import macchinette.StrategiaMinimo;
 import macchinette.StrategiaResto;
 import macchinette.eccezioni.ComposizioneInsufficienteException;
 import macchinette.eccezioni.ValoreInsufficienteException;
+import macchinette.util.gestioneClient;
 
 import java.util.Scanner;
 
@@ -40,12 +41,7 @@ public class CalcolaResti {
                 return;
             }
 
-            String lettera;
-            if (args[0] == null) {
-                lettera = "";
-            } else {
-                lettera = args[0].trim();
-            }
+            String lettera = gestioneClient.pulisci(args[0]);
 
             if (lettera.length() != 1) {
                 return;
@@ -53,7 +49,7 @@ public class CalcolaResti {
 
             char tipo = lettera.charAt(0);
             StrategiaResto strategia;
-            
+
             if (tipo == 'H') {
                 strategia = new StrategiaMassimo();
             } else if (tipo == 'L') {
@@ -79,10 +75,8 @@ public class CalcolaResti {
                     continue;
                 }
 
-                Aggregato disponibilita;
-                try {
-                    disponibilita = Aggregato.daStringa(rigaPulita);
-                } catch (IllegalArgumentException e) {
+                Aggregato disponibilita = gestioneClient.aggregato(rigaPulita);
+                if (disponibilita == null) {
                     System.out.println("invalid");
                     continue;
                 }

@@ -21,4 +21,83 @@ along with this file.  If not, see <https://www.gnu.org/licenses/>.
 
 package clients;
 
-public class CaricaBinario {}
+import java.util.Scanner;
+
+import macchinette.Binario;
+import macchinette.Prodotto;
+import macchinette.Taglia;
+import macchinette.eccezioni.CapacitaSuperataException;
+import macchinette.eccezioni.ProdottoDiversoException;
+import macchinette.eccezioni.TagliaNonCompatibileException;
+import macchinette.util.gestioneClient;
+
+public class CaricaBinario {
+
+    public static void main(String[] args) {
+
+        try (Scanner scanner = new Scanner(System.in)) {
+
+            if (args == null || args.length < 2) {
+                return;
+            }
+
+            Integer capacita = gestioneClient.intero(args[0]);
+            if (capacita == null) {
+                return;
+            }
+
+            Taglia taglia = gestioneClient.taglia(args[1]);
+            if (taglia == null) {
+                return;
+            }
+
+            Binario binario = new Binario(taglia, capacita);
+            System.out.println(binario);
+
+            while (scanner.hasNextLine()) {
+                String riga = scanner.nextLine();
+                if (riga == null) {
+                    continue;
+                }
+                String rigaPulita = riga.trim();
+                if (rigaPulita.isEmpty()) {
+                    continue;
+                }
+
+                int indiceVirgola = rigaPulita.indexOf(',');
+                if (indiceVirgola < 0) {
+                    System.out.println("invalid");
+                    continue;
+                }
+
+                String quantitaTesto = rigaPulita.substring(0, indiceVirgola).trim();
+                String descrizioneProdotto = rigaPulita.substring(indiceVirgola + 1).trim();
+
+                Integer quantita = gestioneClient.intero(quantitaTesto);
+                if (quantita == null) {
+                    System.out.println("invalid");
+                    continue;
+                }
+
+                Prodotto prodotto = gestioneClient.prodotto(descrizioneProdotto);
+                if (prodotto == null) {
+                    System.out.println("invalid");
+                    continue;
+                }
+
+                try {
+                    binario.carica(prodotto, quantita);
+                    System.out.println(binario);
+                } catch (ProdottoDiversoException e) {
+                    System.out.println("item");
+                } catch (CapacitaSuperataException e) {
+                    System.out.println("capacity");
+                } catch (TagliaNonCompatibileException e) {
+                    System.out.println("size");
+                }
+            }
+
+        } catch (Exception e) {
+        }
+    }
+}

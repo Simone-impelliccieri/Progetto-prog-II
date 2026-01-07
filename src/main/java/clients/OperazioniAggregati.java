@@ -24,6 +24,7 @@ package clients;
 import macchinette.Aggregato;
 import macchinette.eccezioni.ComposizioneInsufficienteException;
 import macchinette.eccezioni.ValoreInsufficienteException;
+import macchinette.util.gestioneClient;
 
 import java.util.Scanner;
 
@@ -41,7 +42,7 @@ public class OperazioniAggregati {
                 if (riga == null) {
                     continue;
                 }
-                String rigaPulita = riga.trim();
+                String rigaPulita = gestioneClient.pulisci(riga);
                 if (rigaPulita.isEmpty()) {
                     continue;
                 }
@@ -54,10 +55,8 @@ public class OperazioniAggregati {
 
                 String descrizione = rigaPulita.substring(1).trim();
 
-                Aggregato operando;
-                try {
-                    operando = Aggregato.daStringa(descrizione);
-                } catch (IllegalArgumentException e) {
+                Aggregato operando = gestioneClient.aggregato(descrizione);
+                if (operando == null) {
                     System.out.println("invalid");
                     continue;
                 }

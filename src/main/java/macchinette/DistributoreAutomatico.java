@@ -5,15 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-import macchinette.eccezioni.BinarioVuotoException;
-import macchinette.eccezioni.ComposizioneInsufficienteException;
-import macchinette.eccezioni.CapacitaSuperataException;
-import macchinette.eccezioni.PagamentoInsufficienteException;
-import macchinette.eccezioni.ProdottoDiversoException;
-import macchinette.eccezioni.RestoNonDisponibileException;
-import macchinette.eccezioni.SlotInesistenteException;
-import macchinette.eccezioni.TagliaNonCompatibileException;
-import macchinette.eccezioni.ValoreInsufficienteException;
+import macchinette.eccezioni.*;
 
 public class DistributoreAutomatico {
 
@@ -30,7 +22,12 @@ public class DistributoreAutomatico {
         Objects.requireNonNull(strategiaResto, "strategia resto non può essere null");
 
         this.strategiaResto = strategiaResto;
-        this.binari = Collections.unmodifiableList(new ArrayList<>(binari));
+        List<Binario> copiaBinari = new ArrayList<>(binari.size());
+        for (Binario binario : binari) {
+            Objects.requireNonNull(binario, "binario non può essere null");
+            copiaBinari.add(new Binario(binario));
+        }
+        this.binari = Collections.unmodifiableList(copiaBinari);
         this.fondoCassa = copiaAggregato(fondoCassa);
     }
 

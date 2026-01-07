@@ -30,6 +30,28 @@ public class Binario {
         this.numeroProdotti = 0;
     }
 
+    //costruttore di copia (deep copy dello stato del binario)
+    public Binario(Binario altro) {
+        Objects.requireNonNull(altro, "binario non può essere null");
+        this.taglia = altro.taglia;
+        this.maxCapacita = altro.maxCapacita;
+
+        if (altro.numeroProdotti < 0 || altro.numeroProdotti > altro.maxCapacita) {
+            throw new IllegalStateException("binario non valido");
+        }
+        if (altro.numeroProdotti == 0) {
+            this.tipoProdotto = null;
+            this.numeroProdotti = 0;
+            return;
+        }
+        if (altro.tipoProdotto == null) {
+            throw new IllegalStateException("binario non correttamente inizializzato");
+        }
+
+        this.tipoProdotto = altro.tipoProdotto;
+        this.numeroProdotti = altro.numeroProdotti;
+    }
+
     //getter forse da togliere
     public Taglia getTaglia() {
         return taglia;
@@ -96,7 +118,7 @@ public class Binario {
     }
 
     // Restituisce  Prodotto solleva eccezione personalizzata
-    public Prodotto dispensa() throws BinarioVuotoException {
+    protected Prodotto dispensa() throws BinarioVuotoException {
         if (èVuoto()) {
 
             throw new BinarioVuotoException();

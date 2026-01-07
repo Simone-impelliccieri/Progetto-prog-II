@@ -45,8 +45,8 @@ public final class Importo implements Comparable<Importo> {
         return new Importo(totaleCentesimi);
     }
 
-    // per alcuni clients, da stringa a importo
-    public static Importo stringaToImporto(String str) {
+    // per alcuni clients, da stringa a importo metodo FACTORY statico
+    public static Importo daStringa(String str) {
         if (str == null) {
             throw new IllegalArgumentException("stringa nulla");
         }

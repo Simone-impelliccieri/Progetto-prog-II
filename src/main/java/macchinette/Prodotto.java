@@ -25,6 +25,20 @@ public class Prodotto implements Comparable<Prodotto> {
         this.taglia = taglia;
 
     }
+    //forse da togliere tutti questi getter
+
+    public String getNome() {
+        return nome;
+    }
+
+    public Importo getPrezzo() {
+        return prezzo;
+    }
+
+    //viene usato da binario carica
+    public Taglia getTaglia() {
+        return taglia;
+    }
 
     // Metodo factory statico per il parsing da file (formato: nome|prezzo|taglia)
     public static Prodotto daStringa(String descrizione) {
@@ -41,7 +55,7 @@ public class Prodotto implements Comparable<Prodotto> {
 
         String nome = parti[0].trim();
 
-        Importo prezzo = Importo.stringaToImporto(parti[1].trim());
+        Importo prezzo = Importo.daStringa(parti[1].trim());
 
         Taglia taglia = Taglia.daStringa(parti[2].trim()).orElse(null);
 

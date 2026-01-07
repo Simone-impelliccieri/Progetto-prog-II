@@ -33,13 +33,12 @@ public enum Moneta {
             return Optional.empty();
         }
         try {
-            Importo importo = Importo.stringaToImporto(stringa);
+            Importo importo = Importo.daStringa(stringa);
             return daImporto(importo);
         } catch (IllegalArgumentException e) {
             return Optional.empty();
         }
     }
-
 
     // NON SO SE FARLO PRIVATE O PUBLIC
     // converte importo in moneta

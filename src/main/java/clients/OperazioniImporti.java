@@ -58,24 +58,25 @@ public class OperazioniImporti {
 
                 Importo importoSinistro;
                 try {
-                    importoSinistro = Importo.stringaToImporto(sinistra);
+                    importoSinistro = Importo.daStringa(sinistra);
                 } catch (IllegalArgumentException e) {
                     System.out.println("invalid");
                     continue;
                 }
 
                 switch (operatore) {
-                    case "+" -> {
+                    case "+": {
                         try {
-                            Importo importoDestro = Importo.stringaToImporto(destra);
+                            Importo importoDestro = Importo.daStringa(destra);
                             System.out.println(importoSinistro.somma(importoDestro));
                         } catch (IllegalArgumentException e) {
                             System.out.println("invalid");
                         }
+                        break;
                     }
-                    case "-" -> {
+                    case "-": {
                         try {
-                            Importo importoDestro = Importo.stringaToImporto(destra);
+                            Importo importoDestro = Importo.daStringa(destra);
                             if (importoSinistro.compareTo(importoDestro) < 0) {
                                 System.out.println("negative");
                             } else {
@@ -84,8 +85,9 @@ public class OperazioniImporti {
                         } catch (IllegalArgumentException e) {
                             System.out.println("invalid");
                         }
+                        break;
                     }
-                    case "*" -> {
+                    case "*": {
                         int moltiplicatore;
                         try {
                             moltiplicatore = Integer.parseInt(destra);
@@ -102,16 +104,21 @@ public class OperazioniImporti {
                         } catch (IllegalArgumentException e) {
                             System.out.println("invalid");
                         }
+                        break;
                     }
-                    case "/" -> {
+                    case "/": {
                         try {
-                            Importo importoDestro = Importo.stringaToImporto(destra);
+                            Importo importoDestro = Importo.daStringa(destra);
                             System.out.println(importoSinistro.divIntera(importoDestro));
                         } catch (IllegalArgumentException e) {
                             System.out.println("invalid");
                         }
+                        break;
                     }
-                    default -> System.out.println("invalid");
+                    default: {
+                        System.out.println("invalid");
+                        break;
+                    }
                 }
             }
 

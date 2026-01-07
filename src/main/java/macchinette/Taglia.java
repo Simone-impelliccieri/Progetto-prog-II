@@ -10,12 +10,16 @@ public enum Taglia {
 
     //da carattere
     public static Optional<Taglia> daCarattere(char carattere) {
-        return switch (carattere) {
-            case 'S' -> Optional.of(S);
-            case 'M' -> Optional.of(M);
-            case 'L' -> Optional.of(L);
-            default -> Optional.empty();
-        };
+        switch (carattere) {
+            case 'S':
+                return Optional.of(S);
+            case 'M':
+                return Optional.of(M);
+            case 'L':
+                return Optional.of(L);
+            default:
+                return Optional.empty();
+        }
     }
 
     //da stringa

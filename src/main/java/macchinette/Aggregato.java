@@ -4,6 +4,7 @@ import java.util.EnumMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -23,10 +24,8 @@ public class Aggregato implements Iterable<Moneta> {
         this.contenuto = new EnumMap<>(Moneta.class); //dici che monete possono essere solo di tipo moneta
     }
 
-
-    // NON SO SE FARLO PRIVATE O PUBLIC
     // aggiunge all'aggregato una moneta quantità volte
-    private void aggiungi(Moneta m, int quantita) {
+    public void aggiungi(Moneta m, int quantita) {
         Objects.requireNonNull(m, "Moneta nulla");
         if (quantita <= 0)
             throw new IllegalArgumentException("Quantità non positiva");
@@ -89,7 +88,7 @@ public class Aggregato implements Iterable<Moneta> {
         }
     }
 
-    // getter valore totale
+    // getter valore totale serve in distributore
     public Importo getValoreTotale() {
         Importo tot = Importo.daCentesimi(0);
         for (Map.Entry<Moneta, Integer> e : contenuto.entrySet()) {
@@ -123,8 +122,15 @@ public class Aggregato implements Iterable<Moneta> {
             if (!m.matches())
                 throw new IllegalArgumentException("Formato non valido: " + pezzo);
 
-            Moneta moneta = Moneta.daStringa(m.group(2).trim())
-                    .orElseThrow(() -> new IllegalArgumentException("Moneta non valida"));
+            String testoMoneta = m.group(2).trim();
+
+            Optional<Moneta> boxMoneta = Moneta.daStringa(testoMoneta);
+
+            if (boxMoneta.isEmpty()) {
+                throw new IllegalArgumentException("Moneta non valida");
+            }
+
+            Moneta moneta = boxMoneta.get();
 
             agg.aggiungi(moneta, Integer.parseInt(m.group(1)));
         }

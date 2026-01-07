@@ -3,6 +3,9 @@ package macchinette;
 import java.util.Objects;
 
 import macchinette.eccezioni.BinarioVuotoException;
+import macchinette.eccezioni.CapacitaSuperataException;
+import macchinette.eccezioni.ProdottoDiversoException;
+import macchinette.eccezioni.TagliaNonCompatibileException;
 
 public class Binario {
 
@@ -59,9 +62,8 @@ public class Binario {
         return tipoProdotto;
     }
 
-    //preferisco come output STRING piuttosto che enum o optional strani. carica un prodotto nel binario e da vari errori
-    // se serve
-    public String carica(Prodotto prodotto, int quantita) {
+    public void carica(Prodotto prodotto, int quantita)
+            throws TagliaNonCompatibileException, CapacitaSuperataException, ProdottoDiversoException {
 
         Objects.requireNonNull(prodotto, "prodotto non può essere null");
         if (quantita <= 0) {
@@ -69,32 +71,32 @@ public class Binario {
         }
 
         if (!(prodotto.getTaglia().nonSuperioreA(this.taglia))) {
-            return "taglia-errata";
+            throw new TagliaNonCompatibileException();
         }
 
         if (èVuoto()) {
             if (quantita > maxCapacita) {
-                return "capacità-superata";
+                throw new CapacitaSuperataException();
             }
             this.tipoProdotto = prodotto;
             this.numeroProdotti = quantita;
-            return "OK";
+            return;
         }
 
         if (!tipoProdotto.equals(prodotto)) {
-            return "prodotto-errato";
+            throw new ProdottoDiversoException();
         }
 
         if (numeroProdotti + quantita > maxCapacita) {
-            return "capacità-superata";
+            throw new CapacitaSuperataException();
         }
 
         this.numeroProdotti += quantita;
-        return "OK";
+        return;
     }
 
     // Restituisce  Prodotto solleva eccezione personalizzata
-    public Prodotto dispensa() {
+    public Prodotto dispensa() throws BinarioVuotoException {
         if (èVuoto()) {
 
             throw new BinarioVuotoException();

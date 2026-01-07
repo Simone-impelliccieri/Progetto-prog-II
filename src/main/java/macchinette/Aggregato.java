@@ -53,7 +53,7 @@ public class Aggregato implements Iterable<Moneta> {
     }
 
     //rimuove un aggregato (eccezioni esterne, 2)
-    public void rimuovi(Aggregato daRimuovere) {
+    public void rimuovi(Aggregato daRimuovere) throws ValoreInsufficienteException, ComposizioneInsufficienteException {
         Objects.requireNonNull(daRimuovere, "Aggregato null");
 
         // 1. Check Valore posseduto > togliere 

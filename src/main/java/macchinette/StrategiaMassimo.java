@@ -8,7 +8,8 @@ import macchinette.eccezioni.ValoreInsufficienteException;
 public class StrategiaMassimo implements StrategiaResto {
 
 	@Override
-	public Aggregato calcolaResto(Importo restoDaDare, Aggregato disponibilita) {
+	public Aggregato calcolaResto(Importo restoDaDare, Aggregato disponibilita)
+			throws ValoreInsufficienteException, ComposizioneInsufficienteException {
 		Objects.requireNonNull(restoDaDare, "restoDaDare nullo");
 		Objects.requireNonNull(disponibilita, "disponibilita nulla");
 

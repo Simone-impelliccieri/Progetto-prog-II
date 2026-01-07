@@ -5,7 +5,14 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
+import macchinette.eccezioni.BinarioVuotoException;
 import macchinette.eccezioni.ComposizioneInsufficienteException;
+import macchinette.eccezioni.CapacitaSuperataException;
+import macchinette.eccezioni.PagamentoInsufficienteException;
+import macchinette.eccezioni.ProdottoDiversoException;
+import macchinette.eccezioni.RestoNonDisponibileException;
+import macchinette.eccezioni.SlotInesistenteException;
+import macchinette.eccezioni.TagliaNonCompatibileException;
 import macchinette.eccezioni.ValoreInsufficienteException;
 
 public class DistributoreAutomatico {
@@ -125,34 +132,36 @@ public class DistributoreAutomatico {
 
             int daCaricare = Math.min(quantitaRimanente, spazio);
 
-            String esito = binario.carica(prodotto, daCaricare);
-
-            if ("OK".equals(esito)) {
+            try {
+                binario.carica(prodotto, daCaricare);
                 quantitaRimanente -= daCaricare;
+            } catch (TagliaNonCompatibileException | ProdottoDiversoException | CapacitaSuperataException e) {
             }
         }
 
         return quantitaRimanente;
     }
 
-    /** metodo bello complicatino
-     * 
-     * DA CAMBIARE ASSOLUTAMENTE; deve restituire solo il resto e nel caso ECCEZIONI PERSONALIZZATE
-     * Ritorna una stringa tra:
-     * - "slot", "empty", "value", "change" in caso di errore;
-     * - il toString del resto in caso di successo.
+    /*
+     * Deve restituire solo il resto e nel caso lancia eccezioni:
+     * - SlotInesistenteException (slot)
+     * - BinarioVuotoException (empty)
+     * - PagamentoInsufficienteException (value)
+     * - RestoNonDisponibileException (change)
      */
-    public String eroga(int numeroBinario, Aggregato pagamento) {
+    public Aggregato eroga(int numeroBinario, Aggregato pagamento)
+            throws SlotInesistenteException, BinarioVuotoException, PagamentoInsufficienteException,
+            RestoNonDisponibileException {
         Objects.requireNonNull(pagamento, "pagamento non può essere null");
 
         if (numeroBinario < 0 || numeroBinario >= binari.size()) {
-            return "slot"; //eccezione IndexOutOfBoundsException unchecked
+            throw new SlotInesistenteException();
         }
 
         Binario binario = binari.get(numeroBinario);
 
         if (binario.èVuoto()) {
-            return "empty"; //binario vuoto eccezione
+            throw new BinarioVuotoException();
         }
 
         Prodotto prodotto = binario.getTipoProdotto();
@@ -163,7 +172,7 @@ public class DistributoreAutomatico {
         Importo valorePagamento = pagamento.getValoreTotale();
 
         if (valorePagamento.compareTo(prezzo) < 0) {
-            return "value"; // FondoInsufficienteException checked
+            throw new PagamentoInsufficienteException();
         }
 
         Aggregato disponibilita = copiaAggregato(this.fondoCassa);
@@ -173,7 +182,7 @@ public class DistributoreAutomatico {
         try {
             restoDaDare = valorePagamento.sottrai(prezzo);
         } catch (IllegalArgumentException e) {
-            return "value"; //  FondoInsufficienteException checked
+            throw new PagamentoInsufficienteException();
         }
 
         Aggregato resto = new Aggregato();
@@ -182,7 +191,7 @@ public class DistributoreAutomatico {
             try {
                 resto = strategiaResto.calcolaResto(restoDaDare, disponibilita);
             } catch (ValoreInsufficienteException | ComposizioneInsufficienteException e) {
-                return "change"; // RestoNonDisponibileException checked, magari differenziare tra valore o composizione
+                throw new RestoNonDisponibileException();
             }
         }
 
@@ -191,12 +200,16 @@ public class DistributoreAutomatico {
         try {
             fondoNuovo.rimuovi(resto);
         } catch (ValoreInsufficienteException | ComposizioneInsufficienteException e) {
-            return "change"; // RestoNonDisponibileException checked, magari differenziare tra valore o composizione
+            throw new RestoNonDisponibileException();
         }
 
-        binario.dispensa();
+        try {
+            binario.dispensa();
+        } catch (BinarioVuotoException e) {
+            throw new IllegalStateException("Binario incoerente: vuoto dopo i controlli");
+        }
         this.fondoCassa = fondoNuovo;
-        return resto.toString();
+        return copiaAggregato(resto);
     }
 
 }

@@ -8,7 +8,8 @@ import macchinette.eccezioni.ValoreInsufficienteException;
 public class StrategiaMinimo implements StrategiaResto {
 
 	@Override
-	public Aggregato calcolaResto(Importo restoDaDare, Aggregato disponibilita) {
+	public Aggregato calcolaResto(Importo restoDaDare, Aggregato disponibilita)
+			throws ValoreInsufficienteException, ComposizioneInsufficienteException {
 		Objects.requireNonNull(restoDaDare, "il resto da dare non può essere nullo");
 		Objects.requireNonNull(disponibilita, "disponibilita non può essere nulla");
 

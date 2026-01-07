@@ -1,6 +1,5 @@
 package macchinette.eccezioni;
 
-public class BinarioVuotoException extends Exception {
+public class ProdottoDiversoException extends Exception {
     private static final long serialVersionUID = 1L;
-
 }

@@ -21,4 +21,44 @@ along with this file.  If not, see <https://www.gnu.org/licenses/>.
 
 package clients;
 
-public class OrdinaProdotti {}
+import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.Collections;
+
+import macchinette.Prodotto;
+
+public class OrdinaProdotti {
+
+    public static void main(String[] args) {
+
+        try (Scanner sca = new Scanner(System.in)) {
+
+            ArrayList<Prodotto> prodotti = new ArrayList<Prodotto>();
+
+            while (sca.hasNextLine()) {
+
+                String riga = sca.nextLine();
+                String rigaPulita = riga.trim();
+                if (rigaPulita.isEmpty()) {
+                    continue;
+                }
+
+                prodotti.add(Prodotto.daStringa(rigaPulita));
+
+            }
+
+            Collections.sort(prodotti);
+
+            for (Prodotto prodotto : prodotti) {
+
+                System.out.println(prodotto);
+
+            }
+
+        } catch (Exception e) {
+
+        }
+
+    }
+
+}

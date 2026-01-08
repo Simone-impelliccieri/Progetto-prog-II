@@ -4,7 +4,7 @@ import java.util.Optional;
 
 public enum Moneta {
 
-    //valori consentiti. MONETA è UN SINGOLO OGGETTO
+    //oggetti consentiti del tipo Moneta.
     C01(1),
     C02(2),
     C05(5),
@@ -14,45 +14,38 @@ public enum Moneta {
     E1(100),
     E2(200);
 
-    //campo
+    //campo interno
     private final Importo valore;
 
-    //costruttore privato
+    //costruttore privato . ad esempio c01(1)--> moneta.valore = 1
     Moneta(int centesimi) {
         this.valore = Importo.daCentesimi(centesimi);
     }
 
-    //get valore
+    //get valore. Essenziale(anche perchè il valore è evidente anche dal nome)
     public Importo getValore() {
         return valore;
     }
 
-    // converte stringa in importo e poi moneta
-    public static Optional<Moneta> daStringa(String stringa) {
+    //serve per ottenere la moneta più grande che possa contenere l'importo. Utile solo per client
+    // magari cambiare nome e magari togliere Optional e trovare un altro modo(no exception)
+    public static Optional<Moneta> monetaGiusta(String stringa) {
         if (stringa == null) {
             return Optional.empty();
         }
         try {
             Importo importo = Importo.daStringa(stringa);
-            return daImporto(importo);
+
+            for (Moneta moneta : values()) {
+                if (moneta.getValore().equals(importo)) {
+                    return Optional.of(moneta);
+                }
+            }
+
+            return Optional.empty();
         } catch (IllegalArgumentException e) {
             return Optional.empty();
         }
-    }
-
-    // NON SO SE FARLO PRIVATE O PUBLIC
-    // converte importo in moneta
-    private static Optional<Moneta> daImporto(Importo importo) {
-        if (importo == null)
-            return Optional.empty();
-
-        for (Moneta m : values()) {
-            if (m.getValore().equals(importo)) {
-                return Optional.of(m);
-            }
-        }
-
-        return Optional.empty();
     }
 
     //tostring di importo

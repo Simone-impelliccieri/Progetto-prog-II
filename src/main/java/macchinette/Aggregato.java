@@ -26,7 +26,9 @@ public class Aggregato implements Iterable<Moneta> {
 
     // aggiunge all'aggregato una moneta quantità volte
     public void aggiungi(Moneta m, int quantita) {
-        Objects.requireNonNull(m, "Moneta nulla");
+        Objects.requireNonNull(m, "Moneta non può essere null");
+        Objects.requireNonNull(quantita, "Quantità non può essere null");
+
         if (quantita <= 0)
             throw new IllegalArgumentException("Quantità non positiva");
 
@@ -124,7 +126,7 @@ public class Aggregato implements Iterable<Moneta> {
 
             String testoMoneta = m.group(2).trim();
 
-            Optional<Moneta> boxMoneta = Moneta.daStringa(testoMoneta);
+            Optional<Moneta> boxMoneta = Moneta.monetaGiusta(testoMoneta);
 
             if (boxMoneta.isEmpty()) {
                 throw new IllegalArgumentException("Moneta non valida");

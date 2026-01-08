@@ -34,7 +34,7 @@ public class RiconosciMonete {
 
             while (sca.hasNextLine()) {
 
-                Optional<Moneta> moneta = Moneta.daStringa(sca.nextLine());
+                Optional<Moneta> moneta = Moneta.monetaGiusta(sca.nextLine());
                 if (moneta.isPresent()) {
                     System.out.println(moneta.get());
                 } else {

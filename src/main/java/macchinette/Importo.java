@@ -3,7 +3,13 @@ package macchinette;
 import java.math.BigDecimal;
 import java.util.Objects;
 
+//liksov approvata
+
+// il comparable è ciò che permette che 
+//"L'ordinamento naturale delle monete e degli importi è dato dal loro valore"
+
 public final class Importo implements Comparable<Importo> {
+
     //CAMPO UNICO
     private final int totaleCentesimi;
 
@@ -25,27 +31,25 @@ public final class Importo implements Comparable<Importo> {
         if (centesimi < 0 || centesimi > 99) {
             throw new IllegalArgumentException("centesimi fuori range");
         }
-        long cents = (long) unita * 100L + (long) centesimi;
+        long cents = (long) unita * 100L + (long) centesimi; // magari studiarsi questa parte
         if (cents > Integer.MAX_VALUE) {
             throw new IllegalArgumentException("importo troppo grande");
         }
         this.totaleCentesimi = (int) cents;
     }
 
-    // da centesimi totali PRIVATE  COSTRUTTORE PRIVATO
-    private Importo(int totaleCentesimi) {
+    // da totale centesimi a importo metodo FACTORY statico
+    //non è costruttore SOLO per poterlo chiamare "daCentesimi"
+    public static Importo daCentesimi(int totaleCentesimi) {
         if (totaleCentesimi < 0) {
             throw new IllegalArgumentException("importo negativo");
         }
-        this.totaleCentesimi = totaleCentesimi;
+        int unita = totaleCentesimi / 100;
+        int centesimi = totaleCentesimi % 100;
+        return new Importo(unita, centesimi);
     }
 
-    // da totale centisimi a importo public usando importo private
-    public static Importo daCentesimi(int totaleCentesimi) {
-        return new Importo(totaleCentesimi);
-    }
-
-    // per alcuni clients, da stringa a importo metodo FACTORY statico
+    // per alcuni clients, da stringa a importo. metodo FACTORY statico
     public static Importo daStringa(String str) {
         if (str == null) {
             throw new IllegalArgumentException("stringa nulla");
@@ -55,23 +59,15 @@ public final class Importo implements Comparable<Importo> {
             throw new IllegalArgumentException("stringa vuota");
         }
         try {
-            int cents = new BigDecimal(s).multiply(BigDecimal.valueOf(100)).intValueExact();
-            if (cents < 0) {
+            int totalCents = new BigDecimal(s).multiply(BigDecimal.valueOf(100)).intValueExact();
+            if (totalCents < 0) {
                 throw new IllegalArgumentException("importo negativo");
             }
-            return new Importo(cents);
+            return daCentesimi(totalCents);
         } catch (ArithmeticException | NumberFormatException e) {
             throw new IllegalArgumentException("formato importo non valido", e);
         }
     }
-
-    //METODI
-
-    // MEGLIO TOGLIERLO
-    // metodo comodità per avere centisimi totali
-    //public int inCentesimi() {
-    //    return totaleCentesimi;
-    // }
 
     // metodo per somma
     public Importo somma(Importo altro) {
@@ -80,7 +76,7 @@ public final class Importo implements Comparable<Importo> {
         if (sum > Integer.MAX_VALUE) {
             throw new IllegalArgumentException("somma troppo grande");
         }
-        return new Importo((int) sum);
+        return daCentesimi((int) sum);
     }
 
     // metodo per differenza
@@ -90,7 +86,7 @@ public final class Importo implements Comparable<Importo> {
         if (diff < 0) {
             throw new IllegalArgumentException("risultato negativo");
         }
-        return new Importo(diff);
+        return daCentesimi(diff);
     }
 
     // metodo per moltiplicare
@@ -102,7 +98,7 @@ public final class Importo implements Comparable<Importo> {
         if (prod > Integer.MAX_VALUE) {
             throw new IllegalArgumentException("prodotto troppo grande");
         }
-        return new Importo((int) prod);
+        return daCentesimi((int) prod);
     }
 
     // metodo per dividere
@@ -143,13 +139,22 @@ public final class Importo implements Comparable<Importo> {
 
         StringBuilder sb = new StringBuilder();
         if (u != 0 || totaleCentesimi == 0) {
-            sb.append(u).append(' ').append(u == 1 ? "unit" : "units");
+            if (u == 1) {
+                sb.append(u).append(' ').append("unit");
+            } else {
+                sb.append(u).append(' ').append("units");
+            }
         }
         if (c != 0) {
             if (sb.length() > 0) {
                 sb.append(' ');
             }
-            sb.append(c).append(' ').append(c == 1 ? "cent" : "cents");
+            sb.append(c).append(' ');
+            if (c == 1) {
+                sb.append("cent");
+            } else {
+                sb.append("cents");
+            }
         }
         return sb.toString();
     }

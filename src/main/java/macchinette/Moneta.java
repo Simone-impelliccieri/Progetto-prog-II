@@ -3,6 +3,10 @@ package macchinette;
 import java.util.Optional;
 
 public enum Moneta {
+    // " L'ordinamento naturale delle monete e degli importi è dato dal loro valore" è implicito in enum,
+    // è in base a come li scrivi
+
+    //si inizializza una moneta semplicemente facendo Moneta m = Moneta.E1, il resto è automatico   
 
     //oggetti consentiti del tipo Moneta.
     C01(1),

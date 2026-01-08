@@ -21,7 +21,6 @@ along with this file.  If not, see <https://www.gnu.org/licenses/>.
 
 package clients;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -35,7 +34,7 @@ import macchinette.eccezioni.BinarioVuotoException;
 import macchinette.eccezioni.PagamentoInsufficienteException;
 import macchinette.eccezioni.RestoNonDisponibileException;
 import macchinette.eccezioni.SlotInesistenteException;
-import macchinette.util.gestioneClient;
+import macchinette.util.GestioneClient;
 
 public class UsaDistributore {
 
@@ -48,7 +47,7 @@ public class UsaDistributore {
             }
 
             String rigaBinari = scanner.nextLine();
-            List<Binario> binari = gestioneClient.binariDaRiga(rigaBinari);
+            List<Binario> binari = GestioneClient.binariDaRiga(rigaBinari);
             if (binari == null) {
                 return;
             }
@@ -58,7 +57,7 @@ public class UsaDistributore {
             }
 
             String rigaFondoCassa = scanner.nextLine();
-            Aggregato fondoCassa = gestioneClient.aggregato(rigaFondoCassa);
+            Aggregato fondoCassa = GestioneClient.aggregato(rigaFondoCassa);
             if (fondoCassa == null) {
                 return;
             }
@@ -80,7 +79,6 @@ public class UsaDistributore {
 
                 if (comando == '?') {
                     if (rigaPulita.length() != 1) {
-                        System.out.println("invalid");
                         continue;
                     }
                     for (String rigaStato : distributore.statoProdotti()) {
@@ -90,14 +88,12 @@ public class UsaDistributore {
                 }
 
                 if (comando != '+' && comando != '-') {
-                    System.out.println("invalid");
                     continue;
                 }
 
                 String argomenti = rigaPulita.substring(1).trim();
                 int indiceVirgola = argomenti.indexOf(',');
                 if (indiceVirgola < 0) {
-                    System.out.println("invalid");
                     continue;
                 }
 
@@ -105,15 +101,13 @@ public class UsaDistributore {
                 String secondo = argomenti.substring(indiceVirgola + 1).trim();
 
                 if (comando == '+') {
-                    Integer quantita = gestioneClient.intero(primo);
+                    Integer quantita = GestioneClient.intero(primo);
                     if (quantita == null) {
-                        System.out.println("invalid");
                         continue;
                     }
 
-                    Prodotto prodotto = gestioneClient.prodotto(secondo);
+                    Prodotto prodotto = GestioneClient.prodotto(secondo);
                     if (prodotto == null) {
-                        System.out.println("invalid");
                         continue;
                     }
 
@@ -121,19 +115,17 @@ public class UsaDistributore {
                         int avanzati = distributore.carica(prodotto, quantita);
                         System.out.println("+ " + avanzati);
                     } catch (IllegalArgumentException e) {
-                        System.out.println("invalid");
-                    }
-
-                } else {
-                    Integer indice = gestioneClient.intero(primo);
-                    if (indice == null) {
-                        System.out.println("invalid");
                         continue;
                     }
 
-                    Aggregato pagamento = gestioneClient.aggregato(secondo);
+                } else {
+                    Integer indice = GestioneClient.intero(primo);
+                    if (indice == null) {
+                        continue;
+                    }
+
+                    Aggregato pagamento = GestioneClient.aggregato(secondo);
                     if (pagamento == null) {
-                        System.out.println("invalid");
                         continue;
                     }
 

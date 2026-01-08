@@ -8,9 +8,9 @@ import macchinette.Binario;
 import macchinette.Prodotto;
 import macchinette.Taglia;
 
-public final class gestioneClient {
+public final class GestioneClient {
 
-    private gestioneClient() {
+    private GestioneClient() {
     }
 
     public static String pulisci(String testo) {

@@ -29,7 +29,7 @@ import macchinette.Taglia;
 import macchinette.eccezioni.CapacitaSuperataException;
 import macchinette.eccezioni.ProdottoDiversoException;
 import macchinette.eccezioni.TagliaNonCompatibileException;
-import macchinette.util.gestioneClient;
+import macchinette.util.GestioneClient;
 
 public class CaricaBinario {
 
@@ -41,12 +41,12 @@ public class CaricaBinario {
                 return;
             }
 
-            Integer capacita = gestioneClient.intero(args[0]);
+            Integer capacita = GestioneClient.intero(args[0]);
             if (capacita == null) {
                 return;
             }
 
-            Taglia taglia = gestioneClient.taglia(args[1]);
+            Taglia taglia = GestioneClient.taglia(args[1]);
             if (taglia == null) {
                 return;
             }
@@ -73,13 +73,13 @@ public class CaricaBinario {
                 String quantitaTesto = rigaPulita.substring(0, indiceVirgola).trim();
                 String descrizioneProdotto = rigaPulita.substring(indiceVirgola + 1).trim();
 
-                Integer quantita = gestioneClient.intero(quantitaTesto);
+                Integer quantita = GestioneClient.intero(quantitaTesto);
                 if (quantita == null) {
                     System.out.println("invalid");
                     continue;
                 }
 
-                Prodotto prodotto = gestioneClient.prodotto(descrizioneProdotto);
+                Prodotto prodotto = GestioneClient.prodotto(descrizioneProdotto);
                 if (prodotto == null) {
                     System.out.println("invalid");
                     continue;

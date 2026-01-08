@@ -27,7 +27,7 @@ import macchinette.StrategiaMinimo;
 import macchinette.StrategiaResto;
 import macchinette.eccezioni.ComposizioneInsufficienteException;
 import macchinette.eccezioni.ValoreInsufficienteException;
-import macchinette.util.gestioneClient;
+import macchinette.util.GestioneClient;
 
 import java.util.Scanner;
 
@@ -41,7 +41,7 @@ public class CalcolaResti {
                 return;
             }
 
-            String lettera = gestioneClient.pulisci(args[0]);
+            String lettera = GestioneClient.pulisci(args[0]);
 
             if (lettera.length() != 1) {
                 return;
@@ -75,7 +75,7 @@ public class CalcolaResti {
                     continue;
                 }
 
-                Aggregato disponibilita = gestioneClient.aggregato(rigaPulita);
+                Aggregato disponibilita = GestioneClient.aggregato(rigaPulita);
                 if (disponibilita == null) {
                     System.out.println("invalid");
                     continue;

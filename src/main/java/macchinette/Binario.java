@@ -92,7 +92,7 @@ public class Binario {
             throw new IllegalArgumentException("quantità deve essere positiva");
         }
 
-        if (!(prodotto.getTaglia().nonSuperioreA(this.taglia))) {
+        if (!(prodotto.getTaglia().eMinoreUguale(this.taglia))) {
             throw new TagliaNonCompatibileException();
         }
 

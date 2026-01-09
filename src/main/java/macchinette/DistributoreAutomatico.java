@@ -100,7 +100,7 @@ public class DistributoreAutomatico {
                 break;
             }
 
-            if (!prodotto.getTaglia().nonSuperioreA(binario.getTaglia())) {
+            if (!prodotto.getTaglia().eMinoreUguale(binario.getTaglia())) {
                 continue;
             }
 

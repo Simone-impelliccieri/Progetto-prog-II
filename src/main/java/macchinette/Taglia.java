@@ -8,9 +8,24 @@ public enum Taglia {
     M,
     L;
 
-    //da carattere
-    public static Optional<Taglia> daCarattere(char carattere) {
-        switch (carattere) {
+    //serve per ottenere la taglia a partire da stringa. Utile solo per client
+    // magari cambiare nome e magari togliere Optional e trovare un altro modo(no exception)
+
+    //serve per forza perchè nei client arriva input STRING e non è possibile inizializzare direttamente.
+
+    // potrei togliere l'optional VOLENDO
+    public static Optional<Taglia> daStringa(String stringa) {
+        if (stringa == null) {
+            return Optional.empty();
+        }
+
+        String testo = stringa.trim();
+
+        if (testo.length() != 1) {
+            return Optional.empty();
+        }
+
+        switch (testo.charAt(0)) {
             case 'S':
                 return Optional.of(S);
             case 'M':
@@ -22,20 +37,8 @@ public enum Taglia {
         }
     }
 
-    //da stringa
-    public static Optional<Taglia> daStringa(String stringa) {
-        if (stringa == null) {
-            return Optional.empty();
-        }
-        String testo = stringa.trim();
-        if (testo.length() != 1) {
-            return Optional.empty();
-        }
-        return daCarattere(testo.charAt(0));
-    }
-
-    // se superiore a un altra taglia
-    public boolean nonSuperioreA(Taglia altra) {
+    // se superiore a un altra taglia (o minoreuguale)
+    public boolean eMinoreUguale(Taglia altra) {
         Objects.requireNonNull(altra, "taglia nulla");
         return this.compareTo(altra) <= 0;
     }

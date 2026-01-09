@@ -11,17 +11,17 @@ import java.util.regex.Pattern;
 import macchinette.eccezioni.ComposizioneInsufficienteException;
 import macchinette.eccezioni.ValoreInsufficienteException;
 
+//liskov approved
+
 public class Aggregato implements Iterable<Moneta> {
 
-    //espressione regolare che serve per daStringa (10 x .20 --> 10 monete da 20c)
-    private static final Pattern espressione = Pattern.compile("\\s*(\\d+)\\s*x\\s*(.+)\\s*");
-
-    //L'aggregato è rappresentato come mappa moneta-intero
+    //L'aggregato è rappresentato come mappa moneta-intero. è final in modo che il riferimento alla mappa 
+    // non può essere modificato
     private final Map<Moneta, Integer> contenuto;
 
     //costruttore che inizializza la struttura interna
     public Aggregato() {
-        this.contenuto = new EnumMap<>(Moneta.class); //dici che monete possono essere solo di tipo moneta
+        this.contenuto = new EnumMap<>(Moneta.class); //dice che monete possono essere solo di tipo moneta
     }
 
     // aggiunge all'aggregato una moneta quantità volte
@@ -29,8 +29,9 @@ public class Aggregato implements Iterable<Moneta> {
         Objects.requireNonNull(m, "Moneta non può essere null");
         Objects.requireNonNull(quantita, "Quantità non può essere null");
 
-        if (quantita <= 0)
+        if (quantita <= 0) {
             throw new IllegalArgumentException("Quantità non positiva");
+        }
 
         if (contenuto.containsKey(m)) {
             int vecchie = contenuto.get(m);
@@ -62,15 +63,14 @@ public class Aggregato implements Iterable<Moneta> {
         if (this.getValoreTotale().compareTo(daRimuovere.getValoreTotale()) < 0) {
             throw new ValoreInsufficienteException();
         }
-
-        // 2. Check Composizione , ovvero se
+        // 2. Verifica  che ogni specifico taglio di moneta da rimuovere sia fisicamente sufficiente, 
         for (Map.Entry<Moneta, Integer> e : daRimuovere.contenuto.entrySet()) {
             if (this.getQuantitaMoneta(e.getKey()) < e.getValue()) {
                 throw new ComposizioneInsufficienteException();
             }
         }
 
-        // 3. Commit
+        // 3. esegui
         for (Map.Entry<Moneta, Integer> entry : daRimuovere.contenuto.entrySet()) {
 
             Moneta moneta = entry.getKey();
@@ -81,10 +81,8 @@ public class Aggregato implements Iterable<Moneta> {
             int residuo = qtaPresente - qtaDaTogliere;
 
             if (residuo == 0) {
-
                 this.contenuto.remove(moneta);
             } else {
-
                 this.contenuto.put(moneta, residuo);
             }
         }
@@ -99,7 +97,7 @@ public class Aggregato implements Iterable<Moneta> {
         return tot;
     }
 
-    // getter quantità per moneta
+    // getter quantità per moneta serve in strategia
     public int getQuantitaMoneta(Moneta m) {
 
         if (contenuto.containsKey(m)) {
@@ -110,19 +108,25 @@ public class Aggregato implements Iterable<Moneta> {
 
     }
 
-    // metodo statico per fare da stringa a aggregato
+    // per fare da stringa a aggregato. metodo factory statico
     public static Aggregato daStringa(String descrizione) {
         Aggregato agg = new Aggregato();
-        if (descrizione == null || descrizione.isBlank())
+        if (descrizione == null || descrizione.isBlank()) {
             return agg;
+        }
+
+        // espressione regolare (10 x .20 --> 10 monete da 20c) per client(forse è meglio spostarla(?))
+        Pattern espressione = Pattern.compile("\\s*(\\d+)\\s*x\\s*(.+)\\s*");
 
         for (String pezzo : descrizione.split(",")) {
-            if (pezzo.isBlank())
+            if (pezzo.isBlank()) {
                 continue;
+            }
 
             Matcher m = espressione.matcher(pezzo);
-            if (!m.matches())
+            if (!m.matches()) {
                 throw new IllegalArgumentException("Formato non valido: " + pezzo);
+            }
 
             String testoMoneta = m.group(2).trim();
 
@@ -172,19 +176,11 @@ public class Aggregato implements Iterable<Moneta> {
         return sb.toString();
     }
 
-    //equals
-    @Override
-    public boolean equals(Object o) {
-        if (this == o)
-            return true;
-        if (!(o instanceof Aggregato a))
-            return false;
-        return Objects.equals(contenuto, a.contenuto);
-    }
+    // NOTA (per il prof): Aggregato è MUTABILE (aggiungi/rimuovi cambiano lo stato).
+    // Seguendo Liskov, per oggetti mutabili l'uguaglianza "per contenuto" è pericolosa:
+    // due istanze potrebbero essere uguali in un momento e diverse dopo una mutazione.
+    // Inoltre equals/hashCode basati sul contenuto rendono l'oggetto insicuro in HashSet/HashMap
+    // (dopo una modifica, l'hash cambia e l'elemento può diventare "irraggiungibile").
+    // Per questo Aggregato NON ridefinisce equals/hashCode e usa l'uguaglianza per identità (==).
 
-    //hashcode
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(contenuto);
-    }
 }

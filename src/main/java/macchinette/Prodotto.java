@@ -2,14 +2,15 @@ package macchinette;
 
 import java.util.Objects;
 
-public class Prodotto implements Comparable<Prodotto> {
+//liksov approved
+
+public final class Prodotto implements Comparable<Prodotto> {
 
     private final String nome;
     private final Importo prezzo;
     private final Taglia taglia;
 
     //costruttore normale
-
     public Prodotto(String nome, Importo importo, Taglia taglia) {
         Objects.requireNonNull(nome, "nome non può essere null");
         Objects.requireNonNull(importo, "prezzo non può essere null");
@@ -25,22 +26,23 @@ public class Prodotto implements Comparable<Prodotto> {
         this.taglia = taglia;
 
     }
-    //forse da togliere tutti questi getter
 
+    //forse da togliere questo getter e restituire OGGETTO e non String
     public String getNome() {
         return nome;
     }
 
+    // questi due get vanno bene perchè restituiscono OGGETTO
     public Importo getPrezzo() {
         return prezzo;
     }
 
-    //viene usato da binario carica
+    //viene usato da binario carica , rendere package private
     public Taglia getTaglia() {
         return taglia;
     }
 
-    // Metodo factory statico per il parsing da file (formato: nome|prezzo|taglia)
+    // Metodo factory statico per il parsing da file (formato: nome|prezzo|taglia) per client
     public static Prodotto daStringa(String descrizione) {
 
         if (descrizione == null) {
@@ -50,7 +52,7 @@ public class Prodotto implements Comparable<Prodotto> {
         String[] parti = descrizione.split("\\|", -1);
 
         if (parti.length != 3) {
-            throw new IllegalArgumentException("formato prodotto non valido: " + descrizione);
+            throw new IllegalArgumentException("formato prodotto non valido");
         }
 
         String nome = parti[0].trim();

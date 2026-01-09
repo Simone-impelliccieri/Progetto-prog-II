@@ -4,7 +4,6 @@ import java.util.Optional;
 
 //liskov approved   
 
-
 public enum Moneta {
     // " L'ordinamento naturale delle monete e degli importi è dato dal loro valore" è implicito in enum,
     // è in base a come li scrivi

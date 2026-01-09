@@ -5,7 +5,7 @@ import java.util.Objects;
 import macchinette.eccezioni.ComposizioneInsufficienteException;
 import macchinette.eccezioni.ValoreInsufficienteException;
 
-public class StrategiaMinimo implements StrategiaResto {
+public final class StrategiaMinimo implements StrategiaResto {
 
 	@Override
 	public Aggregato calcolaResto(Importo restoDaDare, Aggregato disponibilita)

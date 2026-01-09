@@ -1,7 +1,6 @@
 package macchinette;
 
 import java.util.EnumMap;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -13,7 +12,7 @@ import macchinette.eccezioni.ValoreInsufficienteException;
 
 //liskov approved
 
-public class Aggregato implements Iterable<Moneta> {
+public final class Aggregato {
 
     //L'aggregato è rappresentato come mappa moneta-intero. è final in modo che il riferimento alla mappa 
     // non può essere modificato
@@ -141,12 +140,6 @@ public class Aggregato implements Iterable<Moneta> {
             agg.aggiungi(moneta, Integer.parseInt(m.group(1)));
         }
         return agg;
-    }
-
-    //iteratore
-    @Override
-    public Iterator<Moneta> iterator() {
-        return contenuto.keySet().iterator();
     }
 
     //toString

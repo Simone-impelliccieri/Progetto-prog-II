@@ -7,7 +7,7 @@ import java.util.Objects;
 
 import macchinette.eccezioni.*;
 
-public class DistributoreAutomatico {
+public final class DistributoreAutomatico {
 
     //campi
     private final List<Binario> binari;

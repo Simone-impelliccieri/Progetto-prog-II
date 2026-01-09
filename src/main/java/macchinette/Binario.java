@@ -7,7 +7,7 @@ import macchinette.eccezioni.CapacitaSuperataException;
 import macchinette.eccezioni.ProdottoDiversoException;
 import macchinette.eccezioni.TagliaNonCompatibileException;
 
-public class Binario {
+public final class Binario {
 
     //CAMPI
 

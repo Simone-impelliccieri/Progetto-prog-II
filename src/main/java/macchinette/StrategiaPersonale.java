@@ -1,5 +1,5 @@
 package macchinette;
 
-public class StrategiaPersonale {
-    
+public final class StrategiaPersonale {
+
 }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 import macchinette.eccezioni.*;
 
@@ -69,14 +70,15 @@ public final class DistributoreAutomatico {
         for (int indice = 0; indice < binari.size(); indice++) {
             Binario binario = binari.get(indice);
 
-            if (binario.èVuoto()) {
+            if (binario.eVuoto()) {
                 continue;
             }
 
-            Prodotto prodotto = binario.getTipoProdotto();
-            if (prodotto == null) {
+            Optional<Prodotto> prodottoOpzionale = binario.getTipoProdotto();
+            if (prodottoOpzionale.isEmpty()) {
                 throw new IllegalStateException("Binario non correttamente inizializzato");
             }
+            Prodotto prodotto = prodottoOpzionale.get();
 
             righe.add("? " + indice + " | " + prodotto.getNome() + " | " + prodotto.getPrezzo());
         }
@@ -106,15 +108,16 @@ public final class DistributoreAutomatico {
 
             boolean compatibile = false;
 
-            if (binario.èVuoto()) {
+            if (binario.eVuoto()) {
 
                 compatibile = true;
 
             } else {
-                Prodotto prodottoPresente = binario.getTipoProdotto();
-
-                if (prodottoPresente != null && prodottoPresente.equals(prodotto)) {
+                Optional<Prodotto> prodottoPresenteOpzionale = binario.getTipoProdotto();
+                if (prodottoPresenteOpzionale.isPresent() && prodottoPresenteOpzionale.get().equals(prodotto)) {
                     compatibile = true;
+                } else {
+                    compatibile = false;
                 }
             }
 
@@ -157,14 +160,15 @@ public final class DistributoreAutomatico {
 
         Binario binario = binari.get(numeroBinario);
 
-        if (binario.èVuoto()) {
+        if (binario.eVuoto()) {
             throw new BinarioVuotoException();
         }
 
-        Prodotto prodotto = binario.getTipoProdotto();
-        if (prodotto == null) {
+        Optional<Prodotto> prodottoOpzionale = binario.getTipoProdotto();
+        if (prodottoOpzionale.isEmpty()) {
             throw new IllegalStateException("Binario non correttamente inizializzato");
         }
+        Prodotto prodotto = prodottoOpzionale.get();
         Importo prezzo = prodotto.getPrezzo();
         Importo valorePagamento = pagamento.getValoreTotale();
 

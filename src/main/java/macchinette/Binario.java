@@ -1,11 +1,14 @@
 package macchinette;
 
 import java.util.Objects;
+import java.util.Optional;
 
 import macchinette.eccezioni.BinarioVuotoException;
 import macchinette.eccezioni.CapacitaSuperataException;
 import macchinette.eccezioni.ProdottoDiversoException;
 import macchinette.eccezioni.TagliaNonCompatibileException;
+
+//più o meno liskov approved
 
 public final class Binario {
 
@@ -21,16 +24,19 @@ public final class Binario {
     //costruttore
     public Binario(Taglia taglia, int maxCapacita) {
 
-        this.taglia = Objects.requireNonNull(taglia, "taglia non può essere null");
+        Objects.requireNonNull(taglia, "taglia non può essere null");
+
         if (maxCapacita <= 0) {
             throw new IllegalArgumentException("la capacità massima deve essere positiva");
         }
+
+        this.taglia = taglia;
         this.maxCapacita = maxCapacita;
         this.tipoProdotto = null;
         this.numeroProdotti = 0;
     }
 
-    //costruttore di copia (deep copy dello stato del binario)
+    //costruttore di copia (deep copy dello stato del binario), devo approfondire il signficato di questo
     public Binario(Binario altro) {
         Objects.requireNonNull(altro, "binario non può essere null");
         this.taglia = altro.taglia;
@@ -52,17 +58,9 @@ public final class Binario {
         this.numeroProdotti = altro.numeroProdotti;
     }
 
-    //getter forse da togliere
+    //getter forse da togliere, sicuro da mettere package private
     public Taglia getTaglia() {
         return taglia;
-    }
-
-    public int getMaxCapacita() {
-        return maxCapacita;
-    }
-
-    public int getNumeroProdotti() {
-        return numeroProdotti;
     }
 
     public int getSpazioRimanente() {
@@ -70,24 +68,26 @@ public final class Binario {
     }
 
     //vedere se è vuoto
-    public boolean èVuoto() {
+    public boolean eVuoto() {
 
-        if (numeroProdotti == 0) {
-            return true;
+        return numeroProdotti == 0;
+
+    }
+
+    // ti da il tipo prodotto OPTIONAL
+    public Optional<Prodotto> getTipoProdotto() {
+        if (tipoProdotto == null) {
+            return Optional.empty();
         }
-        return false;
-
+        return Optional.of(tipoProdotto);
     }
 
-    // ti da il tipo prodotto FORSE QUA METTERE OPTIONAL PERCHE TIPO POTREBBE ESSERE NULL
-    public Prodotto getTipoProdotto() {
-        return tipoProdotto;
-    }
-
+    // carica un prodotto sul binario, OBBLIGATO AD AVERE QUELLE ECCEZIONI PER VIA CLIENT
     public void carica(Prodotto prodotto, int quantita)
             throws TagliaNonCompatibileException, CapacitaSuperataException, ProdottoDiversoException {
 
         Objects.requireNonNull(prodotto, "prodotto non può essere null");
+
         if (quantita <= 0) {
             throw new IllegalArgumentException("quantità deve essere positiva");
         }
@@ -96,7 +96,7 @@ public final class Binario {
             throw new TagliaNonCompatibileException();
         }
 
-        if (èVuoto()) {
+        if (eVuoto()) {
             if (quantita > maxCapacita) {
                 throw new CapacitaSuperataException();
             }
@@ -117,9 +117,9 @@ public final class Binario {
         return;
     }
 
-    // Restituisce  Prodotto solleva eccezione personalizzata
-    protected Prodotto dispensa() throws BinarioVuotoException {
-        if (èVuoto()) {
+    // Restituisce  Prodotto solleva eccezione personalizzata IO FAREI PUBLIC perchè è un comportamento
+    public Prodotto dispensa() throws BinarioVuotoException {
+        if (eVuoto()) {
 
             throw new BinarioVuotoException();
         }
@@ -140,7 +140,7 @@ public final class Binario {
 
         sb.append("<");
 
-        if (this.èVuoto()) {
+        if (this.eVuoto()) {
             sb.append("-");
         } else {
             sb.append(this.tipoProdotto);

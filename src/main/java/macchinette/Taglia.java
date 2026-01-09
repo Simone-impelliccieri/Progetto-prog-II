@@ -3,6 +3,8 @@ package macchinette;
 import java.util.Objects;
 import java.util.Optional;
 
+//liskov approved
+
 public enum Taglia {
     S,
     M,
@@ -13,7 +15,7 @@ public enum Taglia {
 
     //serve per forza perchè nei client arriva input STRING e non è possibile inizializzare direttamente.
 
-    // potrei togliere l'optional VOLENDO
+    // potrei togliere l'optional VOLENDO, ma con optional obbligo il programmatore a gestire nel caso sia null
     public static Optional<Taglia> daStringa(String stringa) {
         if (stringa == null) {
             return Optional.empty();

@@ -1322,7 +1322,7 @@ code {
   }
 </style></head><body class="markdown-body">
 <h1>Specifiche dei <em>client</em></h1>
-<p>Questo documento contiene la versione c6cbb34 (del 2025-12-22, ora 11:23:53) delle
+<p>Questo documento contiene la versione 81f5cc2 (del 2026-01-08, ora 08:20:41) delle
 specifiche dei <em>client</em> da implementare per il progetto. Come illustrato nelle
 <a href="ISTRUZIONI.html">istruzioni</a> dovrà completare le implementazioni delle classi
 nel pacchetto <code>clients</code> (che si trovano nella directory <code>src/main/java/clients</code>)
@@ -1524,8 +1524,10 @@ unità perché si supererebbe la capacità.</p>
 <h3><code>UsaDistributore</code></h3>
 <p>Legge dal flusso di ingresso una linea contenente coppie <code>capacità|taglia</code> (separate
 da <code>,</code>) che descrivono un elenco di binari, quindi legge una linea che descrive
-un aggregato di monete e procede col creare il distributore automatico con i
-binari dell'elenco e il fondo cassa dato dall'aggregato.</p>
+un aggregato di monete e una contenente <code>H</code> o <code>L</code> che descrive la strategia di
+resto (da interpretare come nel client <em><code>CalcolaResti</code></em>); procede quindi col
+creare il distributore automatico con i binari dell'elenco, il fondo cassa dato
+dall'aggregato e la strategia di resto indicata.</p>
 <p>Quindi legge dal flusso di ingresso una sequenza di comandi, uno per linea, di
 una delle seguenti forme:</p>
 <ul>

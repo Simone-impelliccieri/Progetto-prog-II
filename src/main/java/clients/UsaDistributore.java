@@ -29,6 +29,7 @@ import macchinette.Binario;
 import macchinette.DistributoreAutomatico;
 import macchinette.Prodotto;
 import macchinette.StrategiaMassimo;
+import macchinette.StrategiaMinimo;
 import macchinette.StrategiaResto;
 import macchinette.eccezioni.BinarioVuotoException;
 import macchinette.eccezioni.PagamentoInsufficienteException;
@@ -62,7 +63,28 @@ public class UsaDistributore {
                 return;
             }
 
-            StrategiaResto strategiaResto = new StrategiaMassimo();
+            if (!scanner.hasNextLine()) {
+                return;
+            }
+
+            String rigaStrategia = scanner.nextLine();
+            if (rigaStrategia == null) {
+                return;
+            }
+            String strategiaPulita = rigaStrategia.trim();
+            if (strategiaPulita.length() != 1) {
+                return;
+            }
+
+            char tipoStrategia = strategiaPulita.charAt(0);
+            StrategiaResto strategiaResto;
+            if (tipoStrategia == 'H') {
+                strategiaResto = new StrategiaMassimo();
+            } else if (tipoStrategia == 'L') {
+                strategiaResto = new StrategiaMinimo();
+            } else {
+                return;
+            }
             DistributoreAutomatico distributore = new DistributoreAutomatico(binari, fondoCassa, strategiaResto);
 
             while (scanner.hasNextLine()) {

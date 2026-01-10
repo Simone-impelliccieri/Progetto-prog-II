@@ -22,6 +22,7 @@ along with this file.  If not, see <https://www.gnu.org/licenses/>.
 package clients;
 
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Scanner;
 
@@ -32,11 +33,11 @@ import macchinette.Prodotto;
 import macchinette.StrategiaMassimo;
 import macchinette.StrategiaMinimo;
 import macchinette.StrategiaResto;
+import macchinette.Taglia;
 import macchinette.eccezioni.BinarioVuotoException;
 import macchinette.eccezioni.PagamentoInsufficienteException;
 import macchinette.eccezioni.RestoNonDisponibileException;
 import macchinette.eccezioni.SlotInesistenteException;
-import macchinette.util.GestioneClient;
 
 public class UsaDistributore {
 
@@ -49,9 +50,39 @@ public class UsaDistributore {
             }
 
             String rigaBinari = scanner.nextLine();
-            List<Binario> binari = GestioneClient.binariDaRiga(rigaBinari);
-            if (binari == null) {
+            if (rigaBinari == null || rigaBinari.trim().isEmpty()) {
                 return;
+            }
+
+            List<Binario> binari = new ArrayList<>();
+
+            for (String descrizioneBinario : rigaBinari.split(",")) {
+                if (descrizioneBinario == null) {
+                    continue;
+                }
+                String descrizionePulita = descrizioneBinario.trim();
+                if (descrizionePulita.isEmpty()) {
+                    continue;
+                }
+
+                String[] parti = descrizionePulita.split("\\|", -1);
+                if (parti.length != 2) {
+                    return;
+                }
+
+                Integer capacita;
+                try {
+                    capacita = Integer.parseInt(parti[0].trim());
+                } catch (NumberFormatException e) {
+                    return;
+                }
+
+                Taglia taglia = Taglia.daStringa(parti[1].trim()).orElse(null);
+                if (taglia == null) {
+                    return;
+                }
+
+                binari.add(new Binario(taglia, capacita));
             }
 
             if (!scanner.hasNextLine()) {
@@ -59,8 +90,10 @@ public class UsaDistributore {
             }
 
             String rigaFondoCassa = scanner.nextLine();
-            Aggregato fondoCassa = GestioneClient.aggregato(rigaFondoCassa);
-            if (fondoCassa == null) {
+            Aggregato fondoCassa;
+            try {
+                fondoCassa = Aggregato.daStringa(rigaFondoCassa == null ? "" : rigaFondoCassa.trim());
+            } catch (IllegalArgumentException e) {
                 return;
             }
 
@@ -125,13 +158,17 @@ public class UsaDistributore {
                 String secondo = argomenti.substring(indiceVirgola + 1).trim();
 
                 if (comando == '+') {
-                    Integer quantita = GestioneClient.intero(primo);
-                    if (quantita == null) {
+                    int quantita;
+                    try {
+                        quantita = Integer.parseInt(primo);
+                    } catch (NumberFormatException e) {
                         continue;
                     }
 
-                    Prodotto prodotto = GestioneClient.prodotto(secondo);
-                    if (prodotto == null) {
+                    Prodotto prodotto;
+                    try {
+                        prodotto = Prodotto.daStringa(secondo);
+                    } catch (IllegalArgumentException e) {
                         continue;
                     }
 
@@ -143,13 +180,17 @@ public class UsaDistributore {
                     }
 
                 } else {
-                    Integer indice = GestioneClient.intero(primo);
-                    if (indice == null) {
+                    int indice;
+                    try {
+                        indice = Integer.parseInt(primo);
+                    } catch (NumberFormatException e) {
                         continue;
                     }
 
-                    Aggregato pagamento = GestioneClient.aggregato(secondo);
-                    if (pagamento == null) {
+                    Aggregato pagamento;
+                    try {
+                        pagamento = Aggregato.daStringa(secondo);
+                    } catch (IllegalArgumentException e) {
                         continue;
                     }
 

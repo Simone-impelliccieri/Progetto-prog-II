@@ -36,7 +36,9 @@ public final class Binario {
         this.numeroProdotti = 0;
     }
 
-    //costruttore di copia (deep copy dello stato del binario), devo approfondire il signficato di questo
+    // insomma serve per distributore in modo che quando aggiungi il binario poi il binario che hai aggiunto non continua
+    // ad essere modificato anche in seguito
+    //costruttore di copia (deep copy dello stato del binario), devo approfondire il signficato di questo, forse solo package PRIVATE
     public Binario(Binario altro) {
         Objects.requireNonNull(altro, "binario non può essere null");
         this.taglia = altro.taglia;

@@ -2,17 +2,25 @@ package macchinette;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
 import macchinette.eccezioni.*;
 
+// liskov approved
+
 public final class DistributoreAutomatico {
+
+    // NOTA: classe mutabile e NON thread-safe. Se usata in multithread serve sincronizzazione esterna,
+    // perché `fondoCassa` e i `Binario` interni possono cambiare durante le operazioni.
 
     //campi
     private final List<Binario> binari;
     private final StrategiaResto strategiaResto;
+
+    // non è final per poter fare il copiaaggregato
     private Aggregato fondoCassa;
 
     //costruttore
@@ -23,21 +31,17 @@ public final class DistributoreAutomatico {
         Objects.requireNonNull(strategiaResto, "strategia resto non può essere null");
 
         this.strategiaResto = strategiaResto;
+
         List<Binario> copiaBinari = new ArrayList<>(binari.size());
         for (Binario binario : binari) {
             Objects.requireNonNull(binario, "binario non può essere null");
-            copiaBinari.add(new Binario(binario));
+            copiaBinari.add(new Binario(binario)); // il binario viene copiato QUA con DEEP copy
         }
         this.binari = Collections.unmodifiableList(copiaBinari);
         this.fondoCassa = copiaAggregato(fondoCassa);
     }
 
-    //probabilmente non serve 
-    public int getNumeroBinari() {
-        return binari.size();
-    }
-
-    //serve per specifiche
+    //serve per specifiche quindi immagino debba rimanere public
     public Importo getValoreTotaleFondoCassa() {
         return fondoCassa.getValoreTotale();
     }
@@ -57,14 +61,14 @@ public final class DistributoreAutomatico {
         return copia;
     }
 
-    // questo serve per specifiche
+    // questo serve per specifiche quindi immagino public
     public void aggiungiAlFondoCassa(Aggregato daAggiungere) {
         Objects.requireNonNull(daAggiungere, "aggregato non può essere null");
         this.fondoCassa.aggiungi(daAggiungere);
     }
 
-    //immagino serva per qualche client + serve per specifiche
-    public List<String> statoProdotti() {
+    //serve per specifiche e client: fa una copia e restituisce un iteratore per evitare di esporre direttamente una lista
+    public Iterator<String> statoProdotti() {
         List<String> righe = new ArrayList<>();
 
         for (int indice = 0; indice < binari.size(); indice++) {
@@ -83,7 +87,7 @@ public final class DistributoreAutomatico {
             righe.add("? " + indice + " | " + prodotto.getNome() + " | " + prodotto.getPrezzo());
         }
 
-        return righe;
+        return Collections.unmodifiableList(righe).iterator();
     }
 
     //metodo per caricare prodotti,
@@ -136,6 +140,7 @@ public final class DistributoreAutomatico {
                 binario.carica(prodotto, daCaricare);
                 quantitaRimanente -= daCaricare;
             } catch (TagliaNonCompatibileException | ProdottoDiversoException | CapacitaSuperataException e) {
+                throw new IllegalStateException("Caricamento fallito");
             }
         }
 

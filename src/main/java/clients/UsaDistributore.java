@@ -22,6 +22,7 @@ along with this file.  If not, see <https://www.gnu.org/licenses/>.
 package clients;
 
 import java.util.List;
+import java.util.Iterator;
 import java.util.Scanner;
 
 import macchinette.Aggregato;
@@ -103,8 +104,9 @@ public class UsaDistributore {
                     if (rigaPulita.length() != 1) {
                         continue;
                     }
-                    for (String rigaStato : distributore.statoProdotti()) {
-                        System.out.println(rigaStato);
+                    Iterator<String> iteratoreStato = distributore.statoProdotti();
+                    while (iteratoreStato.hasNext()) {
+                        System.out.println(iteratoreStato.next());
                     }
                     continue;
                 }

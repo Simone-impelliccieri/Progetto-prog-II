@@ -5,19 +5,19 @@ import java.util.Optional;
 //liskov approved
 
 /**
- * Una Moneta è un'entità immutabile che rappresenta un tipo di moneta ammesso dal distributore automatico.
+ * Una Moneta è un'entità immutabile che rappresenta un tipo di moneta ammesso dal distributore automatico
  *
  * Ogni Moneta:
  * <ul>
- *   <li>ha un valore rappresentato da un Importo non negativo;</li>
- *   <li>è uno dei seguenti tipi: 1, 2, 5, 10, 20 o 50 centesimi, oppure 1 o 2 unità;</li>
- *   <li>possiede un ordinamento naturale dato dal valore.</li>
+ *   <li>ha un valore rappresentato da un Importo non negativo</li>
+ *   <li>è uno dei seguenti tipi: 1, 2, 5, 10, 20 o 50 centesimi, oppure 1 o 2 unità</li>
+ *   <li>possiede un ordinamento naturale dato dal valore</li>
  * </ul>
  *
  * Le operazioni implementate sono:
  * <ul>
- *   <li>restituire il valore della moneta;</li>
- *   <li>determinare la moneta il cui valore corrisponde ad una stringa fornita;</li>
+ *   <li>restituire il valore della moneta</li>
+ *   <li>determinare la moneta il cui valore corrisponde ad una stringa fornita</li>
  * </ul>
  * 
  * 

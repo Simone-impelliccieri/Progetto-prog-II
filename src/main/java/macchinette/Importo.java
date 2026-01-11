@@ -3,27 +3,68 @@ package macchinette;
 import java.math.BigDecimal;
 import java.util.Objects;
 
-//liksov approvata
-
-// il comparable è ciò che permette che 
-//"L'ordinamento naturale delle monete e degli importi è dato dal loro valore"
-
+/**
+ * Un Importo è un'entità immutabile che rappresenta un valore
+ * composto da una parte unità e da una parte in centesimi.
+ * L'ordinamento naturale degli importi è dato dal loro valore.
+ *
+ * Operazioni implementate:
+ * <ul>
+ *   <li>somma tra importi</li>
+ *   <li>sottrazione tra importi</li>
+ *   <li>moltiplicazione ad un intero</li>
+ *   <li>divisione intera tra importi, pari al più grande n tale che J * n <= I </li>
+ * </ul>
+ * 
+ * L'uguaglianza tra importi dipende dal valore.
+ */
 public final class Importo implements Comparable<Importo> {
 
     //CAMPO UNICO
+    /**
+     * Valore dell'importo in centesimi
+     */
     private final int totaleCentesimi;
 
     //unità
+    /**
+     * Restituisce la parte delle unità dell'importo
+     * @return il numero di unità (intero non negativo).
+     */
     private int unita() {
         return totaleCentesimi / 100;
     }
 
     //centesimi
+    /**
+     * Restituisce la parte in centesimi dell'importo.
+     *
+     * @return il numero di centesimi, compreso tra 0 e 99.
+     */
     private int centesimi() {
         return totaleCentesimi % 100;
     }
 
     // da unità centesimi a importo COSTRUTTORE
+    /**
+     * Metodo di fabbricazione per creare un'istanza di Importo a partire da unita e centesimi.
+        *
+        * AF:
+        * <ul>
+        *   <li>l'istanza costruita rappresenta l'importo di valore {@code unita} unità e {@code centesimi} centesimi,</li>
+        * </ul>
+        *
+        * RI:
+        * <ul>
+        *   <li> totaleCentesimi >= 0,</li>
+        *   <li>0 <= centesimi <= 99</li>
+        * </ul>
+     *
+     * @param unita, deve essere non negativa.
+     * @param centesimi,deve essere compresa tra 0 e 99
+     * @throws IllegalArgumentException se {@code unita < 0}, se {@code centesimi} non è nel range
+     *         consentito, oppure se unità + centesimi supera il valore massimo .
+     */
     public Importo(int unita, int centesimi) {
         if (unita < 0) {
             throw new IllegalArgumentException("unita negative");
@@ -40,6 +81,13 @@ public final class Importo implements Comparable<Importo> {
 
     // da totale centesimi a importo metodo FACTORY statico
     //non è costruttore SOLO per poterlo chiamare "daCentesimi"
+    /**
+     * Restituisce un importo a partire dal totale dei centesimi.
+     *
+     * @param totaleCentesimi totale in centesimi, deve essere non negativo.
+     * @return un importo corrispondente a {@code totaleCentesimi}.
+     * @throws IllegalArgumentException se {@code totaleCentesimi < 0}.
+     */
     public static Importo daCentesimi(int totaleCentesimi) {
         if (totaleCentesimi < 0) {
             throw new IllegalArgumentException("importo negativo");
@@ -50,6 +98,16 @@ public final class Importo implements Comparable<Importo> {
     }
 
     // per alcuni clients, da stringa a importo. metodo FACTORY statico
+    /**
+     * Legge una stringa e restituisce l'importo corrispondente
+     *
+     * La stringa può contenere spazi bianchi iniziali o finali, che vengono ignorati.
+     *
+     * @param str è l'importo in stringa .
+     * @return l'importo corrispondente.
+     * @throws IllegalArgumentException se {@code str} è {@code null} o vuota,
+     *         se il formato non è valido, oppure se l'importo è negativo.
+     */
     public static Importo daStringa(String str) {
         if (str == null) {
             throw new IllegalArgumentException("stringa nulla");
@@ -70,6 +128,14 @@ public final class Importo implements Comparable<Importo> {
     }
 
     // metodo per somma
+    /**
+     * Restituisce la somma tra due importi
+     *
+     * @param altro l'altro importo (non null).
+     * @return un nuovo importo pari a  this + altro.
+     * @throws NullPointerException se  altro è null.
+     * @throws IllegalArgumentException se la somma è superiore di MAX_VALUE.
+     */
     public Importo somma(Importo altro) {
         Objects.requireNonNull(altro, "importo non può essere null");
         long sum = (long) this.totaleCentesimi + (long) altro.totaleCentesimi;
@@ -80,6 +146,14 @@ public final class Importo implements Comparable<Importo> {
     }
 
     // metodo per differenza
+    /**
+     * Restituisce la differenza tra due importi
+     *
+     * @param altro l'altro importo (non  null).
+     * @return un nuovo importo pari a this - altro.
+     * @throws NullPointerException se  altro è  null.
+     * @throws IllegalArgumentException se il risultato sarebbe negativo.
+     */
     public Importo sottrai(Importo altro) {
         Objects.requireNonNull(altro, "importo non può essere null");
         int diff = this.totaleCentesimi - altro.totaleCentesimi;
@@ -90,6 +164,13 @@ public final class Importo implements Comparable<Importo> {
     }
 
     // metodo per moltiplicare
+    /**
+     * Restituisce il risultato della moltiplicazione tra l'importo e un intero non negativo.
+     *
+     * @param n intero che moltiplica; deve essere non negativo.
+     * @return un nuovo importo pari a  this * n.
+     * @throws IllegalArgumentException se n < 0 o se il risultato è superiore di MAX_VALUE
+     */
     public Importo moltiplica(int n) {
         if (n < 0) {
             throw new IllegalArgumentException("moltiplicatore negativo");
@@ -102,6 +183,16 @@ public final class Importo implements Comparable<Importo> {
     }
 
     // metodo per dividere
+    /**
+     * Restituisce il risultato della divisione tra due importi.
+     *
+     * Il risultato è il più grande intero {@code k} tale che {@code k * altro <= this}.
+     *
+     * @param altro il divisore (non  null).
+     * @return il risultato della divisione intera this / altro.
+     * @throws NullPointerException se altro è null.
+     * @throws IllegalArgumentException se  l'altro è pari a zero
+     */
     public int divIntera(Importo altro) {
         Objects.requireNonNull(altro, "importo non può essere null");
         if (altro.totaleCentesimi == 0) {

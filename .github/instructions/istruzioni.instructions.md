@@ -3,8 +3,6 @@ applyTo: '**'
 ---
 Provide project context and coding guidelines that AI should follow when generating code, answering questions, or reviewing changes.
 
-NON SCRIVER MAI JAVADOC, SE SERVE SOLO COMMENTI IN LINEA.
-
 non eseguire ne test ne build ne assemble se non specificamente richiesto.
 
 scrivi il codice in modo che sia pronto per i clients

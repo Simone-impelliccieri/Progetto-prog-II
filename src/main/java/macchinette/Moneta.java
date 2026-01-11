@@ -59,7 +59,7 @@ public enum Moneta {
     //costruttore privato . ad esempio c01(1)--> moneta.valore = 1
 
     /**
-     * Costruisce una moneta assegnandole il valore indicato (in centesimi).
+        * Costruisce una moneta assegnandole il valore indicato in centesimi
         *
         * AF:
         * <ul>
@@ -70,7 +70,7 @@ public enum Moneta {
         * <ul>
         * <li>{@code valore} != null</li>
         * <li>{@code valore} rappresenta un importo non negativo</li>
-        * <li>{@code valore} coincide con il tipo di moneta definito</li>
+        * <li>{@code valore} è uno dei tipi di moneta definiti</li>
         * </ul>
      *
      * @param centesimi valore della moneta in centesimi; deve essere non negativo.
@@ -84,23 +84,24 @@ public enum Moneta {
     }
 
     //get valore. Essenziale(anche perchè il valore è evidente anche dal nome)
+
     /**
      * Restituisce il valore della moneta.
      *
      * @return il valore della moneta come Importo .
      */
-    public Importo getValore() {
+    Importo getValore() {
         return valore;
     }
 
     //serve per ottenere la moneta più grande che possa contenere l'importo. Utile solo per client
 
     /**
-     * Cerca la moneta il cui valore corrisponde alla stringa in input.
+     * Cerca la moneta il cui valore è uguale alla stringa in input.
      *
-     * La stringa viene interpretata tramite Importo.daStringa(String) (quindi gli spazi bianchi
-     * iniziali e finali sono ignorati). Se la stringa non rappresenta un importo valido o se il valore
-     * ottenuto non coincide con nessun taglio ammesso, il risultato è vuoto.
+     * La stringa viene interpretata tramite Importo.daStringa(String)
+     * Se la stringa non rappresenta un importo valido o se il valore
+     * ottenuto non corrisponde a nessun tipo di moneta, il risultato è optional.empty .
       *
       * @param stringa rappresentazione testuale dell'importo; se {@code null} il risultato è vuoto.
       * @return un Optional contenente la moneta corrispondente, oppure Optional.empty().

@@ -47,7 +47,7 @@ public final class Importo implements Comparable<Importo> {
 
     // da unità centesimi a importo COSTRUTTORE
     /**
-     * Metodo di fabbricazione per creare un'istanza di Importo a partire da unita e centesimi.
+     * Metodo costruttore, crea un'istanza di Importo a partire da unita e centesimi.
         *
         * AF:
         * <ul>
@@ -82,7 +82,7 @@ public final class Importo implements Comparable<Importo> {
     // da totale centesimi a importo metodo FACTORY statico
     //non è costruttore SOLO per poterlo chiamare "daCentesimi"
     /**
-     * Restituisce un importo a partire dal totale dei centesimi.
+     * Metodo factory statico, restituisce un importo a partire dal totale dei centesimi.
      *
      * @param totaleCentesimi totale in centesimi, deve essere non negativo.
      * @return un importo corrispondente a {@code totaleCentesimi}.
@@ -99,7 +99,7 @@ public final class Importo implements Comparable<Importo> {
 
     // per alcuni clients, da stringa a importo. metodo FACTORY statico
     /**
-     * Legge una stringa e restituisce l'importo corrispondente
+     * Legge una stringa e restituisce l'istanza di importo corrispondente
      *
      * La stringa può contenere spazi bianchi iniziali o finali, che vengono ignorati.
      *

@@ -59,7 +59,7 @@ public enum Moneta {
     //costruttore privato . ad esempio c01(1)--> moneta.valore = 1
 
     /**
-        * Costruisce una moneta assegnandole il valore indicato in centesimi
+        * Metodo costruttore, costruisce una moneta assegnandole il valore indicato in centesimi
         *
         * AF:
         * <ul>

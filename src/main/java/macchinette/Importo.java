@@ -47,7 +47,7 @@ public final class Importo implements Comparable<Importo> {
 
     // da unità centesimi a importo COSTRUTTORE
     /**
-     * Metodo costruttore, crea un'istanza di Importo a partire da unita e centesimi.
+     * Costruttore, crea un'istanza di Importo a partire da unita e centesimi.
         *
         * AF:
         * <ul>

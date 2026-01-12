@@ -4,13 +4,57 @@ import java.util.Objects;
 
 //liksov approved
 
+/**
+ * Un Prodotto è un'entità immutabile che rappresenta un bene venduto da un distributore.
+ *
+ * Ogni Prodotto è caratterizzato da:
+ * <ul>
+ *   <li>un nome </li>
+ *   <li>un prezzo (un importo non negativo),</li>
+ *   <li>una taglia (S, M o L).</li>
+ * </ul>
+ *
+ * L'ordinamento naturale dei prodotti è dato dall'ordine della tripla: taglia, nome e prezzo.
+ */
 public final class Prodotto implements Comparable<Prodotto> {
 
+    /**
+     * Nome del prodotto.
+     */
     private final String nome;
+
+    /**
+     * Prezzo del prodotto.
+     */
     private final Importo prezzo;
+
+    /**
+     * Taglia del prodotto.
+     */
     private final Taglia taglia;
 
     //costruttore normale
+    /**
+     * Costruttore, crea un prodotto a partire da importo taglia e nome.
+     *
+     * AF:
+     * <ul>
+     *   <li>l'istanza costruita rappresenta il prodotto di nome {@code nome}, prezzo {@code importo} e taglia {@code taglia}.</li>
+     * </ul>
+     *
+     * RI:
+     * <ul>
+     *   <li>{@code nome} è una stringa non vuota e senza spazi iniziali o finali</li>
+     *   <li>{@code importo} non è nullo</li>
+     *   <li>{@code taglia} non è nulla</li>
+     * </ul>
+     *
+     * @param nome nome del prodotto; non nullo e non vuoto (eventuali spazi iniziali e finali vengono rimossi).
+     * @param importo prezzo del prodotto, non nullo.
+     * @param taglia taglia del prodotto, non nulla.
+     * @throws NullPointerException se uno tra {@code nome}, {@code importo} o {@code taglia} è null.
+     * @throws IllegalArgumentException se {@code nome.trim()} è vuoto.
+     */
     public Prodotto(String nome, Importo importo, Taglia taglia) {
         Objects.requireNonNull(nome, "nome non può essere null");
         Objects.requireNonNull(importo, "prezzo non può essere null");
@@ -28,21 +72,47 @@ public final class Prodotto implements Comparable<Prodotto> {
     }
 
     //forse da togliere questo getter e restituire OGGETTO e non String
-    public String getNome() {
+    /**
+     * Restituisce il nome del prodotto.
+     *
+     * @return il nome del prodotto.
+     */
+    String getNome() {
         return nome;
     }
 
     // questi due get vanno bene perchè restituiscono OGGETTO
-    public Importo getPrezzo() {
+    /**
+     * Restituisce il prezzo del prodotto.
+     *
+     * @return il prezzo del prodotto.
+     */
+    Importo getPrezzo() {
         return prezzo;
     }
 
     //viene usato da binario carica , rendere package private
-    public Taglia getTaglia() {
+    /**
+     * Restituisce la taglia del prodotto.
+     *
+     * @return la taglia del prodotto.
+     */
+    Taglia getTaglia() {
         return taglia;
     }
 
     // Metodo factory statico per il parsing da file (formato: nome|prezzo|taglia) per client
+    /**
+     * Metodo factory statico, costruisce un prodotto a partire da una descrizione di tipo string.
+     *
+     * Il formato atteso è {@code nome|prezzo|taglia}.
+     * La taglia deve essere uno tra i caratteri {@code S}, {@code M} e {@code L}.
+     *
+     * @param descrizione, descrizione del prodotto.
+     * @return il prodotto, corrispondente alla descrizione.
+     * @throws IllegalArgumentException se {@code descrizione} è null, se il formato non è valido,
+     *         se il prezzo non è un importo valido oppure se la taglia non è valida.
+     */
     public static Prodotto daStringa(String descrizione) {
 
         if (descrizione == null) {
@@ -88,6 +158,7 @@ public final class Prodotto implements Comparable<Prodotto> {
     }
 
     //uguali se hanno nome prezzo e taglia uguali
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -104,6 +175,7 @@ public final class Prodotto implements Comparable<Prodotto> {
     }
 
     //hashcode
+
     @Override
     public int hashCode() {
         return Objects.hash(nome, prezzo, taglia);

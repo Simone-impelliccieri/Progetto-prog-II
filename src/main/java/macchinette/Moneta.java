@@ -59,7 +59,7 @@ public enum Moneta {
     //costruttore privato . ad esempio c01(1)--> moneta.valore = 1
 
     /**
-        * Metodo costruttore, costruisce una moneta assegnandole il valore indicato in centesimi
+        * Costruttore dell’enum , costruisce una moneta assegnandole il valore indicato in centesimi
         *
         * AF:
         * <ul>
@@ -76,7 +76,7 @@ public enum Moneta {
      * @param centesimi valore della moneta in centesimi; deve essere non negativo.
      * @throws IllegalArgumentException se centesimi minore di 0.
      */
-    Moneta(int centesimi) {
+    private Moneta(int centesimi) {
         if (centesimi < 0) {
             throw new IllegalArgumentException("centesimi negativi");
         }

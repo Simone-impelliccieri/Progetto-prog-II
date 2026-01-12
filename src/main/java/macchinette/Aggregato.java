@@ -41,7 +41,7 @@ public final class Aggregato {
 
     //costruttore che inizializza la struttura interna
     /**
-     * Costruisce l'aggregato vuoto.
+     * Costruttore, inizializza l'aggregato vuoto.
      *
      * AF:
      * <ul>

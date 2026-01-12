@@ -71,7 +71,6 @@ public final class Aggregato {
      */
     public void aggiungi(Moneta m, int quantita) {
         Objects.requireNonNull(m, "Moneta non può essere null");
-        Objects.requireNonNull(quantita, "Quantità non può essere null");
 
         if (quantita <= 0) {
             throw new IllegalArgumentException("Quantità non positiva");

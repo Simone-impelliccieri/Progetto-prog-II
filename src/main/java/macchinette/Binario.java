@@ -1,7 +1,6 @@
 package macchinette;
 
 import java.util.Objects;
-import java.util.Optional;
 
 import macchinette.eccezioni.BinarioVuotoException;
 import macchinette.eccezioni.CapacitaSuperataException;

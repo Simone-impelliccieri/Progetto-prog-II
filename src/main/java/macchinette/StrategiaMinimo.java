@@ -5,8 +5,23 @@ import java.util.Objects;
 import macchinette.eccezioni.ComposizioneInsufficienteException;
 import macchinette.eccezioni.ValoreInsufficienteException;
 
+/**
+ * Una StrategiaMinimo è una strategia per il calcolo del resto che utilizza
+ * per prime le monete di valore minore.
+ *
+ */
 public final class StrategiaMinimo implements StrategiaResto {
 
+	/**
+	 * Calcola il resto utilizzando per prime le monete di valore minore.
+	 *
+	 * @param restoDaDare, importo del resto da restituire, non nullo.
+	 * @param disponibilita, aggregato di monete disponibili per comporre il resto, non nullo.
+	 * @return un Aggregato contenente le monete che compongono  il resto richiesto.
+	 * @throws NullPointerException se {@code restoDaDare} o {@code disponibilita} sono nulli.
+	 * @throws ValoreInsufficienteException se il valore totale di {@code disponibilita} è inferiore a {@code restoDaDare}.
+	 * @throws ComposizioneInsufficienteException se pur avendo valore sufficiente non è possibile comporre il resto esatto.
+	 */
 	@Override
 	public Aggregato calcolaResto(Importo restoDaDare, Aggregato disponibilita)
 			throws ValoreInsufficienteException, ComposizioneInsufficienteException {

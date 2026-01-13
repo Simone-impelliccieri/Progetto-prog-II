@@ -55,7 +55,7 @@ public enum Taglia {
     * È riconosciuta una singola lettera tra "S", "M" e "L" .
     * In tutti gli altri casi il risultato è Optional.Empty.
     *
-    * @param stringa che rappresenta una taglia, può essere {@code null}.
+    * @param stringa, che rappresenta una taglia, può essere {@code null}.
     * @return un Optional contenente la taglia riconosciuta oppure Optional.empty() in caso non sia stata trovata.
     */
     public static Optional<Taglia> daStringa(String stringa) {
@@ -86,7 +86,7 @@ public enum Taglia {
     * Verifica se questa taglia è minore o uguale della taglia {@code altra} rispetto
     * all'ordinamento naturale S poi M poi L.
     *
-    * @param altra la taglia di confronto, non null.
+    * @param altra, la taglia di confronto, non null.
     * @return true se questa taglia è minore o uguale ad {@code altra}, false in caso contrario.
     * @throws NullPointerException se {@code altra} è null.
     */

@@ -61,7 +61,7 @@ public final class Importo implements Comparable<Importo> {
         * </ul>
      *
      * @param unita, deve essere non negativa.
-     * @param centesimi,deve essere compresa tra 0 e 99
+    * @param centesimi, deve essere compresa tra 0 e 99
      * @throws IllegalArgumentException se {@code unita < 0}, se {@code centesimi} non è nel range
      *         consentito, oppure se unità + centesimi supera il valore massimo .
      */
@@ -84,7 +84,7 @@ public final class Importo implements Comparable<Importo> {
     /**
      * Metodo factory statico, restituisce un importo a partire dal totale dei centesimi.
      *
-     * @param totaleCentesimi totale in centesimi, deve essere non negativo.
+    * @param totaleCentesimi, totale in centesimi, deve essere non negativo.
      * @return un importo corrispondente a {@code totaleCentesimi}.
      * @throws IllegalArgumentException se {@code totaleCentesimi < 0}.
      */
@@ -103,7 +103,7 @@ public final class Importo implements Comparable<Importo> {
      *
      * La stringa può contenere spazi bianchi iniziali o finali, che vengono ignorati.
      *
-     * @param str è l'importo in stringa .
+    * @param str, è l'importo in stringa .
      * @return l'importo corrispondente.
      * @throws IllegalArgumentException se {@code str} è {@code null} o vuota,
      *         se il formato non è valido, oppure se l'importo è negativo.
@@ -131,7 +131,7 @@ public final class Importo implements Comparable<Importo> {
     /**
      * Restituisce la somma tra due importi
      *
-     * @param altro l'altro importo (non null).
+    * @param altro, l'altro importo (non null).
      * @return un nuovo importo pari a  this + altro.
      * @throws NullPointerException se  altro è null.
      * @throws IllegalArgumentException se la somma è superiore di MAX_VALUE.
@@ -149,7 +149,7 @@ public final class Importo implements Comparable<Importo> {
     /**
      * Restituisce la differenza tra due importi
      *
-     * @param altro l'altro importo (non  null).
+    * @param altro, l'altro importo (non  null).
      * @return un nuovo importo pari a this - altro.
      * @throws NullPointerException se  altro è  null.
      * @throws IllegalArgumentException se il risultato sarebbe negativo.
@@ -167,7 +167,7 @@ public final class Importo implements Comparable<Importo> {
     /**
      * Restituisce il risultato della moltiplicazione tra l'importo e un intero non negativo.
      *
-     * @param n intero che moltiplica; deve essere non negativo.
+    * @param n, intero che moltiplica; deve essere non negativo.
      * @return un nuovo importo pari a  this * n.
      * @throws IllegalArgumentException se {@code n} è negativo o se il risultato è superiore di MAX_VALUE
      */
@@ -188,7 +188,7 @@ public final class Importo implements Comparable<Importo> {
      *
      * Il risultato è il più grande intero {@code k} tale che {@code k * altro <= this}.
      *
-     * @param altro il divisore (non  null).
+    * @param altro, il divisore (non  null).
      * @return il risultato della divisione intera this / altro.
      * @throws NullPointerException se altro è null.
      * @throws IllegalArgumentException se  l'altro è pari a zero

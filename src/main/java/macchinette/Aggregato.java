@@ -64,8 +64,8 @@ public final class Aggregato {
     /**
      * Aggiunge {@code quantita} monete del tipo {@code m} all'aggregato.
      *
-     * @param m,  la moneta da aggiungere ,non null.
-     * @param quantita numero di monete da aggiungere, deve essere positivo.
+    * @param m, la moneta da aggiungere, non null.
+    * @param quantita, numero di monete da aggiungere, deve essere positivo.
      * @throws NullPointerException se {@code m} è null.
      * @throws IllegalArgumentException se {@code quantita} è minore o uguale a 0.
      */
@@ -90,7 +90,7 @@ public final class Aggregato {
      *
      * Se {@code altro} è null, l'operazione non ha effetto.
      *
-     * @param altro aggregato da aggiungere può essere null.
+    * @param altro, aggregato da aggiungere può essere null.
      */
     public void aggiungi(Aggregato altro) {
         if (altro != null) {
@@ -115,7 +115,7 @@ public final class Aggregato {
      *   <li>il valore totale è sufficiente ma non ci sono abbastanza monete di quello specifico tipo ({@code ComposizioneInsufficienteException})</li>
      * </ul>
      *
-     * @param daRimuovere aggregato da rimuovere, non null.
+    * @param daRimuovere, aggregato da rimuovere, non null.
      * @throws NullPointerException se {@code daRimuovere} è null
      * @throws ValoreInsufficienteException se il valore totale da rimuovere supera il valore totale.
      * @throws ComposizioneInsufficienteException se la composizione non consente la rimozione delle monete.
@@ -171,7 +171,7 @@ public final class Aggregato {
      * Restituisce la quantità di un tipo specifico di moneta {@code m}.
      * 
      *
-     * @param m la moneta di cui si vuole conoscere la quantità
+    * @param m, la moneta di cui si vuole conoscere la quantità
      * @return la quantità (0 se {@code m} non è presente nell'aggregato).
      */
     int getQuantitaMoneta(Moneta m) {
@@ -191,7 +191,7 @@ public final class Aggregato {
      *
      * Se {@code descrizione} è null o vuota viene restituito l'aggregato vuoto.
      *
-     * @param descrizione ,descrizione testuale dell'aggregato.
+    * @param descrizione, descrizione testuale dell'aggregato.
      * @return l'aggregato.
      * @throws IllegalArgumentException se il formato non è valido o se una moneta non è riconosciuta.
      */

@@ -75,7 +75,7 @@ public enum Moneta {
      *
      * 
      *
-     * @param centesimi valore della moneta in centesimi; deve essere non negativo.
+    * @param centesimi, valore della moneta in centesimi; deve essere non negativo.
      * @throws IllegalArgumentException se centesimi minore di 0.
      */
     private Moneta(int centesimi) {
@@ -105,7 +105,7 @@ public enum Moneta {
      * Se la stringa non rappresenta un importo valido o se il valore
      * ottenuto non corrisponde a nessun tipo di moneta, il risultato è optional.empty .
       *
-      * @param stringa rappresentazione testuale dell'importo; se {@code null} il risultato è vuoto.
+    * @param stringa, rappresentazione testuale dell'importo; se {@code null} il risultato è vuoto.
       * @return un Optional contenente la moneta corrispondente, oppure Optional.empty().
      */
     public static Optional<Moneta> monetaGiusta(String stringa) {

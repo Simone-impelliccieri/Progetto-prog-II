@@ -55,7 +55,7 @@ public final class StrategiaPersonale implements StrategiaResto {
      *
      * @param restoDaDare, importo del resto da restituire.
      * @param disponibilita, aggregato di monete disponibili.
-     * @param evitaMonetePiccole ,se true esclude le monete da 1 e 2 centesimi.
+    * @param evitaMonetePiccole, se true esclude le monete da 1 e 2 centesimi.
      * @return un Aggregato contenente le monete che compongono il resto.
      * @throws ComposizioneInsufficienteException se non è possibile comporre il resto esatto.
      */

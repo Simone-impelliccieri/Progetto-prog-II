@@ -58,9 +58,9 @@ public final class Prodotto implements Comparable<Prodotto> {
      *   <li>{@code taglia} non è nulla</li>
      * </ul>
      *
-     * @param nome nome del prodotto; non nullo e non vuoto (eventuali spazi iniziali e finali vengono rimossi).
-     * @param importo prezzo del prodotto, non nullo.
-     * @param taglia taglia del prodotto, non nulla.
+    * @param nome, nome del prodotto; non nullo e non vuoto (eventuali spazi iniziali e finali vengono rimossi).
+    * @param importo, prezzo del prodotto, non nullo.
+    * @param taglia, taglia del prodotto, non nulla.
      * @throws NullPointerException se uno tra {@code nome}, {@code importo} o {@code taglia} è null.
      * @throws IllegalArgumentException se {@code nome.trim()} è vuoto.
      */

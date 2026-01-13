@@ -67,7 +67,7 @@ public final class Aggregato {
      * @param m,  la moneta da aggiungere ,non null.
      * @param quantita numero di monete da aggiungere, deve essere positivo.
      * @throws NullPointerException se {@code m} è null.
-     * @throws IllegalArgumentException se  quantita <= 0.
+     * @throws IllegalArgumentException se {@code quantita} è minore o uguale a 0.
      */
     public void aggiungi(Moneta m, int quantita) {
         Objects.requireNonNull(m, "Moneta non può essere null");

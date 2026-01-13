@@ -34,8 +34,12 @@ import java.util.Optional;
  * </ul>
  */
 public enum Taglia {
+
+    /** Taglia small. */
     S,
+    /** Taglia medium. */
     M,
+    /** Taglia large. */
     L;
 
     //serve per ottenere la taglia a partire da stringa. Utile solo per client
@@ -80,10 +84,10 @@ public enum Taglia {
     // se superiore a un altra taglia (o minoreuguale)
     /**
     * Verifica se questa taglia è minore o uguale della taglia {@code altra} rispetto
-    * all'ordinamento naturale S<M<L
+    * all'ordinamento naturale S poi M poi L.
     *
     * @param altra la taglia di confronto, non null.
-    * @return true se this <= altra, false in caso contrario.
+    * @return true se questa taglia è minore o uguale ad {@code altra}, false in caso contrario.
     * @throws NullPointerException se {@code altra} è null.
     */
     public boolean eMinoreUguale(Taglia altra) {

@@ -13,8 +13,14 @@ import macchinette.eccezioni.ValoreInsufficienteException;
 public final class StrategiaMassimo implements StrategiaResto {
 
 	/**
-	 * Calcola il resto utilizzando per prime le monete di valore maggiore.
+	 * Costruisce Strategia massimo
+	 */
+	public StrategiaMassimo() {
+	}
 
+	/**
+	 * Calcola il resto utilizzando per prime le monete di valore maggiore.
+	
 	 *
 	 * @param restoDaDare, importo del resto da restituire, non nullo.
 	 * @param disponibilita, aggregato di monete disponibili per comporre il resto, non nullo.

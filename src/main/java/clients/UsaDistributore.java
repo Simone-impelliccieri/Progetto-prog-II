@@ -210,6 +210,7 @@ public class UsaDistributore {
             }
 
         } catch (Exception e) {
+            System.err.println("Errore: " + e.getMessage());
         }
     }
 }

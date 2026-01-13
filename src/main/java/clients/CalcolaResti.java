@@ -105,6 +105,8 @@ public class CalcolaResti {
             }
 
         } catch (Exception e) {
+            System.err.println("Errore: " + e.getMessage());
+
         }
     }
 

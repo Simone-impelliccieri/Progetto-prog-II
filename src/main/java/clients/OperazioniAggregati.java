@@ -82,6 +82,8 @@ public class OperazioniAggregati {
             }
 
         } catch (Exception e) {
+            System.err.println("Errore: " + e.getMessage());
+
         }
 
     }

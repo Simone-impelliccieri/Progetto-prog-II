@@ -13,6 +13,12 @@ import macchinette.eccezioni.ValoreInsufficienteException;
 public final class StrategiaMinimo implements StrategiaResto {
 
 	/**
+	 * Costruisce Strategia minimo.
+	 */
+	public StrategiaMinimo() {
+	}
+
+	/**
 	 * Calcola il resto utilizzando per prime le monete di valore minore.
 	 *
 	 * @param restoDaDare, importo del resto da restituire, non nullo.

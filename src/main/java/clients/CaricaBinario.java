@@ -107,6 +107,8 @@ public class CaricaBinario {
             }
 
         } catch (Exception e) {
+            System.err.println("Errore: " + e.getMessage());
+
         }
     }
 }

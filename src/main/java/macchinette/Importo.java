@@ -13,7 +13,7 @@ import java.util.Objects;
  *   <li>somma tra importi</li>
  *   <li>sottrazione tra importi</li>
  *   <li>moltiplicazione ad un intero</li>
- *   <li>divisione intera tra importi, pari al più grande n tale che J * n <= I </li>
+ *   <li>divisione intera tra importi, pari al più grande n tale che {@code J * n <= I}</li>
  * </ul>
  * 
  * L'uguaglianza tra importi dipende dal valore.
@@ -57,7 +57,7 @@ public final class Importo implements Comparable<Importo> {
         * RI:
         * <ul>
         *   <li> totaleCentesimi >= 0,</li>
-        *   <li>0 <= centesimi <= 99</li>
+        *   <li>{@code centesimi} compreso tra 0 e 99 (estremi inclusi)</li>
         * </ul>
      *
      * @param unita, deve essere non negativa.
@@ -169,7 +169,7 @@ public final class Importo implements Comparable<Importo> {
      *
      * @param n intero che moltiplica; deve essere non negativo.
      * @return un nuovo importo pari a  this * n.
-     * @throws IllegalArgumentException se n < 0 o se il risultato è superiore di MAX_VALUE
+     * @throws IllegalArgumentException se {@code n} è negativo o se il risultato è superiore di MAX_VALUE
      */
     public Importo moltiplica(int n) {
         if (n < 0) {

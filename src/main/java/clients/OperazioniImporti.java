@@ -123,6 +123,8 @@ public class OperazioniImporti {
             }
 
         } catch (Exception e) {
+            System.err.println("Errore: " + e.getMessage());
+
         }
 
     }

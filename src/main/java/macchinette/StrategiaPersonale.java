@@ -15,6 +15,12 @@ import macchinette.eccezioni.ValoreInsufficienteException;
 public final class StrategiaPersonale implements StrategiaResto {
 
     /**
+     * Costruisce Strategia personale
+     */
+    public StrategiaPersonale() {
+    }
+
+    /**
      * Calcola il resto preservando le monete da 1 e 2 centesimi quando possibile.
      *
      *

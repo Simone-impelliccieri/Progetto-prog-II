@@ -44,6 +44,9 @@ public class RiconosciMonete {
             }
 
         } catch (Exception e) {
+
+            System.err.println("Errore: " + e.getMessage());
+
         }
 
     }

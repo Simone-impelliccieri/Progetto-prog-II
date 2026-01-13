@@ -64,7 +64,7 @@ public final class Aggregato {
     /**
      * Aggiunge {@code quantita} monete del tipo {@code m} all'aggregato.
      *
-     * @param m la moneta da aggiungere ,non null.
+     * @param m,  la moneta da aggiungere ,non null.
      * @param quantita numero di monete da aggiungere, deve essere positivo.
      * @throws NullPointerException se {@code m} è null.
      * @throws IllegalArgumentException se  quantita <= 0.

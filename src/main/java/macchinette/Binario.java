@@ -9,19 +9,82 @@ import macchinette.eccezioni.ProdottoDiversoException;
 import macchinette.eccezioni.TagliaNonCompatibileException;
 
 //più o meno liskov approved
-
+/**
+ * Un Binario rappresenta un contenitore di prodotti all'interno di un distributore automatico.
+ * 
+ * Un Binario è un'entità mutabile perchè le operazione carica e dispensa modificano lo stato dell'istanza.
+ * 
+ *
+ *
+ * Ogni binario è caratterizzato da:
+ * <ul>
+ *   <li>una taglia massima {@code taglia}</li>
+ *   <li>una capacità massima {@code maxCapacita} (intero positivo)</li>
+ *   <li>un eventuale tipo di prodotto {@code tipoProdotto} e un numero di prodotti {@code numeroProdotti}</li>
+ * </ul>
+ * 
+ * 
+ *  Operazioni implementate:
+ * <ul>
+ *   <li>verificare se un binario è vuoto</li>
+ *   <li>restituire il tipo di prodotto contenuto nel binario</li>
+ *   <li>caricare un prodotto</li>
+ *   <li>dispensare un prodotto</li>
+ * </ul>
+ *
+ * Un binario può essere vuoto oppure contenere fino a {@code maxCapacita} prodotti.
+ * 
+ * Se non è vuoto, contiene prodotti tutti dello stesso tipo e con taglia non superiore alla taglia del binario.
+ *
+ */
 public final class Binario {
 
     //CAMPI
 
+    /**
+     * Taglia massima dei prodotti che il binario può contenere.
+     */
     private final Taglia taglia;
 
+    /**
+     * Capacità massima del binario.
+     */
     private final int maxCapacita;
 
+    /**
+     * Eventuale tipo di prodotto contenuto nel binario .
+     */
     private Prodotto tipoProdotto;
+
+    /**
+     * Numero di prodotti attualmente presenti nel binario.
+     */
     private int numeroProdotti;
 
     //costruttore
+    /**
+     * Costruttore, crea un binario vuoto di taglia {@code taglia} e capacità massima {@code maxCapacita}.
+     *
+     * AF:
+     * <ul>
+     *   <li>l'istanza rappresenta un binario di taglia {@code taglia} e capacità {@code maxCapacita}</li>
+     *   <li>se {@code numeroProdotti == 0} allora il binario è vuoto, altrimenti contiene {@code numeroProdotti}
+     *       copie del prodotto {@code tipoProdotto}.</li>
+     * </ul>
+     *
+     * RI:
+     * <ul>
+     *   <li>{@code taglia} non è nulla</li>
+     *   <li>{@code maxCapacita > 0}</li>
+     *   <li>{@code 0 <= numeroProdotti <= maxCapacita}</li>
+     *   <li>{@code numeroProdotti == 0} se {@code tipoProdotto} non è impostato</li>
+     * </ul>
+     *
+     * @param taglia, taglia massima del binario.
+     * @param maxCapacita, capacità massima del binario, deve essere positiva.
+     * @throws NullPointerException se {@code taglia} è null.
+     * @throws IllegalArgumentException se {@code maxCapacita <= 0}.
+     */
     public Binario(Taglia taglia, int maxCapacita) {
 
         Objects.requireNonNull(taglia, "taglia non può essere null");
@@ -39,7 +102,20 @@ public final class Binario {
     // insomma serve per distributore in modo che quando aggiungi il binario poi il binario che hai aggiunto non continua
     // ad essere modificato anche in seguito
     //costruttore di copia (deep copy dello stato del binario), devo approfondire il signficato di questo, forse solo package PRIVATE
-    public Binario(Binario altro) {
+
+    /**
+     * Costruttore di copia, costruisce un nuovo binario copiando lo stato di {@code altro}.
+     *
+     * La copia duplica taglia, capacità, tipo di prodotto e numero di prodotti.
+     *
+     * Serve per ottenere un binario indipendente in modo che lo stato copiato non viene modificato da operazioni
+     * eseguite sull'istanza originale.
+     *
+     * @param altro, binario da copiare.
+     * @throws NullPointerException se {@code altro} è null.
+     * @throws IllegalStateException se lo stato di {@code altro} non rispetta i vincoli interni.
+     */
+    Binario(Binario altro) {
         Objects.requireNonNull(altro, "binario non può essere null");
         this.taglia = altro.taglia;
         this.maxCapacita = altro.maxCapacita;
@@ -60,31 +136,63 @@ public final class Binario {
         this.numeroProdotti = altro.numeroProdotti;
     }
 
-    //getter forse da togliere, sicuro da mettere package private
-    public Taglia getTaglia() {
+    /**
+     * Restituisce la taglia del binario.
+     *
+     * @return la taglia del binario.
+     */
+    Taglia getTaglia() {
         return taglia;
     }
 
-    public int getSpazioRimanente() {
+    /**
+     * Restituisce lo spazio ancora disponibile nel binario.
+     *
+     * @return il numero di prodotti ancora caricabili.
+     */
+    int getSpazioRimanente() {
         return maxCapacita - numeroProdotti;
     }
 
-    //vedere se è vuoto
+    /**
+     * Indica se il binario è vuoto.
+     *
+     * @return {@code true} se non contiene prodotti, {@code false} altrimenti.
+     */
     public boolean eVuoto() {
 
         return numeroProdotti == 0;
 
     }
 
-    // ti da il tipo prodotto OPTIONAL
-    public Optional<Prodotto> getTipoProdotto() {
-        if (tipoProdotto == null) {
-            return Optional.empty();
-        }
-        return Optional.of(tipoProdotto);
+    /**
+     * Restituisce il tipo di prodotto contenuto nel binario.
+     *
+     * @return il prodotto contenuto, oppure un valore non definito se il binario è vuoto.
+     */
+    Prodotto getTipoProdotto() {
+        return tipoProdotto;
     }
 
-    // carica un prodotto sul binario, OBBLIGATO AD AVERE QUELLE ECCEZIONI PER VIA CLIENT
+    /**
+     * Carica {@code quantita} prodotti di tipo {@code prodotto} nel binario.
+     *
+     * Il caricamento fallisce se:
+     * <ul>
+     *   <li>la taglia del prodotto è maggiore della taglia del binario</li>
+     *   <li>il binario è vuoto ma {@code quantita} supera la capacità massima</li>
+     *   <li>il binario non è vuoto e il prodotto è diverso da quello già presente</li>
+     *   <li>il numero totale di prodotti supera la capacità massima</li>
+     * </ul>
+     *
+     * @param prodotto prodotto da caricare.
+     * @param quantita numero di prodotti da caricare, deve essere positivo.
+     * @throws NullPointerException se {@code prodotto} è nullo.
+     * @throws IllegalArgumentException se {@code quantita <= 0}.
+     * @throws TagliaNonCompatibileException se la taglia di {@code prodotto} eccede la taglia del binario.
+     * @throws CapacitaSuperataException se il caricamento supera {@code maxCapacita}.
+     * @throws ProdottoDiversoException se il binario non è vuoto e {@code prodotto} è diverso dal tipo presente.
+     */
     public void carica(Prodotto prodotto, int quantita)
             throws TagliaNonCompatibileException, CapacitaSuperataException, ProdottoDiversoException {
 
@@ -119,7 +227,15 @@ public final class Binario {
         return;
     }
 
-    // Restituisce  Prodotto solleva eccezione personalizzata IO FAREI PUBLIC perchè è un comportamento
+    /**
+     * Dispensa un prodotto dal binario.
+     *
+     * Se il binario contiene almeno un prodotto, sottrae una unità a {@code numeroProdotti}
+     * e restituisce il prodotto dispensato.
+     *
+     * @return il prodotto dispensato.
+     * @throws BinarioVuotoException se il binario è vuoto.
+     */
     public Prodotto dispensa() throws BinarioVuotoException {
         if (eVuoto()) {
 
@@ -136,6 +252,14 @@ public final class Binario {
         return prodottoErogato;
     }
 
+    /**
+     * Restituisce una rappresentazione testuale del binario.
+     *
+     * Il formato è {@code <prodotto, taglia, numeroProdotti, maxCapacita>}
+     * dove {@code prodotto} è il tipo di prodotto contenuto oppure {@code -} se il binario è vuoto.
+     *
+     * @return la rappresentazione testuale del binario.
+     */
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

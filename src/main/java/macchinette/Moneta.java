@@ -14,12 +14,24 @@ import java.util.Optional;
  *   <li>possiede un ordinamento naturale dato dal valore</li>
  * </ul>
  *
- * Le operazioni implementate sono:
+ * Operazioni implementate :
  * <ul>
  *   <li>restituire il valore della moneta</li>
  *   <li>determinare la moneta il cui valore corrisponde ad una stringa fornita</li>
  * </ul>
  * 
+ * 
+ *  AF:
+ * <ul>
+ * <li>ogni costante rappresenta la moneta con valore {@code valore}.</li>
+ * </ul>
+ *
+ * RI:
+ * <ul>
+ * <li>{@code valore} != null</li>
+ * <li>{@code valore} rappresenta un importo non negativo</li>
+ * <li>{@code valore} è uno dei tipi di moneta definiti</li>
+ * </ul>
  * 
  */
 public enum Moneta {
@@ -59,19 +71,9 @@ public enum Moneta {
     //costruttore privato . ad esempio c01(1)--> moneta.valore = 1
 
     /**
-        * Costruttore dell’enum , costruisce una moneta assegnandole il valore indicato in centesimi
-        *
-        * AF:
-        * <ul>
-        * <li>ogni costante rappresenta la moneta con valore {@code valore}.</li>
-        * </ul>
-        *
-        * RI:
-        * <ul>
-        * <li>{@code valore} != null</li>
-        * <li>{@code valore} rappresenta un importo non negativo</li>
-        * <li>{@code valore} è uno dei tipi di moneta definiti</li>
-        * </ul>
+     * Costruttore dell’enum , costruisce una moneta assegnandole il valore indicato in centesimi
+     *
+     * 
      *
      * @param centesimi valore della moneta in centesimi; deve essere non negativo.
      * @throws IllegalArgumentException se centesimi minore di 0.

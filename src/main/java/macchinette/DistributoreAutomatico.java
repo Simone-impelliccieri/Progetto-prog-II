@@ -78,11 +78,10 @@ public final class DistributoreAutomatico {
                 continue;
             }
 
-            Optional<Prodotto> prodottoOpzionale = binario.getTipoProdotto();
-            if (prodottoOpzionale.isEmpty()) {
+            Prodotto prodotto = binario.getTipoProdotto();
+            if (prodotto == null) {
                 throw new IllegalStateException("Binario non correttamente inizializzato");
             }
-            Prodotto prodotto = prodottoOpzionale.get();
 
             righe.add("? " + indice + " | " + prodotto.getNome() + " | " + prodotto.getPrezzo());
         }
@@ -117,8 +116,8 @@ public final class DistributoreAutomatico {
                 compatibile = true;
 
             } else {
-                Optional<Prodotto> prodottoPresenteOpzionale = binario.getTipoProdotto();
-                if (prodottoPresenteOpzionale.isPresent() && prodottoPresenteOpzionale.get().equals(prodotto)) {
+                Prodotto prodottoPresente = binario.getTipoProdotto();
+                if (prodottoPresente != null && prodottoPresente.equals(prodotto)) {
                     compatibile = true;
                 } else {
                     compatibile = false;
@@ -169,11 +168,10 @@ public final class DistributoreAutomatico {
             throw new BinarioVuotoException();
         }
 
-        Optional<Prodotto> prodottoOpzionale = binario.getTipoProdotto();
-        if (prodottoOpzionale.isEmpty()) {
+        Prodotto prodotto = binario.getTipoProdotto();
+        if (prodotto == null) {
             throw new IllegalStateException("Binario non correttamente inizializzato");
         }
-        Prodotto prodotto = prodottoOpzionale.get();
         Importo prezzo = prodotto.getPrezzo();
         Importo valorePagamento = pagamento.getValoreTotale();
 

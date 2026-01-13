@@ -4,14 +4,23 @@ import java.util.Objects;
 
 //liksov approved
 
+//forse togliere operazioni implementate
+
 /**
  * Un Prodotto è un'entità immutabile che rappresenta un bene venduto da un distributore.
  *
+ * 
  * Ogni Prodotto è caratterizzato da:
  * <ul>
- *   <li>un nome </li>
- *   <li>un prezzo (un importo non negativo),</li>
- *   <li>una taglia (S, M o L).</li>
+ *   <li>un nome {@code nome}</li>
+ *   <li>un prezzo (un importo non negativo){@code prezzo}</li>
+ *   <li>una taglia (S, M o L) {@code taglia}</li>
+ * </ul>
+ * 
+ * 
+ * Operazioni implementate:
+ * <ul>
+ *   <li>costruzione di un prodotto a partire da una descrizione testuale</li>
  * </ul>
  *
  * L'ordinamento naturale dei prodotti è dato dall'ordine della tripla: taglia, nome e prezzo.

@@ -16,7 +16,7 @@ import macchinette.eccezioni.TagliaNonCompatibileException;
  * 
  *
  *
- * Ogni binario è caratterizzato da:
+ * Ogni Binario è caratterizzato da:
  * <ul>
  *   <li>una taglia massima {@code taglia}</li>
  *   <li>una capacità massima {@code maxCapacita} (intero positivo)</li>
@@ -136,6 +136,7 @@ public final class Binario {
         this.numeroProdotti = altro.numeroProdotti;
     }
 
+    //getter forse da togliere, sicuro da mettere package private
     /**
      * Restituisce la taglia del binario.
      *
@@ -154,6 +155,7 @@ public final class Binario {
         return maxCapacita - numeroProdotti;
     }
 
+    //vedere se è vuoto
     /**
      * Indica se il binario è vuoto.
      *
@@ -168,26 +170,27 @@ public final class Binario {
     /**
      * Restituisce il tipo di prodotto contenuto nel binario.
      *
-     * @return il prodotto contenuto, oppure un valore non definito se il binario è vuoto.
+     * @return il prodotto contenuto, oppure null se il binario è vuoto.
      */
     Prodotto getTipoProdotto() {
         return tipoProdotto;
     }
 
+    // carica un prodotto sul binario, OBBLIGATO AD AVERE QUELLE ECCEZIONI PER VIA CLIENT
     /**
      * Carica {@code quantita} prodotti di tipo {@code prodotto} nel binario.
      *
      * Il caricamento fallisce se:
      * <ul>
      *   <li>la taglia del prodotto è maggiore della taglia del binario</li>
-     *   <li>il binario è vuoto ma {@code quantita} supera la capacità massima</li>
-     *   <li>il binario non è vuoto e il prodotto è diverso da quello già presente</li>
+     *   <li>il binario è vuoto ma {@code quantita} è superiore della capacità massima</li>
+     *   <li>il binario non è vuoto e il prodotto è diverso da quello già nel binario</li>
      *   <li>il numero totale di prodotti supera la capacità massima</li>
      * </ul>
      *
-     * @param prodotto prodotto da caricare.
-     * @param quantita numero di prodotti da caricare, deve essere positivo.
-     * @throws NullPointerException se {@code prodotto} è nullo.
+     * @param prodotto, prodotto da caricare.
+     * @param quantita, numero di prodotti da caricare, deve essere positivo.
+     * @throws NullPointerException se {@code prodotto} è null.
      * @throws IllegalArgumentException se {@code quantita <= 0}.
      * @throws TagliaNonCompatibileException se la taglia di {@code prodotto} eccede la taglia del binario.
      * @throws CapacitaSuperataException se il caricamento supera {@code maxCapacita}.
@@ -227,11 +230,12 @@ public final class Binario {
         return;
     }
 
+    // Restituisce  Prodotto solleva eccezione personalizzata IO FAREI PUBLIC perchè è un comportamento
     /**
      * Dispensa un prodotto dal binario.
      *
-     * Se il binario contiene almeno un prodotto, sottrae una unità a {@code numeroProdotti}
-     * e restituisce il prodotto dispensato.
+     * Se il binario contiene almeno un prodotto, sottrae un unità a {@code numeroProdotti}
+     * e restituisce il prodotto.
      *
      * @return il prodotto dispensato.
      * @throws BinarioVuotoException se il binario è vuoto.
@@ -252,14 +256,6 @@ public final class Binario {
         return prodottoErogato;
     }
 
-    /**
-     * Restituisce una rappresentazione testuale del binario.
-     *
-     * Il formato è {@code <prodotto, taglia, numeroProdotti, maxCapacita>}
-     * dove {@code prodotto} è il tipo di prodotto contenuto oppure {@code -} se il binario è vuoto.
-     *
-     * @return la rappresentazione testuale del binario.
-     */
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

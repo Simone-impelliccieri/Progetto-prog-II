@@ -36,8 +36,6 @@ public final class Aggregato {
     private final Map<Moneta, Integer> contenuto;
 
     /**
-     * Costruttore, inizializza l'aggregato vuoto.
-     *
      * AF:
      * <ul>
      *   <li>La mappa {@code contentuto} associa a ogni {@code Moneta} la sua quantità nell'aggregato,</li>
@@ -50,6 +48,13 @@ public final class Aggregato {
      *   <li>nessuna chiave è null in {@code contenuto}</li>
      *   <li>tutte le quantità sono interi positivi.</li>
      * </ul>
+     */
+    
+    /**
+     * 
+     * 
+     * Costruttore, inizializza l'aggregato vuoto.
+     * 
      */
     public Aggregato() {
         this.contenuto = new EnumMap<>(Moneta.class);

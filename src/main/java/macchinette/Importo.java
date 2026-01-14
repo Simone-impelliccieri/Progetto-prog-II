@@ -45,8 +45,6 @@ public final class Importo implements Comparable<Importo> {
     }
 
     /**
-     * Costruttore, crea un'istanza di Importo a partire da unita e centesimi.
-     *
      * AF:
      * <ul>
      *   <li>l'istanza costruita rappresenta l'importo di valore {@code unita} unità e {@code centesimi} centesimi</li>
@@ -57,6 +55,10 @@ public final class Importo implements Comparable<Importo> {
      *   <li> totaleCentesimi >= 0,</li>
      *   <li>{@code centesimi} compreso tra 0 e 99 (estremi inclusi)</li>
      * </ul>
+     */
+    
+    /**
+     * Costruttore, crea un'istanza di Importo a partire da unita e centesimi.
      *
      * @param unita, deve essere non negativa.
      * @param centesimi, deve essere compresa tra 0 e 99.

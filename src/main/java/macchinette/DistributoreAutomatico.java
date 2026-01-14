@@ -8,7 +8,6 @@ import java.util.Objects;
 
 import macchinette.eccezioni.*;
 
-
 /**
  * Un Distributore automatico rappresenta un sistema di vendita automatizzato a moneta.
 
@@ -35,8 +34,6 @@ import macchinette.eccezioni.*;
  */
 public final class DistributoreAutomatico {
 
-    
-
     /**
      * Lista dei binari del distributore.
      */
@@ -53,11 +50,6 @@ public final class DistributoreAutomatico {
     private Aggregato fondoCassa;
 
     /**
-     * Costruttore, crea un distributore automatico con i binari, il fondo cassa
-     * e la strategia per il resto specificati.
-     *
-     * I binari e il fondocassa vengono copiati per garantire l'indipendenza dallo stato esterno.
-     * 
      * AF:
      * <ul>
      *   <li>l'istanza rappresenta un distributore con {@code binari.size()} binari numerati da 0</li>
@@ -71,6 +63,14 @@ public final class DistributoreAutomatico {
      *   <li>{@code fondoCassa} non è nullo</li>
      *   <li>{@code strategiaResto} non è nulla</li>
      * </ul>
+    */
+   
+    /**
+     * Costruttore, crea un distributore automatico con i binari, il fondo cassa
+     * e la strategia per il resto specificati.
+     *
+     * I binari e il fondocassa vengono copiati per garantire l'indipendenza dallo stato esterno.
+     * 
      *
      * @param binari, lista dei binari del distributore, non nulla e senza elementi nulli.
      * @param fondoCassa,  aggregato iniziale del fondo cassa, non nullo.
@@ -89,7 +89,7 @@ public final class DistributoreAutomatico {
         List<Binario> copiaBinari = new ArrayList<>(binari.size());
         for (Binario binario : binari) {
             Objects.requireNonNull(binario, "binario non può essere null");
-            copiaBinari.add(new Binario(binario)); 
+            copiaBinari.add(new Binario(binario));
         }
         this.binari = Collections.unmodifiableList(copiaBinari);
         this.fondoCassa = copiaAggregato(fondoCassa);

@@ -17,7 +17,7 @@
  *
  * Ho utilizzato l'autocomplete di co-pilot per assistermi nella scrittura di
  * alcuni metodi e della documentazione Javadoc. 
- * Ho utilizzato chatgpt per il chiarimento di concetti e qualche debug.
+ * Ho utilizzato chatgpt per il chiarimento di concetti e qualche correzione nei client.
  *  
  */
 package macchinette;

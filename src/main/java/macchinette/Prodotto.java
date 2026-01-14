@@ -41,8 +41,6 @@ public final class Prodotto implements Comparable<Prodotto> {
     private final Taglia taglia;
 
     /**
-     * Costruttore, crea un prodotto a partire da importo taglia e nome.
-     *
      * AF:
      * <ul>
      *   <li>l'istanza costruita rappresenta il prodotto di nome {@code nome}, prezzo {@code importo} e taglia {@code taglia}.</li>
@@ -54,6 +52,11 @@ public final class Prodotto implements Comparable<Prodotto> {
      *   <li>{@code importo} non è nullo</li>
      *   <li>{@code taglia} non è nulla</li>
      * </ul>
+     * 
+     */
+
+    /**
+     * Costruttore, crea un prodotto a partire da importo taglia e nome.
      *
      * @param nome, nome del prodotto; non nullo e non vuoto (eventuali spazi iniziali e finali vengono rimossi).
      * @param importo, prezzo del prodotto, non nullo.
@@ -158,7 +161,6 @@ public final class Prodotto implements Comparable<Prodotto> {
         return this.prezzo.compareTo(altro.prezzo);
     }
 
-
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -173,7 +175,6 @@ public final class Prodotto implements Comparable<Prodotto> {
         return false;
 
     }
-
 
     @Override
     public int hashCode() {

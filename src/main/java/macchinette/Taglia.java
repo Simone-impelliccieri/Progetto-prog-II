@@ -42,10 +42,11 @@ public enum Taglia {
     * <ul>
     *   <li>lo stato di una {@code Taglia} è determinato dalla costante enum</li>
     * </ul>
+    * 
+    */
+   
+    /**
     *
-    * 
-    * 
-    * 
     * 
     * Restituisce la taglia corrispondente alla stringa in ingresso.
     *

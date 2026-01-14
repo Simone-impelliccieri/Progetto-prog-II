@@ -45,7 +45,7 @@ public enum Moneta {
 
     /**
      * 
-     *  AF:
+     * AF:
      * <ul>
      * <li>ogni costante rappresenta la moneta con valore {@code valore}.</li>
      * </ul>
@@ -57,11 +57,12 @@ public enum Moneta {
      * <li>{@code valore} rappresenta un importo non negativo</li>
      * <li>{@code valore} è uno dei tipi di moneta definiti</li>
      * </ul>
-     * 
+     */
+    
+    /**
      * 
      * 
      * Costruttore dell’enum , costruisce una moneta assegnandole il valore indicato in centesimi
-     *
      *
      * @param centesimi, valore della moneta in centesimi; deve essere non negativo.
      * @throws IllegalArgumentException se centesimi minore di 0.

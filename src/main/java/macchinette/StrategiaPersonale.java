@@ -41,11 +41,9 @@ public final class StrategiaPersonale implements StrategiaResto {
             throw new ValoreInsufficienteException();
         }
 
-        // Strategia: prova a non consumare monete "rare" (1c e 2c) se non necessario.
         try {
             return strategiaMassimo(restoDaDare, disponibilita, true);
         } catch (ComposizioneInsufficienteException e) {
-            // fallback: se è impossibile senza 1c/2c, allora le permetto.
             return strategiaMassimo(restoDaDare, disponibilita, false);
         }
     }

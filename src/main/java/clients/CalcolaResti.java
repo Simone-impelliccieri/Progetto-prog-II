@@ -17,7 +17,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this file.  If not, see <https://www.gnu.org/licenses/>..
 */
-
 package clients;
 
 import macchinette.Aggregato;
@@ -34,80 +33,48 @@ public class CalcolaResti {
 
     public static void main(String[] args) {
 
+        if (args == null || args.length < 2 || args[0].length() != 1) {
+            return;
+        }
+
+        StrategiaResto strategia;
+        if (args[0].equals("H")) {
+            strategia = new StrategiaMassimo();
+        } else if (args[0].equals("L")) {
+            strategia = new StrategiaMinimo();
+        } else {
+            return;
+        }
+
+        Importo restoDaDare;
+        try {
+            restoDaDare = Importo.daStringa(args[1]);
+        } catch (IllegalArgumentException e) {
+            return;
+        }
+
         try (Scanner scanner = new Scanner(System.in)) {
-
-            if (args == null || args.length < 2) {
-                return;
-            }
-
-            if (args[0] == null) {
-                return;
-            }
-
-            String lettera = args[0].trim();
-
-            if (lettera.length() != 1) {
-                return;
-            }
-
-            char tipo = lettera.charAt(0);
-            StrategiaResto strategia;
-
-            if (tipo == 'H') {
-                strategia = new StrategiaMassimo();
-            } else if (tipo == 'L') {
-                strategia = new StrategiaMinimo();
-            } else {
-                return;
-            }
-
-            Importo restoDaDare;
-            try {
-                restoDaDare = Importo.daStringa(args[1]);
-            } catch (IllegalArgumentException e) {
-                return;
-            }
-
             while (scanner.hasNextLine()) {
-                String riga = scanner.nextLine();
-                if (riga == null) {
-                    continue;
-                }
-                String rigaPulita = riga.trim();
+                String rigaPulita = scanner.nextLine().trim();
                 if (rigaPulita.isEmpty()) {
                     continue;
                 }
 
-                Aggregato disponibilita;
                 try {
-                    disponibilita = Aggregato.daStringa(rigaPulita);
+                    Aggregato disponibilita = Aggregato.daStringa(rigaPulita);
+
+                    System.out.println(strategia.calcolaResto(restoDaDare, disponibilita));
+
                 } catch (IllegalArgumentException e) {
-                    disponibilita = null;
-                }
-                if (disponibilita == null) {
                     System.out.println("invalid");
-                    continue;
-                }
-
-                if (disponibilita.getValoreTotale().compareTo(restoDaDare) < 0) {
-                    System.out.println("value");
-                    continue;
-                }
-
-                try {
-                    Aggregato resto = strategia.calcolaResto(restoDaDare, disponibilita);
-                    System.out.println(resto);
                 } catch (ValoreInsufficienteException e) {
                     System.out.println("value");
                 } catch (ComposizioneInsufficienteException e) {
                     System.out.println("change");
                 }
             }
-
         } catch (Exception e) {
             System.err.println("Errore: " + e.getMessage());
-
         }
     }
-
 }

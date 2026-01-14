@@ -43,7 +43,6 @@ public final class StrategiaMassimo implements StrategiaResto {
 		Importo restoRimanente = restoDaDare;
 		Aggregato risultato = new Aggregato();
 
-		//cicla al contrario sui valori moneta
 		Moneta[] monete = Moneta.values();
 		for (int indice = monete.length - 1; indice >= 0; indice--) {
 			if (restoRimanente.compareTo(zero) == 0) {

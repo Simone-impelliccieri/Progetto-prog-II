@@ -10,8 +10,6 @@ import java.util.regex.Pattern;
 import macchinette.eccezioni.ComposizioneInsufficienteException;
 import macchinette.eccezioni.ValoreInsufficienteException;
 
-//liskov approved
-
 /**
  * Un Aggregato è un multi-insieme di monete.
  * È utile per descrivere pagamenti, resti e fondo cassa del distributore.
@@ -32,20 +30,17 @@ import macchinette.eccezioni.ValoreInsufficienteException;
  */
 public final class Aggregato {
 
-    //L'aggregato è rappresentato come mappa moneta-intero. è final in modo che il riferimento alla mappa 
-    // non può essere modificato
     /**
      * Campo interno dell'aggregato, composto da una mappa tipo di moneta-quantità posseduta
      */
     private final Map<Moneta, Integer> contenuto;
 
-    //costruttore che inizializza la struttura interna
     /**
      * Costruttore, inizializza l'aggregato vuoto.
      *
      * AF:
      * <ul>
-    *   <li>La mappa {@code contentuto} associa a ogni {@code Moneta} la sua quantità nell'aggregato,</li>
+     *   <li>La mappa {@code contentuto} associa a ogni {@code Moneta} la sua quantità nell'aggregato,</li>
      *   <li>una moneta non presente in {@code contenuto} ha quantità 0.</li>
      * </ul>
      *
@@ -57,15 +52,14 @@ public final class Aggregato {
      * </ul>
      */
     public Aggregato() {
-        this.contenuto = new EnumMap<>(Moneta.class); //dice che monete possono essere solo di tipo moneta
+        this.contenuto = new EnumMap<>(Moneta.class);
     }
 
-    // aggiunge all'aggregato una moneta quantità volte
     /**
      * Aggiunge {@code quantita} monete del tipo {@code m} all'aggregato.
      *
-    * @param m, la moneta da aggiungere, non null.
-    * @param quantita, numero di monete da aggiungere, deve essere positivo.
+     * @param m, la moneta da aggiungere, non null.
+     * @param quantita, numero di monete da aggiungere, deve essere positivo.
      * @throws NullPointerException se {@code m} è null.
      * @throws IllegalArgumentException se {@code quantita} è minore o uguale a 0.
      */
@@ -84,13 +78,12 @@ public final class Aggregato {
         }
     }
 
-    // aggiungi all'aggregato un'altro aggregato(scorrendo tutti i suoi contenuti)
     /**
      * Aggiunge all'aggregato  tutte le monete contenute in {@code altro}.
      *
      * Se {@code altro} è null, l'operazione non ha effetto.
      *
-    * @param altro, aggregato da aggiungere può essere null.
+     * @param altro, aggregato da aggiungere può essere null.
      */
     public void aggiungi(Aggregato altro) {
         if (altro != null) {
@@ -105,7 +98,6 @@ public final class Aggregato {
         }
     }
 
-    //rimuove un aggregato (eccezioni esterne, 2)
     /**
      * Rimuove dall'aggregato tutte le monete contenute nell'Aggregato {@code daRimuovere}.
      *
@@ -115,7 +107,7 @@ public final class Aggregato {
      *   <li>il valore totale è sufficiente ma non ci sono abbastanza monete di quello specifico tipo ({@code ComposizioneInsufficienteException})</li>
      * </ul>
      *
-    * @param daRimuovere, aggregato da rimuovere, non null.
+     * @param daRimuovere, aggregato da rimuovere, non null.
      * @throws NullPointerException se {@code daRimuovere} è null
      * @throws ValoreInsufficienteException se il valore totale da rimuovere supera il valore totale.
      * @throws ComposizioneInsufficienteException se la composizione non consente la rimozione delle monete.
@@ -123,18 +115,16 @@ public final class Aggregato {
     public void rimuovi(Aggregato daRimuovere) throws ValoreInsufficienteException, ComposizioneInsufficienteException {
         Objects.requireNonNull(daRimuovere, "Aggregato null");
 
-        // 1. Check Valore posseduto > togliere 
         if (this.getValoreTotale().compareTo(daRimuovere.getValoreTotale()) < 0) {
             throw new ValoreInsufficienteException();
         }
-        // 2. Verifica  che ogni specifico taglio di moneta da rimuovere sia fisicamente sufficiente, 
+
         for (Map.Entry<Moneta, Integer> e : daRimuovere.contenuto.entrySet()) {
             if (this.getQuantitaMoneta(e.getKey()) < e.getValue()) {
                 throw new ComposizioneInsufficienteException();
             }
         }
 
-        // 3. esegui
         for (Map.Entry<Moneta, Integer> entry : daRimuovere.contenuto.entrySet()) {
 
             Moneta moneta = entry.getKey();
@@ -152,7 +142,6 @@ public final class Aggregato {
         }
     }
 
-    // getter valore totale serve in distributore e client
     /**
      * Restituisce il valore totale dell'aggregato.
      *
@@ -166,12 +155,11 @@ public final class Aggregato {
         return tot;
     }
 
-    // getter quantità per moneta serve in strategia
     /**
      * Restituisce la quantità di un tipo specifico di moneta {@code m}.
      * 
      *
-    * @param m, la moneta di cui si vuole conoscere la quantità
+     * @param m, la moneta di cui si vuole conoscere la quantità
      * @return la quantità (0 se {@code m} non è presente nell'aggregato).
      */
     int getQuantitaMoneta(Moneta m) {
@@ -184,14 +172,13 @@ public final class Aggregato {
 
     }
 
-    // per fare da stringa a aggregato. metodo factory statico
     /**
      * Metodo factory statico, legge una stringa e restituisce l'istanza di aggregato corrispondente
      *
      *
      * Se {@code descrizione} è null o vuota viene restituito l'aggregato vuoto.
      *
-    * @param descrizione, descrizione testuale dell'aggregato.
+     * @param descrizione, descrizione testuale dell'aggregato.
      * @return l'aggregato.
      * @throws IllegalArgumentException se il formato non è valido o se una moneta non è riconosciuta.
      */
@@ -201,7 +188,6 @@ public final class Aggregato {
             return agg;
         }
 
-        // espressione regolare (10 x .20 --> 10 monete da 20c) per client(forse è meglio spostarla(?))
         Pattern espressione = Pattern.compile("\\s*(\\d+)\\s*x\\s*(.+)\\s*");
 
         for (String pezzo : descrizione.split(",")) {
@@ -229,7 +215,6 @@ public final class Aggregato {
         return agg;
     }
 
-    //toString
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -255,12 +240,5 @@ public final class Aggregato {
 
         return sb.toString();
     }
-
-    // NOTA (per il prof): Aggregato è MUTABILE (aggiungi/rimuovi cambiano lo stato).
-    // Seguendo Liskov, per oggetti mutabili l'uguaglianza "per contenuto" è pericolosa:
-    // due istanze potrebbero essere uguali in un momento e diverse dopo una mutazione.
-    // Inoltre equals/hashCode basati sul contenuto rendono l'oggetto insicuro in HashSet/HashMap
-    // (dopo una modifica, l'hash cambia e l'elemento può diventare "irraggiungibile").
-    // Per questo Aggregato NON ridefinisce equals/hashCode e usa l'uguaglianza per identità (==).
 
 }

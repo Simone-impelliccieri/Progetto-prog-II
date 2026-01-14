@@ -8,7 +8,6 @@ import java.util.Objects;
 
 import macchinette.eccezioni.*;
 
-// liskov approved
 
 /**
  * Un Distributore automatico rappresenta un sistema di vendita automatizzato a moneta.
@@ -36,10 +35,8 @@ import macchinette.eccezioni.*;
  */
 public final class DistributoreAutomatico {
 
-    // NOTA: classe mutabile e NON thread-safe. Se usata in multithread serve sincronizzazione esterna,
-    // perché `fondoCassa` e i `Binario` interni possono cambiare durante le operazioni.
+    
 
-    //campi
     /**
      * Lista dei binari del distributore.
      */
@@ -50,18 +47,16 @@ public final class DistributoreAutomatico {
      */
     private final StrategiaResto strategiaResto;
 
-    // non è final per poter fare il copiaaggregato
     /**
      * Fondo cassa del distributore.
      */
     private Aggregato fondoCassa;
 
-    //costruttore MAGARI RIVEDERE QUESTO
     /**
      * Costruttore, crea un distributore automatico con i binari, il fondo cassa
      * e la strategia per il resto specificati.
      *
-     * I binari e il fondocassa vengono copiati in per garantire l'indipendenza dallo stato esterno
+     * I binari e il fondocassa vengono copiati per garantire l'indipendenza dallo stato esterno.
      * 
      * AF:
      * <ul>
@@ -94,13 +89,12 @@ public final class DistributoreAutomatico {
         List<Binario> copiaBinari = new ArrayList<>(binari.size());
         for (Binario binario : binari) {
             Objects.requireNonNull(binario, "binario non può essere null");
-            copiaBinari.add(new Binario(binario)); // il binario viene copiato QUA con DEEP copy
+            copiaBinari.add(new Binario(binario)); 
         }
         this.binari = Collections.unmodifiableList(copiaBinari);
         this.fondoCassa = copiaAggregato(fondoCassa);
     }
 
-    //serve per specifiche quindi immagino debba rimanere public
     /**
      * Restituisce il valore totale del fondo cassa.
      *
@@ -110,7 +104,6 @@ public final class DistributoreAutomatico {
         return fondoCassa.getValoreTotale();
     }
 
-    //sostanzialmente toglie tutti i soldi dalla macchinetta e li mette nel Aggregato restituito. serve per specifiche
     /**
      * Svuota integralmente il fondo cassa e restituisce le monete rimosse.
      *
@@ -124,7 +117,6 @@ public final class DistributoreAutomatico {
         return svuotato;
     }
 
-    //serve a garantire il Disaccoppiamento tra lo stato interno del distributore e il mondo esterno.
     /**
      * Crea una copia indipendente di un aggregato.
      *
@@ -141,7 +133,6 @@ public final class DistributoreAutomatico {
         return copia;
     }
 
-    // questo serve per specifiche quindi immagino public
     /**
      * Aggiunge le monete di un aggregato al fondo cassa.
      *
@@ -153,7 +144,6 @@ public final class DistributoreAutomatico {
         this.fondoCassa.aggiungi(daAggiungere);
     }
 
-    //serve per specifiche e client: fa una copia e restituisce un iteratore per evitare di esporre direttamente una lista
     /**
      * Restituisce un iteratore sulle descrizioni dei prodotti disponibili.
      *
@@ -184,9 +174,6 @@ public final class DistributoreAutomatico {
         return Collections.unmodifiableList(righe).iterator();
     }
 
-    //metodo per caricare prodotti,
-    // deve indicare il numero di prodotti che non sono stati caricati per mancanza di spazio
-    //  E LO FA, è l'int restituito
     /**
      * Carica una quantità di prodotti nel distributore.
      *
@@ -198,7 +185,6 @@ public final class DistributoreAutomatico {
      * @return il numero di prodotti non caricati per mancanza di spazio.
      * @throws NullPointerException se {@code prodotto} è nullo.
      * @throws IllegalArgumentException se {@code quantita <= 0}.
-     * @throws IllegalStateException se il caricamento fallisce .
      */
     public int carica(Prodotto prodotto, int quantita) {
         Objects.requireNonNull(prodotto, "prodotto non può essere null");
@@ -247,7 +233,7 @@ public final class DistributoreAutomatico {
                 binario.carica(prodotto, daCaricare);
                 quantitaRimanente -= daCaricare;
             } catch (TagliaNonCompatibileException | ProdottoDiversoException | CapacitaSuperataException e) {
-                throw new IllegalStateException("Caricamento fallito");
+                continue;
             }
         }
 

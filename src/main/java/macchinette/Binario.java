@@ -7,13 +7,11 @@ import macchinette.eccezioni.CapacitaSuperataException;
 import macchinette.eccezioni.ProdottoDiversoException;
 import macchinette.eccezioni.TagliaNonCompatibileException;
 
-//più o meno liskov approved
 /**
  * Un Binario rappresenta un contenitore di prodotti all'interno di un distributore automatico.
  * 
  * Un Binario è un'entità mutabile perchè le operazione carica e dispensa modificano lo stato dell'istanza.
  * 
- *
  *
  * Ogni Binario è caratterizzato da:
  * <ul>
@@ -26,7 +24,6 @@ import macchinette.eccezioni.TagliaNonCompatibileException;
  *  Operazioni implementate:
  * <ul>
  *   <li>verificare se un binario è vuoto</li>
- *   <li>restituire il tipo di prodotto contenuto nel binario</li>
  *   <li>caricare un prodotto</li>
  *   <li>dispensare un prodotto</li>
  * </ul>
@@ -37,8 +34,6 @@ import macchinette.eccezioni.TagliaNonCompatibileException;
  *
  */
 public final class Binario {
-
-    //CAMPI
 
     /**
      * Taglia massima dei prodotti che il binario può contenere.
@@ -60,7 +55,6 @@ public final class Binario {
      */
     private int numeroProdotti;
 
-    //costruttore
     /**
      * Costruttore, crea un binario vuoto di taglia {@code taglia} e capacità massima {@code maxCapacita}.
      *
@@ -98,10 +92,6 @@ public final class Binario {
         this.numeroProdotti = 0;
     }
 
-    // insomma serve per distributore in modo che quando aggiungi il binario poi il binario che hai aggiunto non continua
-    // ad essere modificato anche in seguito
-    //costruttore di copia (deep copy dello stato del binario), devo approfondire il signficato di questo, forse solo package PRIVATE
-
     /**
      * Costruttore di copia, costruisce un nuovo binario copiando lo stato di {@code altro}.
      *
@@ -135,7 +125,6 @@ public final class Binario {
         this.numeroProdotti = altro.numeroProdotti;
     }
 
-    //getter forse da togliere, sicuro da mettere package private
     /**
      * Restituisce la taglia del binario.
      *
@@ -154,7 +143,6 @@ public final class Binario {
         return maxCapacita - numeroProdotti;
     }
 
-    //vedere se è vuoto
     /**
      * Indica se il binario è vuoto.
      *
@@ -175,7 +163,6 @@ public final class Binario {
         return tipoProdotto;
     }
 
-    // carica un prodotto sul binario, OBBLIGATO AD AVERE QUELLE ECCEZIONI PER VIA CLIENT
     /**
      * Carica {@code quantita} prodotti di tipo {@code prodotto} nel binario.
      *
@@ -229,7 +216,6 @@ public final class Binario {
         return;
     }
 
-    // Restituisce  Prodotto solleva eccezione personalizzata IO FAREI PUBLIC perchè è un comportamento
     /**
      * Dispensa un prodotto dal binario.
      *

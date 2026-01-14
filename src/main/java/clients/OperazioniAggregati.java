@@ -18,7 +18,6 @@ You should have received a copy of the GNU General Public License
 along with this file.  If not, see <https://www.gnu.org/licenses/>.
 
 */
-
 package clients;
 
 import macchinette.Aggregato;
@@ -37,11 +36,7 @@ public class OperazioniAggregati {
 
             while (sca.hasNextLine()) {
 
-                String riga = sca.nextLine();
-                if (riga == null) {
-                    continue;
-                }
-                String rigaPulita = riga.trim();
+                String rigaPulita = sca.nextLine().trim();
                 if (rigaPulita.isEmpty()) {
                     continue;
                 }
@@ -52,40 +47,29 @@ public class OperazioniAggregati {
                     continue;
                 }
 
-                String descrizione = rigaPulita.substring(1).trim();
-
-                Aggregato operando;
                 try {
-                    operando = Aggregato.daStringa(descrizione);
-                } catch (IllegalArgumentException e) {
-                    operando = null;
-                }
-                if (operando == null) {
-                    System.out.println("invalid");
-                    continue;
-                }
+                    Aggregato operando = Aggregato.daStringa(rigaPulita.substring(1).trim());
 
-                if (segno == '+') {
-                    aggregatoCorrente.aggiungi(operando);
-                    System.out.println(aggregatoCorrente);
-                } else {
-                    try {
-                        aggregatoCorrente.rimuovi(operando);
+                    if (segno == '+') {
+                        aggregatoCorrente.aggiungi(operando);
                         System.out.println(aggregatoCorrente);
-                    } catch (ValoreInsufficienteException e) {
-                        System.out.println("value");
-                    } catch (ComposizioneInsufficienteException e) {
-                        System.out.println("coins");
+                    } else {
+                        try {
+                            aggregatoCorrente.rimuovi(operando);
+                            System.out.println(aggregatoCorrente);
+                        } catch (ValoreInsufficienteException e) {
+                            System.out.println("value");
+                        } catch (ComposizioneInsufficienteException e) {
+                            System.out.println("coins");
+                        }
                     }
+                } catch (IllegalArgumentException e) {
+                    System.out.println("invalid");
                 }
-
             }
 
         } catch (Exception e) {
             System.err.println("Errore: " + e.getMessage());
-
         }
-
     }
-
 }

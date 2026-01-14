@@ -18,26 +18,14 @@ You should have received a copy of the GNU General Public License
 along with this file.  If not, see <https://www.gnu.org/licenses/>.
 
 */
-
 package clients;
 
-import java.util.List;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Scanner;
-
-import macchinette.Aggregato;
-import macchinette.Binario;
-import macchinette.DistributoreAutomatico;
-import macchinette.Prodotto;
-import macchinette.StrategiaMassimo;
-import macchinette.StrategiaMinimo;
-import macchinette.StrategiaResto;
-import macchinette.Taglia;
-import macchinette.eccezioni.BinarioVuotoException;
-import macchinette.eccezioni.PagamentoInsufficienteException;
-import macchinette.eccezioni.RestoNonDisponibileException;
-import macchinette.eccezioni.SlotInesistenteException;
+import macchinette.*;
+import macchinette.eccezioni.*;
 
 public class UsaDistributore {
 
@@ -48,85 +36,62 @@ public class UsaDistributore {
             if (!scanner.hasNextLine()) {
                 return;
             }
-
             String rigaBinari = scanner.nextLine();
             if (rigaBinari == null || rigaBinari.trim().isEmpty()) {
                 return;
             }
 
             List<Binario> binari = new ArrayList<>();
-
-            for (String descrizioneBinario : rigaBinari.split(",")) {
-                if (descrizioneBinario == null) {
-                    continue;
-                }
-                String descrizionePulita = descrizioneBinario.trim();
-                if (descrizionePulita.isEmpty()) {
-                    continue;
-                }
-
-                String[] parti = descrizionePulita.split("\\|", -1);
+            for (String descrizione : rigaBinari.split(",")) {
+                String[] parti = descrizione.trim().split("\\|");
                 if (parti.length != 2) {
                     return;
                 }
-
-                Integer capacita;
                 try {
-                    capacita = Integer.parseInt(parti[0].trim());
-                } catch (NumberFormatException e) {
+                    int capacita = Integer.parseInt(parti[0].trim());
+                    Taglia taglia = Taglia.daStringa(parti[1].trim()).orElse(null);
+                    if (taglia == null) {
+                        return;
+                    }
+                    binari.add(new Binario(taglia, capacita));
+                } catch (Exception e) {
                     return;
                 }
-
-                Taglia taglia = Taglia.daStringa(parti[1].trim()).orElse(null);
-                if (taglia == null) {
-                    return;
-                }
-
-                binari.add(new Binario(taglia, capacita));
             }
 
             if (!scanner.hasNextLine()) {
                 return;
             }
-
-            String rigaFondoCassa = scanner.nextLine();
             Aggregato fondoCassa;
             try {
-                fondoCassa = Aggregato.daStringa(rigaFondoCassa == null ? "" : rigaFondoCassa.trim());
-            } catch (IllegalArgumentException e) {
+                fondoCassa = Aggregato.daStringa(scanner.nextLine().trim());
+            } catch (Exception e) {
                 return;
             }
 
-            if (!scanner.hasNextLine()) {
+            if (!scanner.hasNextLine())
+                return;
+            String rigaStrategia = scanner.nextLine().trim();
+            if (rigaStrategia.length() != 1) {
                 return;
             }
 
-            String rigaStrategia = scanner.nextLine();
-            if (rigaStrategia == null) {
-                return;
-            }
-            String strategiaPulita = rigaStrategia.trim();
-            if (strategiaPulita.length() != 1) {
-                return;
-            }
-
-            char tipoStrategia = strategiaPulita.charAt(0);
             StrategiaResto strategiaResto;
-            if (tipoStrategia == 'H') {
+            char tipo = rigaStrategia.charAt(0);
+            if (tipo == 'H') {
                 strategiaResto = new StrategiaMassimo();
-            } else if (tipoStrategia == 'L') {
+            } else if (tipo == 'L') {
                 strategiaResto = new StrategiaMinimo();
+            } else if (tipo == 'P') {
+                strategiaResto = new StrategiaPersonale();
             } else {
                 return;
             }
+
             DistributoreAutomatico distributore = new DistributoreAutomatico(binari, fondoCassa, strategiaResto);
 
             while (scanner.hasNextLine()) {
-                String riga = scanner.nextLine();
-                if (riga == null) {
-                    continue;
-                }
-                String rigaPulita = riga.trim();
+                String rigaPulita = scanner.nextLine().trim();
                 if (rigaPulita.isEmpty()) {
                     continue;
                 }
@@ -134,12 +99,10 @@ public class UsaDistributore {
                 char comando = rigaPulita.charAt(0);
 
                 if (comando == '?') {
-                    if (rigaPulita.length() != 1) {
-                        continue;
-                    }
-                    Iterator<String> iteratoreStato = distributore.statoProdotti();
-                    while (iteratoreStato.hasNext()) {
-                        System.out.println(iteratoreStato.next());
+                    if (rigaPulita.length() == 1) {
+                        Iterator<String> it = distributore.statoProdotti();
+                        while (it.hasNext())
+                            System.out.println(it.next());
                     }
                     continue;
                 }
@@ -149,66 +112,35 @@ public class UsaDistributore {
                 }
 
                 String argomenti = rigaPulita.substring(1).trim();
-                int indiceVirgola = argomenti.indexOf(',');
-                if (indiceVirgola < 0) {
+                int virgola = argomenti.indexOf(',');
+                if (virgola < 0) {
                     continue;
                 }
 
-                String primo = argomenti.substring(0, indiceVirgola).trim();
-                String secondo = argomenti.substring(indiceVirgola + 1).trim();
+                String primo = argomenti.substring(0, virgola).trim();
+                String secondo = argomenti.substring(virgola + 1).trim();
 
-                if (comando == '+') {
-                    int quantita;
-                    try {
-                        quantita = Integer.parseInt(primo);
-                    } catch (NumberFormatException e) {
-                        continue;
+                try {
+                    if (comando == '+') {
+                        int quantita = Integer.parseInt(primo);
+                        Prodotto prodotto = Prodotto.daStringa(secondo);
+                        System.out.println("+ " + distributore.carica(prodotto, quantita));
+                    } else {
+                        int indice = Integer.parseInt(primo);
+                        Aggregato pagamento = Aggregato.daStringa(secondo);
+                        System.out.println("- " + distributore.eroga(indice, pagamento));
                     }
-
-                    Prodotto prodotto;
-                    try {
-                        prodotto = Prodotto.daStringa(secondo);
-                    } catch (IllegalArgumentException e) {
-                        continue;
-                    }
-
-                    try {
-                        int avanzati = distributore.carica(prodotto, quantita);
-                        System.out.println("+ " + avanzati);
-                    } catch (IllegalArgumentException e) {
-                        continue;
-                    }
-
-                } else {
-                    int indice;
-                    try {
-                        indice = Integer.parseInt(primo);
-                    } catch (NumberFormatException e) {
-                        continue;
-                    }
-
-                    Aggregato pagamento;
-                    try {
-                        pagamento = Aggregato.daStringa(secondo);
-                    } catch (IllegalArgumentException e) {
-                        continue;
-                    }
-
-                    try {
-                        Aggregato resto = distributore.eroga(indice, pagamento);
-                        System.out.println("- " + resto);
-                    } catch (SlotInesistenteException e) {
-                        System.out.println("- slot");
-                    } catch (PagamentoInsufficienteException e) {
-                        System.out.println("- value");
-                    } catch (BinarioVuotoException e) {
-                        System.out.println("- empty");
-                    } catch (RestoNonDisponibileException e) {
-                        System.out.println("- change");
-                    }
+                } catch (SlotInesistenteException e) {
+                    System.out.println("- slot");
+                } catch (PagamentoInsufficienteException e) {
+                    System.out.println("- value");
+                } catch (BinarioVuotoException e) {
+                    System.out.println("- empty");
+                } catch (RestoNonDisponibileException e) {
+                    System.out.println("- change");
+                } catch (Exception e) {
                 }
             }
-
         } catch (Exception e) {
             System.err.println("Errore: " + e.getMessage());
         }

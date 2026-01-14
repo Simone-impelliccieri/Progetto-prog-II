@@ -11,6 +11,7 @@ import macchinette.eccezioni.ValoreInsufficienteException;
  * potrebbe essere insufficiente, ma anche perché pur essendolo, 
  * a seconda della strategia scelta, potrebbe risultare impossibile determinare 
  * un aggregato di monete che consenta di raggiungere esattamente l'importo del resto.
+ * 
  */
 public interface StrategiaResto {
 

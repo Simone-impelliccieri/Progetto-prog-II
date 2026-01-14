@@ -18,13 +18,11 @@ You should have received a copy of the GNU General Public License
 along with this file.  If not, see <https://www.gnu.org/licenses/>.
 
 */
-
 package clients;
 
+import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.Scanner;
-
 import macchinette.Importo;
 
 public class OperazioniImporti {
@@ -32,101 +30,58 @@ public class OperazioniImporti {
     private static final Pattern operazione = Pattern.compile("^\\s*(.+?)\\s*([+\\-*/])\\s*(.+?)\\s*$");
 
     public static void main(String[] args) {
-
         try (Scanner sca = new Scanner(System.in)) {
-
             while (sca.hasNextLine()) {
-
-                String riga = sca.nextLine();
-                if (riga == null) {
-                    continue;
-                }
-                String rigaPulita = riga.trim();
-                if (rigaPulita.isEmpty()) {
+                String riga = sca.nextLine().trim();
+                if (riga.isEmpty()) {
                     continue;
                 }
 
-                Matcher matcher = operazione.matcher(rigaPulita);
-                if (!matcher.matches()) {
+                Matcher match = operazione.matcher(riga);
+                if (!match.matches()) {
                     System.out.println("invalid");
                     continue;
                 }
 
-                String sinistra = matcher.group(1).trim();
-                String operatore = matcher.group(2);
-                String destra = matcher.group(3).trim();
-
-                Importo importoSinistro;
                 try {
-                    importoSinistro = Importo.daStringa(sinistra);
+                    Importo importoSinistro = Importo.daStringa(match.group(1));
+                    String operatore = match.group(2);
+                    String destroStr = match.group(3).trim();
+
+                    if (operatore.equals("*")) {
+                        int fattore = Integer.parseInt(destroStr);
+                        if (fattore < 0) {
+                            System.out.println("negative");
+                        } else {
+                            System.out.println(importoSinistro.moltiplica(fattore));
+                        }
+                    } else {
+                        Importo importoDestro = Importo.daStringa(destroStr);
+                        if (operatore.equals("-") && importoSinistro.compareTo(importoDestro) < 0) {
+                            System.out.println("negative");
+                        } else {
+                            switch (operatore) {
+                                case "+":
+                                    System.out.println(importoSinistro.somma(importoDestro));
+                                    break;
+                                case "-":
+                                    System.out.println(importoSinistro.sottrai(importoDestro));
+                                    break;
+                                case "/":
+                                    System.out.println(importoSinistro.divIntera(importoDestro));
+                                    break;
+                                default:
+                                    System.out.println("invalid");
+                                    break;
+                            }
+                        }
+                    }
                 } catch (IllegalArgumentException e) {
                     System.out.println("invalid");
-                    continue;
-                }
-
-                switch (operatore) {
-                    case "+": {
-                        try {
-                            Importo importoDestro = Importo.daStringa(destra);
-                            System.out.println(importoSinistro.somma(importoDestro));
-                        } catch (IllegalArgumentException e) {
-                            System.out.println("invalid");
-                        }
-                        break;
-                    }
-                    case "-": {
-                        try {
-                            Importo importoDestro = Importo.daStringa(destra);
-                            if (importoSinistro.compareTo(importoDestro) < 0) {
-                                System.out.println("negative");
-                            } else {
-                                System.out.println(importoSinistro.sottrai(importoDestro));
-                            }
-                        } catch (IllegalArgumentException e) {
-                            System.out.println("invalid");
-                        }
-                        break;
-                    }
-                    case "*": {
-                        int moltiplicatore;
-                        try {
-                            moltiplicatore = Integer.parseInt(destra);
-                        } catch (NumberFormatException e) {
-                            System.out.println("invalid");
-                            continue;
-                        }
-                        if (moltiplicatore < 0) {
-                            System.out.println("negative");
-                            continue;
-                        }
-                        try {
-                            System.out.println(importoSinistro.moltiplica(moltiplicatore));
-                        } catch (IllegalArgumentException e) {
-                            System.out.println("invalid");
-                        }
-                        break;
-                    }
-                    case "/": {
-                        try {
-                            Importo importoDestro = Importo.daStringa(destra);
-                            System.out.println(importoSinistro.divIntera(importoDestro));
-                        } catch (IllegalArgumentException e) {
-                            System.out.println("invalid");
-                        }
-                        break;
-                    }
-                    default: {
-                        System.out.println("invalid");
-                        break;
-                    }
                 }
             }
-
         } catch (Exception e) {
             System.err.println("Errore: " + e.getMessage());
-
         }
-
     }
-
 }

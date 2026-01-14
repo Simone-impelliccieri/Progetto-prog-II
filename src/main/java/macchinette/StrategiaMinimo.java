@@ -42,7 +42,6 @@ public final class StrategiaMinimo implements StrategiaResto {
 		Importo restoRimanente = restoDaDare;
 		Aggregato risultato = new Aggregato();
 
-		// cicla tra i valori di moneta nell'ordine in cui li ho scritti
 		for (Moneta moneta : Moneta.values()) {
 			if (restoRimanente.compareTo(zero) == 0) {
 				break;

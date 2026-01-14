@@ -18,33 +18,25 @@ You should have received a copy of the GNU General Public License
 along with this file.  If not, see <https://www.gnu.org/licenses/>.
 
 */
-
 package clients;
 
 import java.util.Scanner;
-
 import macchinette.Binario;
 import macchinette.Prodotto;
 import macchinette.Taglia;
-import macchinette.eccezioni.CapacitaSuperataException;
-import macchinette.eccezioni.ProdottoDiversoException;
-import macchinette.eccezioni.TagliaNonCompatibileException;
+import macchinette.eccezioni.*;
 
 public class CaricaBinario {
 
     public static void main(String[] args) {
 
+        if (args == null || args.length < 2) {
+            return;
+        }
+
         try (Scanner scanner = new Scanner(System.in)) {
 
-            if (args == null || args.length < 2) {
-                return;
-            }
-
-            if (args[0] == null || args[1] == null) {
-                return;
-            }
-
-            Integer capacita;
+            int capacita;
             try {
                 capacita = Integer.parseInt(args[0].trim());
             } catch (NumberFormatException e) {
@@ -60,11 +52,7 @@ public class CaricaBinario {
             System.out.println(binario);
 
             while (scanner.hasNextLine()) {
-                String riga = scanner.nextLine();
-                if (riga == null) {
-                    continue;
-                }
-                String rigaPulita = riga.trim();
+                String rigaPulita = scanner.nextLine().trim();
                 if (rigaPulita.isEmpty()) {
                     continue;
                 }
@@ -75,28 +63,13 @@ public class CaricaBinario {
                     continue;
                 }
 
-                String quantitaTesto = rigaPulita.substring(0, indiceVirgola).trim();
-                String descrizioneProdotto = rigaPulita.substring(indiceVirgola + 1).trim();
-
-                int quantita;
                 try {
-                    quantita = Integer.parseInt(quantitaTesto);
-                } catch (NumberFormatException e) {
-                    System.out.println("invalid");
-                    continue;
-                }
+                    int quantita = Integer.parseInt(rigaPulita.substring(0, indiceVirgola).trim());
+                    Prodotto prodotto = Prodotto.daStringa(rigaPulita.substring(indiceVirgola + 1).trim());
 
-                Prodotto prodotto;
-                try {
-                    prodotto = Prodotto.daStringa(descrizioneProdotto);
-                } catch (IllegalArgumentException e) {
-                    System.out.println("invalid");
-                    continue;
-                }
-
-                try {
                     binario.carica(prodotto, quantita);
                     System.out.println(binario);
+
                 } catch (ProdottoDiversoException e) {
                     System.out.println("item");
                 } catch (CapacitaSuperataException e) {
@@ -108,7 +81,6 @@ public class CaricaBinario {
 
         } catch (Exception e) {
             System.err.println("Errore: " + e.getMessage());
-
         }
     }
 }

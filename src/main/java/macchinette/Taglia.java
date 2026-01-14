@@ -3,8 +3,6 @@ package macchinette;
 import java.util.Objects;
 import java.util.Optional;
 
-//liskov approved
-
 /**
  * Una Taglia è un'entità immutabile che rappresenta la taglia di un prodotto
  * 
@@ -21,17 +19,7 @@ import java.util.Optional;
  *   <li>verificare se una taglia è minore o uguale di un'altra</li>
  * </ul>
  *
- * AF:
- * <ul>
- *   <li>{@code S} rappresenta la taglia small</li>
- *   <li>{@code M} rappresenta la taglia medium</li>
- *   <li>{@code L} rappresenta la taglia large</li>
- * </ul>
- *
- * RI:
- * <ul>
- *   <li>lo stato di una {@code Taglia} è determinato dalla costante enum</li>
- * </ul>
+ * 
  */
 public enum Taglia {
 
@@ -42,18 +30,29 @@ public enum Taglia {
     /** Taglia large. */
     L;
 
-    //serve per ottenere la taglia a partire da stringa. Utile solo per client
-    // magari cambiare nome e magari togliere Optional e trovare un altro modo(no exception)
-
-    //serve per forza perchè nei client arriva input STRING e non è possibile inizializzare direttamente.
-
-    // potrei togliere l'optional VOLENDO, ma con optional obbligo il programmatore a gestire nel caso sia null
     /**
+    * AF:
+    * <ul>
+    *   <li>{@code S} rappresenta la taglia small</li>
+    *   <li>{@code M} rappresenta la taglia medium</li>
+    *   <li>{@code L} rappresenta la taglia large</li>
+    * </ul>
+    *
+    * RI:
+    * <ul>
+    *   <li>lo stato di una {@code Taglia} è determinato dalla costante enum</li>
+    * </ul>
+    *
+    * 
+    * 
+    * 
+    * 
     * Restituisce la taglia corrispondente alla stringa in ingresso.
     *
     * La stringa può contenere spazi bianchi iniziali e finali, che vengono ignorati.
     * È riconosciuta una singola lettera tra "S", "M" e "L" .
     * In tutti gli altri casi il risultato è Optional.Empty.
+    * 
     *
     * @param stringa, che rappresenta una taglia, può essere {@code null}.
     * @return un Optional contenente la taglia riconosciuta oppure Optional.empty() in caso non sia stata trovata.
@@ -81,7 +80,6 @@ public enum Taglia {
         }
     }
 
-    // se superiore a un altra taglia (o minoreuguale)
     /**
     * Verifica se questa taglia è minore o uguale della taglia {@code altra} rispetto
     * all'ordinamento naturale S poi M poi L.

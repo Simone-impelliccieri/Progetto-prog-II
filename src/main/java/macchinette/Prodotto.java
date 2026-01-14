@@ -2,10 +2,6 @@ package macchinette;
 
 import java.util.Objects;
 
-//liksov approved
-
-//forse togliere operazioni implementate
-
 /**
  * Un Prodotto è un'entità immutabile che rappresenta un bene venduto da un distributore.
  *
@@ -24,6 +20,8 @@ import java.util.Objects;
  * </ul>
  *
  * L'ordinamento naturale dei prodotti è dato dall'ordine della tripla: taglia, nome e prezzo.
+ *
+ * L'uguaglianza di un prodotto è data da nome, prezzo e taglia.
  */
 public final class Prodotto implements Comparable<Prodotto> {
 
@@ -42,7 +40,6 @@ public final class Prodotto implements Comparable<Prodotto> {
      */
     private final Taglia taglia;
 
-    //costruttore normale
     /**
      * Costruttore, crea un prodotto a partire da importo taglia e nome.
      *
@@ -58,9 +55,9 @@ public final class Prodotto implements Comparable<Prodotto> {
      *   <li>{@code taglia} non è nulla</li>
      * </ul>
      *
-    * @param nome, nome del prodotto; non nullo e non vuoto (eventuali spazi iniziali e finali vengono rimossi).
-    * @param importo, prezzo del prodotto, non nullo.
-    * @param taglia, taglia del prodotto, non nulla.
+     * @param nome, nome del prodotto; non nullo e non vuoto (eventuali spazi iniziali e finali vengono rimossi).
+     * @param importo, prezzo del prodotto, non nullo.
+     * @param taglia, taglia del prodotto, non nulla.
      * @throws NullPointerException se uno tra {@code nome}, {@code importo} o {@code taglia} è null.
      * @throws IllegalArgumentException se {@code nome.trim()} è vuoto.
      */
@@ -80,7 +77,6 @@ public final class Prodotto implements Comparable<Prodotto> {
 
     }
 
-    //forse da togliere questo getter e restituire OGGETTO e non String
     /**
      * Restituisce il nome del prodotto.
      *
@@ -90,7 +86,6 @@ public final class Prodotto implements Comparable<Prodotto> {
         return nome;
     }
 
-    // questi due get vanno bene perchè restituiscono OGGETTO
     /**
      * Restituisce il prezzo del prodotto.
      *
@@ -100,7 +95,6 @@ public final class Prodotto implements Comparable<Prodotto> {
         return prezzo;
     }
 
-    //viene usato da binario carica , rendere package private
     /**
      * Restituisce la taglia del prodotto.
      *
@@ -110,7 +104,6 @@ public final class Prodotto implements Comparable<Prodotto> {
         return taglia;
     }
 
-    // Metodo factory statico per il parsing da file (formato: nome|prezzo|taglia) per client
     /**
      * Metodo factory statico, costruisce un prodotto a partire da una descrizione di tipo string.
      *
@@ -119,8 +112,8 @@ public final class Prodotto implements Comparable<Prodotto> {
      *
      * @param descrizione, descrizione del prodotto.
      * @return il prodotto, corrispondente alla descrizione.
-     * @throws IllegalArgumentException se {@code descrizione} è null, se il formato non è valido,
-     *         se il prezzo non è un importo valido oppure se la taglia non è valida.
+     * @throws IllegalArgumentException se {@code descrizione} è null, se il formato non è valido, se il 
+     * prezzo non è un importo valido oppure se la taglia non è valida.
      */
     public static Prodotto daStringa(String descrizione) {
 
@@ -148,7 +141,6 @@ public final class Prodotto implements Comparable<Prodotto> {
 
     }
 
-    // ordinamento taglia, nome prezzo
     @Override
     public int compareTo(Prodotto altro) {
         Objects.requireNonNull(altro, "prodotto non può essere null");
@@ -166,7 +158,6 @@ public final class Prodotto implements Comparable<Prodotto> {
         return this.prezzo.compareTo(altro.prezzo);
     }
 
-    //uguali se hanno nome prezzo e taglia uguali
 
     @Override
     public boolean equals(Object obj) {
@@ -183,14 +174,12 @@ public final class Prodotto implements Comparable<Prodotto> {
 
     }
 
-    //hashcode
 
     @Override
     public int hashCode() {
         return Objects.hash(nome, prezzo, taglia);
     }
 
-    //tostring
     @Override
     public String toString() {
         return "<" + nome + ", " + prezzo + ", " + taglia + ">";

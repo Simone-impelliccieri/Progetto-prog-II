@@ -43,13 +43,11 @@ public enum Moneta {
      */
     private final Importo valore;
 
-    /**
-     * 
+    /*
      * AF:
      * <ul>
      * <li>ogni costante rappresenta la moneta con valore {@code valore}.</li>
      * </ul>
-     * 
      *
      * RI:
      * <ul>
@@ -58,7 +56,7 @@ public enum Moneta {
      * <li>{@code valore} è uno dei tipi di moneta definiti</li>
      * </ul>
      */
-    
+
     /**
      * 
      * 

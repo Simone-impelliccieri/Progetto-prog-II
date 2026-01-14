@@ -55,7 +55,7 @@ public final class Binario {
      */
     private int numeroProdotti;
 
-    /**
+    /*
      * AF:
      * <ul>
      *   <li>l'istanza rappresenta un binario di taglia {@code taglia} e capacità {@code maxCapacita}</li>
@@ -71,7 +71,7 @@ public final class Binario {
      *   <li>{@code numeroProdotti == 0} se {@code tipoProdotto} non è impostato</li>
      * </ul>
     */
-   
+
     /**
      * Costruttore, crea un binario vuoto di taglia {@code taglia} e capacità massima {@code maxCapacita}.
      *

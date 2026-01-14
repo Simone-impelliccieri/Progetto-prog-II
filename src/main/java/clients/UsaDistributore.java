@@ -54,7 +54,7 @@ public class UsaDistributore {
                         return;
                     }
                     binari.add(new Binario(taglia, capacita));
-                } catch (Exception e) {
+                } catch (IllegalArgumentException e) { 
                     return;
                 }
             }
@@ -65,7 +65,7 @@ public class UsaDistributore {
             Aggregato fondoCassa;
             try {
                 fondoCassa = Aggregato.daStringa(scanner.nextLine().trim());
-            } catch (Exception e) {
+            } catch (IllegalArgumentException e) { 
                 return;
             }
 
@@ -120,29 +120,40 @@ public class UsaDistributore {
                 String primo = argomenti.substring(0, virgola).trim();
                 String secondo = argomenti.substring(virgola + 1).trim();
 
-                try {
-                    if (comando == '+') {
-                        int quantita = Integer.parseInt(primo);
-                        Prodotto prodotto = Prodotto.daStringa(secondo);
-                        System.out.println("+ " + distributore.carica(prodotto, quantita));
-                    } else {
-                        int indice = Integer.parseInt(primo);
-                        Aggregato pagamento = Aggregato.daStringa(secondo);
-                        System.out.println("- " + distributore.eroga(indice, pagamento));
+                if (comando == '+') {
+                    int quantita;
+                    Prodotto prodotto;
+                    try {
+                        quantita = Integer.parseInt(primo);
+                        prodotto = Prodotto.daStringa(secondo);
+                    } catch (IllegalArgumentException e) {
+                        continue;
                     }
-                } catch (SlotInesistenteException e) {
-                    System.out.println("- slot");
-                } catch (PagamentoInsufficienteException e) {
-                    System.out.println("- value");
-                } catch (BinarioVuotoException e) {
-                    System.out.println("- empty");
-                } catch (RestoNonDisponibileException e) {
-                    System.out.println("- change");
-                } catch (Exception e) {
+                    System.out.println("+ " + distributore.carica(prodotto, quantita));
+
+                } else {
+                    int indice;
+                    Aggregato pagamento;
+                    try {
+                        indice = Integer.parseInt(primo);
+                        pagamento = Aggregato.daStringa(secondo);
+                    } catch (IllegalArgumentException e) {
+                        continue;
+                    }
+
+                    try {
+                        System.out.println("- " + distributore.eroga(indice, pagamento));
+                    } catch (SlotInesistenteException e) {
+                        System.out.println("- slot");
+                    } catch (PagamentoInsufficienteException e) {
+                        System.out.println("- value");
+                    } catch (BinarioVuotoException e) {
+                        System.out.println("- empty");
+                    } catch (RestoNonDisponibileException e) {
+                        System.out.println("- change");
+                    }
                 }
             }
-        } catch (Exception e) {
-            System.err.println("Errore: " + e.getMessage());
         }
     }
 }

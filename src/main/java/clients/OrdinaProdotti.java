@@ -18,13 +18,12 @@ You should have received a copy of the GNU General Public License
 along with this file.  If not, see <https://www.gnu.org/licenses/>.
 
 */
-
 package clients;
 
-import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.Collections;
-
+import java.util.List;
+import java.util.Scanner;
 import macchinette.Prodotto;
 
 public class OrdinaProdotti {
@@ -33,7 +32,7 @@ public class OrdinaProdotti {
 
         try (Scanner sca = new Scanner(System.in)) {
 
-            ArrayList<Prodotto> prodotti = new ArrayList<Prodotto>();
+            List<Prodotto> prodotti = new ArrayList<>();
 
             while (sca.hasNextLine()) {
 
@@ -43,23 +42,21 @@ public class OrdinaProdotti {
                     continue;
                 }
 
-                prodotti.add(Prodotto.daStringa(rigaPulita));
+                Prodotto p;
+                try {
+                    p = Prodotto.daStringa(rigaPulita);
+                } catch (IllegalArgumentException e) {
+                    continue;
+                }
 
+                prodotti.add(p);
             }
 
             Collections.sort(prodotti);
 
             for (Prodotto prodotto : prodotti) {
-
                 System.out.println(prodotto);
-
             }
-
-        } catch (Exception e) {
-            System.err.println("Errore: " + e.getMessage());
-
         }
-
     }
-
 }

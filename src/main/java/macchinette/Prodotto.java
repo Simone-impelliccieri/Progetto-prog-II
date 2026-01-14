@@ -40,7 +40,7 @@ public final class Prodotto implements Comparable<Prodotto> {
      */
     private final Taglia taglia;
 
-    /**
+    /*
      * AF:
      * <ul>
      *   <li>l'istanza costruita rappresenta il prodotto di nome {@code nome}, prezzo {@code importo} e taglia {@code taglia}.</li>
@@ -52,7 +52,6 @@ public final class Prodotto implements Comparable<Prodotto> {
      *   <li>{@code importo} non è nullo</li>
      *   <li>{@code taglia} non è nulla</li>
      * </ul>
-     * 
      */
 
     /**

@@ -63,13 +63,20 @@ public class CaricaBinario {
                     continue;
                 }
 
-                try {
-                    int quantita = Integer.parseInt(rigaPulita.substring(0, indiceVirgola).trim());
-                    Prodotto prodotto = Prodotto.daStringa(rigaPulita.substring(indiceVirgola + 1).trim());
+                int quantita;
+                Prodotto prodotto;
 
+                try {
+                    quantita = Integer.parseInt(rigaPulita.substring(0, indiceVirgola).trim());
+                    prodotto = Prodotto.daStringa(rigaPulita.substring(indiceVirgola + 1).trim());
+                } catch (IllegalArgumentException e) {
+                    System.out.println("invalid");
+                    continue;
+                }
+
+                try {
                     binario.carica(prodotto, quantita);
                     System.out.println(binario);
-
                 } catch (ProdottoDiversoException e) {
                     System.out.println("item");
                 } catch (CapacitaSuperataException e) {
@@ -78,9 +85,6 @@ public class CaricaBinario {
                     System.out.println("size");
                 }
             }
-
-        } catch (Exception e) {
-            System.err.println("Errore: " + e.getMessage());
         }
     }
 }

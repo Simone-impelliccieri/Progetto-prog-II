@@ -18,7 +18,6 @@ You should have received a copy of the GNU General Public License
 along with this file.  If not, see <https://www.gnu.org/licenses/>.
 
 */
-
 package clients;
 
 import macchinette.Moneta;
@@ -34,21 +33,21 @@ public class RiconosciMonete {
 
             while (sca.hasNextLine()) {
 
-                Optional<Moneta> moneta = Moneta.monetaGiusta(sca.nextLine());
+                String riga = sca.nextLine().trim();
+
+                if (riga.isEmpty()) {
+                    continue;
+                }
+
+              
+                Optional<Moneta> moneta = Moneta.monetaGiusta(riga);
+
                 if (moneta.isPresent()) {
                     System.out.println(moneta.get());
                 } else {
                     System.out.println("invalid");
                 }
-
             }
-
-        } catch (Exception e) {
-
-            System.err.println("Errore: " + e.getMessage());
-
         }
-
     }
-
 }

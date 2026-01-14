@@ -49,7 +49,7 @@ public final class DistributoreAutomatico {
      */
     private Aggregato fondoCassa;
 
-    /**
+    /*
      * AF:
      * <ul>
      *   <li>l'istanza rappresenta un distributore con {@code binari.size()} binari numerati da 0</li>
@@ -64,7 +64,7 @@ public final class DistributoreAutomatico {
      *   <li>{@code strategiaResto} non è nulla</li>
      * </ul>
     */
-   
+
     /**
      * Costruttore, crea un distributore automatico con i binari, il fondo cassa
      * e la strategia per il resto specificati.

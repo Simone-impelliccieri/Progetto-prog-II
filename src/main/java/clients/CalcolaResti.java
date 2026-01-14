@@ -60,21 +60,22 @@ public class CalcolaResti {
                     continue;
                 }
 
+                Aggregato disponibilita;
                 try {
-                    Aggregato disponibilita = Aggregato.daStringa(rigaPulita);
-
-                    System.out.println(strategia.calcolaResto(restoDaDare, disponibilita));
-
+                    disponibilita = Aggregato.daStringa(rigaPulita);
                 } catch (IllegalArgumentException e) {
                     System.out.println("invalid");
+                    continue;
+                }
+
+                try {
+                    System.out.println(strategia.calcolaResto(restoDaDare, disponibilita));
                 } catch (ValoreInsufficienteException e) {
                     System.out.println("value");
                 } catch (ComposizioneInsufficienteException e) {
                     System.out.println("change");
                 }
             }
-        } catch (Exception e) {
-            System.err.println("Errore: " + e.getMessage());
         }
     }
 }

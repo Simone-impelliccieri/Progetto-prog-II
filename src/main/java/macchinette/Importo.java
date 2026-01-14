@@ -44,7 +44,7 @@ public final class Importo implements Comparable<Importo> {
         return totaleCentesimi % 100;
     }
 
-    /**
+    /*
      * AF:
      * <ul>
      *   <li>l'istanza costruita rappresenta l'importo di valore {@code unita} unità e {@code centesimi} centesimi</li>
@@ -56,7 +56,7 @@ public final class Importo implements Comparable<Importo> {
      *   <li>{@code centesimi} compreso tra 0 e 99 (estremi inclusi)</li>
      * </ul>
      */
-    
+
     /**
      * Costruttore, crea un'istanza di Importo a partire da unita e centesimi.
      *

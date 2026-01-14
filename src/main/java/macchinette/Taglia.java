@@ -30,7 +30,7 @@ public enum Taglia {
     /** Taglia large. */
     L;
 
-    /**
+    /*
     * AF:
     * <ul>
     *   <li>{@code S} rappresenta la taglia small</li>
@@ -42,9 +42,8 @@ public enum Taglia {
     * <ul>
     *   <li>lo stato di una {@code Taglia} è determinato dalla costante enum</li>
     * </ul>
-    * 
     */
-   
+
     /**
     *
     * 

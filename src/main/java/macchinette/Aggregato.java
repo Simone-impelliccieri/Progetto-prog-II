@@ -35,10 +35,10 @@ public final class Aggregato {
      */
     private final Map<Moneta, Integer> contenuto;
 
-    /**
+    /*
      * AF:
      * <ul>
-     *   <li>La mappa {@code contentuto} associa a ogni {@code Moneta} la sua quantità nell'aggregato,</li>
+     *   <li>La mappa {@code contenuto} associa a ogni {@code Moneta} la sua quantità nell'aggregato,</li>
      *   <li>una moneta non presente in {@code contenuto} ha quantità 0.</li>
      * </ul>
      *
@@ -49,9 +49,8 @@ public final class Aggregato {
      *   <li>tutte le quantità sono interi positivi.</li>
      * </ul>
      */
-    
-    /**
-     * 
+
+    /** 
      * 
      * Costruttore, inizializza l'aggregato vuoto.
      * 

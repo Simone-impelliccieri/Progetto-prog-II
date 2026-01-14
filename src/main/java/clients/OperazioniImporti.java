@@ -43,23 +43,50 @@ public class OperazioniImporti {
                     continue;
                 }
 
-                try {
-                    Importo importoSinistro = Importo.daStringa(match.group(1));
-                    String operatore = match.group(2);
-                    String destroStr = match.group(3).trim();
+                String sinistraStr = match.group(1);
+                String operatore = match.group(2);
+                String destraStr = match.group(3).trim();
 
-                    if (operatore.equals("*")) {
-                        int fattore = Integer.parseInt(destroStr);
-                        if (fattore < 0) {
-                            System.out.println("negative");
-                        } else {
-                            System.out.println(importoSinistro.moltiplica(fattore));
-                        }
+                Importo importoSinistro;
+                try {
+                    importoSinistro = Importo.daStringa(sinistraStr);
+                } catch (IllegalArgumentException e) {
+                    System.out.println("invalid");
+                    continue;
+                }
+
+                if (operatore.equals("*")) {
+                    int fattore;
+                    try {
+                        fattore = Integer.parseInt(destraStr);
+                    } catch (NumberFormatException e) {
+                        System.out.println("invalid");
+                        continue;
+                    }
+
+                    if (fattore < 0) {
+                        System.out.println("negative");
                     } else {
-                        Importo importoDestro = Importo.daStringa(destroStr);
-                        if (operatore.equals("-") && importoSinistro.compareTo(importoDestro) < 0) {
-                            System.out.println("negative");
-                        } else {
+                        try {
+                            System.out.println(importoSinistro.moltiplica(fattore));
+                        } catch (IllegalArgumentException e) {
+                            System.out.println("invalid");
+                        }
+                    }
+
+                } else {
+                    Importo importoDestro;
+                    try {
+                        importoDestro = Importo.daStringa(destraStr);
+                    } catch (IllegalArgumentException e) {
+                        System.out.println("invalid");
+                        continue;
+                    }
+
+                    if (operatore.equals("-") && importoSinistro.compareTo(importoDestro) < 0) {
+                        System.out.println("negative");
+                    } else {
+                        try {
                             switch (operatore) {
                                 case "+":
                                     System.out.println(importoSinistro.somma(importoDestro));
@@ -72,16 +99,13 @@ public class OperazioniImporti {
                                     break;
                                 default:
                                     System.out.println("invalid");
-                                    break;
                             }
+                        } catch (IllegalArgumentException e) {
+                            System.out.println("invalid");
                         }
                     }
-                } catch (IllegalArgumentException e) {
-                    System.out.println("invalid");
                 }
             }
-        } catch (Exception e) {
-            System.err.println("Errore: " + e.getMessage());
         }
     }
 }

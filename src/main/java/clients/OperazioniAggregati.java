@@ -47,29 +47,28 @@ public class OperazioniAggregati {
                     continue;
                 }
 
+                Aggregato operando;
                 try {
-                    Aggregato operando = Aggregato.daStringa(rigaPulita.substring(1).trim());
-
-                    if (segno == '+') {
-                        aggregatoCorrente.aggiungi(operando);
-                        System.out.println(aggregatoCorrente);
-                    } else {
-                        try {
-                            aggregatoCorrente.rimuovi(operando);
-                            System.out.println(aggregatoCorrente);
-                        } catch (ValoreInsufficienteException e) {
-                            System.out.println("value");
-                        } catch (ComposizioneInsufficienteException e) {
-                            System.out.println("coins");
-                        }
-                    }
+                    operando = Aggregato.daStringa(rigaPulita.substring(1).trim());
                 } catch (IllegalArgumentException e) {
                     System.out.println("invalid");
+                    continue;
+                }
+
+                if (segno == '+') {
+                    aggregatoCorrente.aggiungi(operando);
+                    System.out.println(aggregatoCorrente);
+                } else {
+                    try {
+                        aggregatoCorrente.rimuovi(operando);
+                        System.out.println(aggregatoCorrente);
+                    } catch (ValoreInsufficienteException e) {
+                        System.out.println("value");
+                    } catch (ComposizioneInsufficienteException e) {
+                        System.out.println("coins");
+                    }
                 }
             }
-
-        } catch (Exception e) {
-            System.err.println("Errore: " + e.getMessage());
         }
     }
 }

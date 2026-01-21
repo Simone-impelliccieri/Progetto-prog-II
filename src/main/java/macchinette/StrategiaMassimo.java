@@ -10,7 +10,7 @@ import macchinette.eccezioni.ValoreInsufficienteException;
  * per prime le monete di valore maggiore.
  *
  */
-public final class StrategiaMassimo implements StrategiaResto {
+public class StrategiaMassimo implements StrategiaResto {
 
 	/**
 	 * Costruisce Strategia massimo

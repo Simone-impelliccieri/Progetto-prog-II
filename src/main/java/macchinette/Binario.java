@@ -33,7 +33,7 @@ import macchinette.eccezioni.TagliaNonCompatibileException;
  * Se non è vuoto, contiene prodotti tutti dello stesso tipo e con taglia non superiore alla taglia del binario.
  *
  */
-public final class Binario {
+public class Binario {
 
     /**
      * Taglia massima dei prodotti che il binario può contenere.
@@ -72,6 +72,8 @@ public final class Binario {
      * </ul>
     */
 
+    // il prof ha detto qualcosa del tipo " ah ma non controlli prima se non sono pieni i binari?"
+
     /**
      * Costruttore, crea un binario vuoto di taglia {@code taglia} e capacità massima {@code maxCapacita}.
      *
@@ -93,6 +95,8 @@ public final class Binario {
         this.tipoProdotto = null;
         this.numeroProdotti = 0;
     }
+
+    //hanno senso per una copia tutti sti controlli? è solo una copia....
 
     /**
      * Costruttore di copia, costruisce un nuovo binario copiando lo stato di {@code altro}.
@@ -144,6 +148,8 @@ public final class Binario {
     int getSpazioRimanente() {
         return maxCapacita - numeroProdotti;
     }
+
+    //perchè public?
 
     /**
      * Indica se il binario è vuoto.

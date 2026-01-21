@@ -20,7 +20,7 @@ import java.util.Objects;
  * 
  * L'uguaglianza tra importi dipende dal valore.
  */
-public final class Importo implements Comparable<Importo> {
+public class Importo implements Comparable<Importo> {
 
     /**
      * Valore dell'importo in centesimi
@@ -31,7 +31,7 @@ public final class Importo implements Comparable<Importo> {
      * Restituisce la parte delle unità dell'importo
      * @return il numero di unità (intero non negativo).
      */
-    private int unita() {
+    public int unita() {
         return totaleCentesimi / 100;
     }
 
@@ -40,7 +40,7 @@ public final class Importo implements Comparable<Importo> {
      *
      * @return il numero di centesimi, compreso tra 0 e 99.
      */
-    private int centesimi() {
+    public int centesimi() {
         return totaleCentesimi % 100;
     }
 
@@ -53,7 +53,6 @@ public final class Importo implements Comparable<Importo> {
      * RI:
      * <ul>
      *   <li> totaleCentesimi >= 0,</li>
-     *   <li>{@code centesimi} compreso tra 0 e 99 (estremi inclusi)</li>
      * </ul>
      */
 
@@ -72,11 +71,8 @@ public final class Importo implements Comparable<Importo> {
         if (centesimi < 0 || centesimi > 99) {
             throw new IllegalArgumentException("centesimi fuori range");
         }
-        long cents = (long) unita * 100L + (long) centesimi;
-        if (cents > Integer.MAX_VALUE) {
-            throw new IllegalArgumentException("importo troppo grande");
-        }
-        this.totaleCentesimi = (int) cents;
+        int cents = (unita * 100) + centesimi;
+        this.totaleCentesimi = cents;
     }
 
     /**
@@ -134,11 +130,8 @@ public final class Importo implements Comparable<Importo> {
      */
     public Importo somma(Importo altro) {
         Objects.requireNonNull(altro, "importo non può essere null");
-        long sum = (long) this.totaleCentesimi + (long) altro.totaleCentesimi;
-        if (sum > Integer.MAX_VALUE) {
-            throw new IllegalArgumentException("somma troppo grande");
-        }
-        return daCentesimi((int) sum);
+        int sum = this.totaleCentesimi + altro.totaleCentesimi;
+        return daCentesimi(sum);
     }
 
     /**
@@ -169,11 +162,8 @@ public final class Importo implements Comparable<Importo> {
         if (n < 0) {
             throw new IllegalArgumentException("moltiplicatore negativo");
         }
-        long prod = (long) this.totaleCentesimi * (long) n;
-        if (prod > Integer.MAX_VALUE) {
-            throw new IllegalArgumentException("prodotto troppo grande");
-        }
-        return daCentesimi((int) prod);
+        int prod = this.totaleCentesimi * n;
+        return daCentesimi(prod);
     }
 
     /**

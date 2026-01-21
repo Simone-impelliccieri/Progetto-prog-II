@@ -32,7 +32,7 @@ import macchinette.eccezioni.*;
  * </ul>
  *
  */
-public final class DistributoreAutomatico {
+public class DistributoreAutomatico {
 
     /**
      * Lista dei binari del distributore.
@@ -64,6 +64,8 @@ public final class DistributoreAutomatico {
      *   <li>{@code strategiaResto} non è nulla</li>
      * </ul>
     */
+
+    //no ok QUA ha detto qualcosa riguardo ai binari che devo controllare prima se non siano pieni
 
     /**
      * Costruttore, crea un distributore automatico con i binari, il fondo cassa
@@ -143,6 +145,9 @@ public final class DistributoreAutomatico {
         Objects.requireNonNull(daAggiungere, "aggregato non può essere null");
         this.fondoCassa.aggiungi(daAggiungere);
     }
+
+    //"meglio restituire gli oggetti e che siano i client a farsi la conversione a stringa " dice lui
+    // farei tipo public Map<Integer, Prodotto> statoProdotti
 
     /**
      * Restituisce un iteratore sulle descrizioni dei prodotti disponibili.
@@ -322,7 +327,7 @@ public final class DistributoreAutomatico {
             throw new IllegalStateException("Binario incoerente: vuoto dopo i controlli");
         }
         this.fondoCassa = fondoNuovo;
-        return copiaAggregato(resto);
+        return resto;
     }
 
 }

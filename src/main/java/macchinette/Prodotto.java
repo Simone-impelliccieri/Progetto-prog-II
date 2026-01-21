@@ -23,7 +23,7 @@ import java.util.Objects;
  *
  * L'uguaglianza di un prodotto è data da nome, prezzo e taglia.
  */
-public final class Prodotto implements Comparable<Prodotto> {
+public class Prodotto implements Comparable<Prodotto> {
 
     /**
      * Nome del prodotto.

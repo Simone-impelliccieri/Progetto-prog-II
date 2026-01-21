@@ -12,7 +12,7 @@ import macchinette.eccezioni.ValoreInsufficienteException;
  * Se il resto non è componibile senza quel tipo di monete, riprova consentendoli.
  *
  */
-public final class StrategiaPersonale implements StrategiaResto {
+public class StrategiaPersonale implements StrategiaResto {
 
     /**
      * Costruisce Strategia personale

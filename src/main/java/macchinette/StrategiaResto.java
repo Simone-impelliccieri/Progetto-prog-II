@@ -15,6 +15,8 @@ import macchinette.eccezioni.ValoreInsufficienteException;
  */
 public interface StrategiaResto {
 
+	// FARE SI CHE SIA CHIARO IL FATTO CHE DISPONIBILITà NON VIENE MODIFICATA
+
 	/**
 	 * Calcola il resto da erogare a partire dall'importo richiesto e dalla disponibilità di monete.
 	 *

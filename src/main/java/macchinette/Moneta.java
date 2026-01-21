@@ -66,9 +66,7 @@ public enum Moneta {
      * @throws IllegalArgumentException se centesimi minore di 0.
      */
     private Moneta(int centesimi) {
-        if (centesimi < 0) {
-            throw new IllegalArgumentException("centesimi negativi");
-        }
+        
         this.valore = Importo.daCentesimi(centesimi);
     }
 

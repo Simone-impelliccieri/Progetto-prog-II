@@ -28,27 +28,29 @@ import macchinette.eccezioni.ValoreInsufficienteException;
  * </ul>
  *
  */
-public final class Aggregato {
+public class Aggregato {
 
     /**
      * Campo interno dell'aggregato, composto da una mappa tipo di moneta-quantità posseduta
      */
     private final Map<Moneta, Integer> contenuto;
 
+    //AF critica: una moneta non presente ha quantità 0 è fuorviante, magari togliere
+
     /*
-     * AF:
-     * <ul>
-     *   <li>La mappa {@code contenuto} associa a ogni {@code Moneta} la sua quantità nell'aggregato,</li>
-     *   <li>una moneta non presente in {@code contenuto} ha quantità 0.</li>
-     * </ul>
-     *
-     * RI:
-     * <ul>
-     *   <li>contenuto != null</li>
-     *   <li>nessuna chiave è null in {@code contenuto}</li>
-     *   <li>tutte le quantità sono interi positivi.</li>
-     * </ul>
-     */
+    * AF:
+    * <ul>
+    *   <li>La mappa {@code contenuto} associa a ogni {@code Moneta} la sua quantità nell'aggregato,</li>
+    *   <li>una moneta non presente in {@code contenuto} ha quantità 0.</li>
+    * </ul>
+    *
+    * RI:
+    * <ul>
+    *   <li>contenuto != null</li>
+    *   <li>nessuna chiave è null in {@code contenuto}</li>
+    *   <li>tutte le quantità sono interi positivi.</li>
+    * </ul>
+    */
 
     /** 
      * 
@@ -101,6 +103,8 @@ public final class Aggregato {
             }
         }
     }
+
+    //PROBLEMA! il metodo sottrare monete anche senza concludere l'operazione. evitare ciò... ma in realtà lo faccio già è il prof che non si è accorto
 
     /**
      * Rimuove dall'aggregato tutte le monete contenute nell'Aggregato {@code daRimuovere}.
@@ -158,6 +162,8 @@ public final class Aggregato {
         }
         return tot;
     }
+
+    // magari rendere getquantita moneta PUBLIC (dopo aver modificato AF naturalmente)
 
     /**
      * Restituisce la quantità di un tipo specifico di moneta {@code m}.

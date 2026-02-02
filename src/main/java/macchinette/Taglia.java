@@ -1,15 +1,14 @@
 package macchinette;
 
 import java.util.Objects;
-import java.util.Optional;
 
 /**
  * Una Taglia è un'entità immutabile che rappresenta la taglia di un prodotto
  * 
  *  Ogni Taglia:
  * <ul>
- *   <li>è uno dei seguenti tipi:S, M o L</li>
- *   <li>possiede un ordinamento naturale dato dall'ordine S M L.</li>
+ *   <li>è uno dei seguenti tipi:S, M ,L o XL</li>
+ *   <li>possiede un ordinamento naturale dato dall'ordine S M L XL.</li>
  * </ul>
  *
  *
@@ -28,7 +27,9 @@ public enum Taglia {
     /** Taglia medium. */
     M,
     /** Taglia large. */
-    L;
+    L,
+    /** Taglia extra-large. */
+    XL;
 
     /*
     * AF:
@@ -36,6 +37,8 @@ public enum Taglia {
     *   <li>{@code S} rappresenta la taglia small</li>
     *   <li>{@code M} rappresenta la taglia medium</li>
     *   <li>{@code L} rappresenta la taglia large</li>
+    *   <li>{@code XL} rappresenta la taglia extra-large</li>
+    * 
     * </ul>
     *
     * RI:
@@ -44,45 +47,52 @@ public enum Taglia {
     * </ul>
     */
 
+    // HO CAMBIATO DA TESTO.CHARAT(0) a SOLO TESTO
+
     /**
     *
     * 
     * Restituisce la taglia corrispondente alla stringa in ingresso.
     *
     * La stringa può contenere spazi bianchi iniziali e finali, che vengono ignorati.
-    * È riconosciuta una singola lettera tra "S", "M" e "L" .
-    * In tutti gli altri casi il risultato è Optional.Empty.
+    * È riconosciuta una singola lettera tra "S", "M","L" o "XL".
+    * In tutti gli altri casi viene sollevata un'eccezione.
     * 
     *
-    * @param stringa, che rappresenta una taglia, può essere {@code null}.
-    * @return un Optional contenente la taglia riconosciuta oppure Optional.empty() in caso non sia stata trovata.
+    * @param stringa, che rappresenta una taglia.
+    * @return la taglia riconosciuta.
+    * @throws IllegalArgumentException se la stringa è nulla o non rappresenta una taglia valida.
     */
-    public static Optional<Taglia> daStringa(String stringa) {
+    public static Taglia daStringa(String stringa) {
         if (stringa == null) {
-            return Optional.empty();
+            throw new IllegalArgumentException("stringa nulla");
         }
 
         String testo = stringa.trim();
 
+        if ("XL".equals(testo)) {
+            return XL;
+        }
+
         if (testo.length() != 1) {
-            return Optional.empty();
+            throw new IllegalArgumentException("taglia non valida");
         }
 
         switch (testo.charAt(0)) {
             case 'S':
-                return Optional.of(S);
+                return S;
             case 'M':
-                return Optional.of(M);
+                return M;
             case 'L':
-                return Optional.of(L);
+                return L;
             default:
-                return Optional.empty();
+                throw new IllegalArgumentException("taglia non valida");
         }
     }
 
     /**
     * Verifica se questa taglia è minore o uguale della taglia {@code altra} rispetto
-    * all'ordinamento naturale S poi M poi L.
+    * all'ordinamento naturale S poi M poi L po XL.
     *
     * @param altra, la taglia di confronto, non null.
     * @return true se questa taglia è minore o uguale ad {@code altra}, false in caso contrario.
@@ -95,6 +105,9 @@ public enum Taglia {
 
     @Override
     public String toString() {
+        if (this == XL) {
+            return "XL";
+        }
         return String.valueOf(name().charAt(0));
     }
 }

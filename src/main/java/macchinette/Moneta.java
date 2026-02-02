@@ -1,7 +1,5 @@
 package macchinette;
 
-import java.util.Optional;
-
 /**
  * Una Moneta è un'entità immutabile che rappresenta un tipo di moneta ammesso dal distributore automatico
  *
@@ -66,7 +64,7 @@ public enum Moneta {
      * @throws IllegalArgumentException se centesimi minore di 0.
      */
     private Moneta(int centesimi) {
-        
+
         this.valore = Importo.daCentesimi(centesimi);
     }
 
@@ -82,30 +80,25 @@ public enum Moneta {
     /**
      * Cerca la moneta il cui valore è uguale alla stringa in input.
      *
-     * La stringa viene interpretata tramite Importo.daStringa(String)
-     * Se la stringa non rappresenta un importo valido o se il valore
-     * ottenuto non corrisponde a nessun tipo di moneta il risultato è optional.empty .
+     * La stringa viene interpretata tramite Importo.daStringa(String).
      *
-     * @param stringa, rappresentazione testuale dell'importo; se {@code null} il risultato è vuoto.
-     * @return un Optional contenente la moneta corrispondente, oppure Optional.empty().
+     * @param stringa, rappresentazione testuale dell'importo.
+     * @return la moneta corrispondente.
+     * @throws IllegalArgumentException se la stringa è nulla o non rappresenta una moneta valida.
      */
-    public static Optional<Moneta> monetaGiusta(String stringa) {
+    public static Moneta monetaGiusta(String stringa) {
         if (stringa == null) {
-            return Optional.empty();
+            throw new IllegalArgumentException("stringa nulla");
         }
-        try {
-            Importo importo = Importo.daStringa(stringa);
 
-            for (Moneta moneta : values()) {
-                if (moneta.getValore().equals(importo)) {
-                    return Optional.of(moneta);
-                }
+        Importo importo = Importo.daStringa(stringa);
+        for (Moneta moneta : values()) {
+            if (moneta.getValore().equals(importo)) {
+                return moneta;
             }
-
-            return Optional.empty();
-        } catch (IllegalArgumentException e) {
-            return Optional.empty();
         }
+
+        throw new IllegalArgumentException("moneta non valida");
     }
 
     @Override

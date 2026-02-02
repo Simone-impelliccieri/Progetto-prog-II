@@ -39,7 +39,7 @@ public class OperazioniImporti {
 
                 Matcher match = operazione.matcher(riga);
                 if (!match.matches()) {
-                    System.out.println("invalid");
+                    System.out.println("invalid-result");
                     continue;
                 }
 
@@ -51,7 +51,7 @@ public class OperazioniImporti {
                 try {
                     importoSinistro = Importo.daStringa(sinistraStr);
                 } catch (IllegalArgumentException e) {
-                    System.out.println("invalid");
+                    System.out.println("invalid-result");
                     continue;
                 }
 
@@ -60,7 +60,7 @@ public class OperazioniImporti {
                     try {
                         fattore = Integer.parseInt(destraStr);
                     } catch (NumberFormatException e) {
-                        System.out.println("invalid");
+                        System.out.println("invalid-result");
                         continue;
                     }
 
@@ -70,7 +70,7 @@ public class OperazioniImporti {
                         try {
                             System.out.println(importoSinistro.moltiplica(fattore));
                         } catch (IllegalArgumentException e) {
-                            System.out.println("invalid");
+                            System.out.println("invalid-result");
                         }
                     }
 
@@ -79,12 +79,12 @@ public class OperazioniImporti {
                     try {
                         importoDestro = Importo.daStringa(destraStr);
                     } catch (IllegalArgumentException e) {
-                        System.out.println("invalid");
+                        System.out.println("invalid-result");
                         continue;
                     }
 
                     if (operatore.equals("-") && importoSinistro.compareTo(importoDestro) < 0) {
-                        System.out.println("negative");
+                        System.out.println("negative-result");
                     } else {
                         try {
                             switch (operatore) {
@@ -98,10 +98,10 @@ public class OperazioniImporti {
                                     System.out.println(importoSinistro.divIntera(importoDestro));
                                     break;
                                 default:
-                                    System.out.println("invalid");
+                                    System.out.println("invalid-result");
                             }
                         } catch (IllegalArgumentException e) {
-                            System.out.println("invalid");
+                            System.out.println("invalid-result");
                         }
                     }
                 }

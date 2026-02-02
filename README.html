@@ -1355,43 +1355,43 @@ realizzare le transazioni. Di seguito ne vengono illustrate le caratteristiche
 principali (le informazioni che le descrivono e le competenze che possiedono).</p>
 <h3>Valori monetari</h3>
 <p>L'<strong>importo</strong> è composto da <em>unità</em> (un intero non negativo) e <em>centesimi</em> (un
-intero compreso tra 0 e 99, estremi inclusi). Una <strong>moneta</strong> è caratterizzato da
+intero compreso tra 0 e 99, estremi inclusi). Una <strong>moneta</strong> è caratterizzata da
 un <em>valore</em>  che può essere esclusivamente uno dei seguenti importi: 1, 2, 5,
 10, 20 o 50 centesimi, oppure 1 o 2 unità. L'<em>ordinamento naturale</em> delle monete
 e degli importi è dato dal loro valore. Sono definite le seguenti operazioni
-(dall'ovvio significato):</p>
+(dall'ovvio significato, dove <span class="arithmatex">\(I\)</span>, <span class="arithmatex">\(J\)</span> e <span class="arithmatex">\(K\)</span> sono importi):</p>
 <ul>
-<li>somma: <span class="arithmatex">\(I + J\)</span>;</li>
-<li>sottrazione: <span class="arithmatex">\(I - J\)</span>, prestando attenzione al segno;</li>
-<li>moltiplicazione: <span class="arithmatex">\(I * n\)</span>;</li>
-<li>divisione intera: <span class="arithmatex">\(I / J\)</span>, pari al più grande <span class="arithmatex">\(n\)</span> tale che <span class="arithmatex">\(J * n \leq I\)</span>;</li>
+<li>somma: <span class="arithmatex">\(K = I + J\)</span>,</li>
+<li>sottrazione: <span class="arithmatex">\(K = I - J\)</span>,</li>
+<li>moltiplicazione: <span class="arithmatex">\(J = I * n\)</span>, dove <span class="arithmatex">\(n\)</span> è un intero non negativo;</li>
+<li>divisione intera: <span class="arithmatex">\(m = I / J\)</span>, dove <span class="arithmatex">\(n\)</span> è il più grande intero tale che <span class="arithmatex">\(J * m \leq I\)</span>.</li>
 </ul>
-<p>dove <span class="arithmatex">\(I\)</span> e <span class="arithmatex">\(J\)</span> sono importi e <span class="arithmatex">\(n\)</span> è un intero non negativo.</p>
 <p>Un <strong>aggregato</strong> è un multi-insieme di monete (ossia insiemi che possono
 contenere più occorrenze della stessa moneta), l'aggregato è utile ad esempio
 per rappresentare i pagamenti, i resti e il fondo cassa del distributore. Non è
-sensato definire un ordinamento tra aggregati di monete. Oltre che partendo da
-un elenco di monete, si può ottenere un aggregato sia <em>aggiungendo</em> che
-<em>rimuovendo</em> le monete di un altro aggregato; si osservi che la rimozione
-potrebbe non essere possibile innanzitutto per una questione di valore (il
-valore totale dell'aggregato potrebbe essere inferiore a quello da rimuovere),
-ma anche per una questione di composizione (ad esempio se si volesse rimuovere
-una moneta da 50 centesimi ma l'aggregato ne contenesse solo da 20 e 10
-centesimi). </p>
+sensato definire un ordinamento tra aggregati di monete. Si può ottenere un
+aggregato da quello vuoto sia <em>aggiungendo</em> o <em>rimuovendo</em> monete, sia
+singolarmente che a partire da quelle di un altro aggregato; si osservi che la
+rimozione potrebbe non essere possibile innanzitutto per una questione di valore
+(il valore totale dell'aggregato potrebbe essere inferiore a quello da
+rimuovere), ma anche per una questione di composizione (ad esempio se si volesse
+rimuovere una moneta da 50 centesimi ma l'aggregato ne contenesse pur molte, ma
+solo da 20 e 10 centesimi). </p>
 <h3>Prodotto</h3>
 <p>Un <strong>prodotto</strong> è caratterizzato da un <em>nome</em> (dato da una stringa non vuota),
 un <em>prezzo</em> (dato da un importo) e una <em>taglia</em>; per semplicità si assuma che la
-<strong>taglia</strong> sia uno dei tre valori: <code>small</code>, <code>medium</code> e <code>large</code> (rappresentati in
-input e output rispettivamente dai caratteri <code>S</code>, <code>M</code> e <code>L</code>). L'ordinamento
-naturale dei prodotti è dato dall'ordine della tripla taglia, nome e prezzo.</p>
+<strong>taglia</strong> sia uno dei quattro valori: <code>small</code>, <code>medium</code>, <code>large</code> e
+<code>extra-large</code> (rappresentati in input e output rispettivamente dalle stringhe
+<code>S</code>, <code>M</code>, <code>L</code>, <code>XL</code>). L'ordinamento naturale e l'uguaglianza tra prodotti
+dipendono della tripla taglia, nome e prezzo.</p>
 <h3>Distributore automatico</h3>
 <p>Un <strong>distributore automatico</strong> è costruito a partire da un elenco di <em>binari</em>
 (inizialmente vuoti, numerati progressivamente da 0), da un <em>fondo cassa</em> (dato
 da un aggregato di monete) e da una <em>strategia</em> per dare il resto.</p>
 <p>Un <strong>binario</strong> è caratterizzato da una <em>taglia</em> e da una <em>capacità massima</em> (un
 intero positivo) e può essere vuoto, oppure contenere un numero di prodotti fino
-alla capacità massima, che devono avere taglia non superiore a quella del
-binario e devono essere tutti dello stesso tipo. Il binario consente due
+alla capacità massima (compresa), che devono avere taglia non superiore a quella
+del binario e devono essere tutti dello stesso tipo. Il binario consente due
 operazioni: <em>dispensare</em> un prodotto (se disponibile) e <em>caricare</em> un dato
 numero di prodotti. Il caricamento fallisce se il binario:</p>
 <ul>

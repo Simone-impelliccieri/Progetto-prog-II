@@ -15,11 +15,9 @@ import macchinette.eccezioni.ValoreInsufficienteException;
  */
 public interface StrategiaResto {
 
-	// FARE SI CHE SIA CHIARO IL FATTO CHE DISPONIBILITà NON VIENE MODIFICATA
-
 	/**
 	 * Calcola il resto da erogare a partire dall'importo richiesto e dalla disponibilità di monete.
-	 *
+	 *	L'implementazione non modifica {@code disponibilita}.
 	 * @param restoDaDare, importo del resto da restituire, non nullo.
 	 * @param disponibilita, aggregato di monete disponibili per comporre il resto, non nullo.
 	 * @return un Aggregato contenente le monete che compongono  il resto .

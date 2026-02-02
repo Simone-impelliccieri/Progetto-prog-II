@@ -3,7 +3,6 @@ package macchinette;
 import java.util.EnumMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -182,6 +181,8 @@ public class Aggregato {
 
     }
 
+    //qua ho cambiato per far si che accetti sia , che ; che x che *
+
     /**
      * Metodo factory statico, legge una stringa e restituisce l'istanza di aggregato corrispondente
      *
@@ -198,9 +199,8 @@ public class Aggregato {
             return agg;
         }
 
-        Pattern espressione = Pattern.compile("\\s*(\\d+)\\s*x\\s*(.+)\\s*");
-
-        for (String pezzo : descrizione.split(",")) {
+        Pattern espressione = Pattern.compile("\\s*(\\d+)\\s*[x*é]\\s*(.+)\\s*");
+        for (String pezzo : descrizione.split("[,;]")) {
             if (pezzo.isBlank()) {
                 continue;
             }
@@ -212,13 +212,7 @@ public class Aggregato {
 
             String testoMoneta = m.group(2).trim();
 
-            Optional<Moneta> boxMoneta = Moneta.monetaGiusta(testoMoneta);
-
-            if (boxMoneta.isEmpty()) {
-                throw new IllegalArgumentException("Moneta non valida");
-            }
-
-            Moneta moneta = boxMoneta.get();
+            Moneta moneta = Moneta.monetaGiusta(testoMoneta);
 
             agg.aggiungi(moneta, Integer.parseInt(m.group(1)));
         }

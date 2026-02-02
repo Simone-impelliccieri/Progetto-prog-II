@@ -49,12 +49,9 @@ public class UsaDistributore {
                 }
                 try {
                     int capacita = Integer.parseInt(parti[0].trim());
-                    Taglia taglia = Taglia.daStringa(parti[1].trim()).orElse(null);
-                    if (taglia == null) {
-                        return;
-                    }
+                    Taglia taglia = Taglia.daStringa(parti[1].trim());
                     binari.add(new Binario(taglia, capacita));
-                } catch (IllegalArgumentException e) { 
+                } catch (IllegalArgumentException e) {
                     return;
                 }
             }
@@ -62,11 +59,23 @@ public class UsaDistributore {
             if (!scanner.hasNextLine()) {
                 return;
             }
-            Aggregato fondoCassa;
-            try {
-                fondoCassa = Aggregato.daStringa(scanner.nextLine().trim());
-            } catch (IllegalArgumentException e) { 
-                return;
+
+            Aggregato fondoCassa = new Aggregato();
+
+            String riga = scanner.nextLine().trim();
+
+            while (!riga.equals(".")) {
+                String[] parti = riga.split("\\s+");
+
+                if (parti.length > 1) {
+                    try {
+                        int quantita = Integer.parseInt(parti[0]);
+                        Moneta moneta = Moneta.monetaGiusta(parti[1]);
+                        fondoCassa.aggiungi(moneta, quantita);
+                    } catch (Exception e) {
+                    }
+                }
+                riga = scanner.nextLine().trim();
             }
 
             if (!scanner.hasNextLine())
@@ -79,11 +88,11 @@ public class UsaDistributore {
             StrategiaResto strategiaResto;
             char tipo = rigaStrategia.charAt(0);
             if (tipo == 'H') {
-                strategiaResto = new StrategiaMassimo();
+                strategiaResto = new Strategie('H');
             } else if (tipo == 'L') {
-                strategiaResto = new StrategiaMinimo();
+                strategiaResto = new Strategie('L');
             } else if (tipo == 'P') {
-                strategiaResto = new StrategiaPersonale();
+                strategiaResto = new Strategie('P');
             } else {
                 return;
             }
@@ -112,13 +121,12 @@ public class UsaDistributore {
                 }
 
                 String argomenti = rigaPulita.substring(1).trim();
-                int virgola = argomenti.indexOf(',');
-                if (virgola < 0) {
+                int sep = argomenti.indexOf('!');
+                if (sep < 0) {
                     continue;
                 }
-
-                String primo = argomenti.substring(0, virgola).trim();
-                String secondo = argomenti.substring(virgola + 1).trim();
+                String primo = argomenti.substring(0, sep).trim();
+                String secondo = argomenti.substring(sep + 1).trim();
 
                 if (comando == '+') {
                     int quantita;

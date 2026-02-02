@@ -1322,10 +1322,10 @@ code {
   }
 </style></head><body class="markdown-body">
 <h1>Specifiche dei <em>client</em></h1>
-<p>Questo documento contiene la versione 81f5cc2 (del 2026-01-08, ora 08:20:41) delle
+<p>Questo documento contiene la versione 09ca617 (del 2026-01-29, ora 08:44:23) delle
 specifiche dei <em>client</em> da implementare per il progetto. Come illustrato nelle
-<a href="ISTRUZIONI.html">istruzioni</a> dovrà completare le implementazioni delle classi
-nel pacchetto <code>clients</code> (che si trovano nella directory <code>src/main/java/clients</code>)
+<a href="ISTRUZIONI.html">istruzioni</a> dovrà completare le implementazioni delle classi nel
+pacchetto <code>clients</code> (che si trovano nella directory <code>src/main/java/clients</code>)
 seguendo con attenzione quanto illustrato di seguito.</p>
 <blockquote>
 <p><strong>Nota bene</strong>: i <em>client</em> hanno non a caso questo nome: il loro compito è
@@ -1381,14 +1381,14 @@ dal costruttore, o dal metodo <code>intValueExact()</code>.</p>
 parentesi quadre è opzionale a seconda che i valori siano diversi da 0 e 1. </p>
 <h3>Spazi bianchi</h3>
 <p>In alcuni casi l'input è composto di parti inframezzate da operatori come <code>,</code>,
-<code>x</code>, <code>|</code> o simili. In tali casi, <strong>è sempre possibile</strong> che vi siano spazi
-bianchi (uno o più) prima o dopo tali operatori. I <em>client</em> devono essere in
-grado di gestire tali spazi bianchi senza problemi.</p>
+<code>x</code>, <code>*</code> , <code>|</code> , <code>;</code> o simili. In tali casi, <strong>è sempre possibile</strong> che vi siano
+spazi bianchi (uno o più) prima o dopo tali operatori. I <em>client</em> devono essere
+in grado di gestire tali spazi bianchi senza problemi.</p>
 <h2>I <em>client</em></h2>
 <h3><code>RiconosciMonete</code></h3>
 <p>Legge una sequenza di importi dal flusso d'ingresso, uno per linea, ed emette
 nel flusso d'uscita il valore della moneta corrispondente, oppure la stringa
-<code>invalid</code> se l'importo non corrisponde ad alcuna moneta.</p>
+<code>invalid-amount</code> se l'importo non corrisponde ad alcuna moneta.</p>
 <p>Ad esempio, su input
 <div class="highlight"><pre><span></span><code>.05
 .07
@@ -1399,10 +1399,10 @@ nel flusso d'uscita il valore della moneta corrispondente, oppure la stringa
 </code></pre></div>
 il client emette
 <div class="highlight"><pre><span></span><code>5 cents
-invalid
+invalid-amount
 10 cents
 1 unit
-invalid
+invalid-amount
 2 units
 </code></pre></div></p>
 <h3><code>OperazioniImporti</code></h3>
@@ -1414,9 +1414,9 @@ I / J
 </code></pre></div>
 dove <code>I</code> e <code>J</code> sono importi monetari (ad esempio, ".50" o "2.30") e <code>n</code> è un
 intero. Per ciascuna operazione, il client emette nel flusso d'uscita il
-risultato dell'operazione, oppure la stringa <code>invalid</code> se uno degli operandi non
-è nel formato corretto, oppure <code>negative</code> se il primo operando della sottrazione
-è minore del secondo, o l'intero è negativo.</p>
+risultato dell'operazione, oppure la stringa <code>invalid-result</code> se uno degli
+operandi non è nel formato corretto, oppure <code>negative-result</code> se il primo
+operando della sottrazione è minore del secondo, o l'intero è negativo.</p>
 <h3><code>OperazioniAggregati</code></h3>
 <p>Legge dal flusso di ingresso una sequenza di linee, ciascuna linea contiene il
 segno <code>+</code> o <code>-</code> seguito da uno spazio e da un aggregato, descritto da una
@@ -1425,10 +1425,10 @@ sequenza separata da <code>,</code> di coppie <code>n x M</code>, dove <code>n</
 <p>A partire dall'aggregato vuoto, per ciascuna linea il client procede aggiungendo
 (se il segno è <code>+</code>) o rimuovendo (se il segno è <code>-</code>) l'aggregato descritto
 emettendo nel flusso d'uscita il valore dell'aggregato risultante. Dato che non
-è sempre possibile rimuovere un aggregato da un'altro, il client emette <code>value</code>
-se il valore totale da rimuovere eccede quello dell'aggregato corrente, oppure
-<code>coins</code> se pur avendo valore totale maggiore, non ci sono abbastanza monete del
-taglio indicato da rimuovere. </p>
+è sempre possibile rimuovere un aggregato da un'altro, il client emette
+<code>missing-value</code> se il valore totale da rimuovere eccede quello dell'aggregato
+corrente, oppure <code>missing-coins</code> se pur avendo valore totale maggiore, non ci
+sono abbastanza monete del taglio indicato da rimuovere. </p>
 <p>Ad esempio, su input
 <div class="highlight"><pre><span></span><code>+ 10 x .20, 5 x .50, 20 x 1, 10 x 2
 - 1 x 2
@@ -1438,38 +1438,40 @@ taglio indicato da rimuovere. </p>
 il client emette
 <div class="highlight"><pre><span></span><code>&lt;10 x 20 cents, 5 x 50 cents, 20 x 1 unit, 10 x 2 units&gt;
 &lt;10 x 20 cents, 5 x 50 cents, 20 x 1 unit, 9 x 2 units&gt;
-coins
-value
+missing-coins
+missing-value
 </code></pre></div>
-la terza riga è <code>coins</code> perché sebbene l'aggregato sulla seconda riga valga più
-di 5 cents, non contiene monete da 1 cent (che quindi non possono essere
-rimosse); la terza riga è <code>value</code> perché l'aggregato sulla seconda riga vale
-meno di 60 units.</p>
+la terza riga è <code>missing-coins</code> perché sebbene l'aggregato sulla seconda riga
+valga più di 5 cents, non contiene monete da 1 cent (che quindi non possono
+essere rimosse); la terza riga è <code>missing-value</code> perché l'aggregato sulla
+seconda riga vale meno di 60 units.</p>
 <h3><code>CalcolaResti</code></h3>
 <p>Riceve come argomento sulla linea di comando un carattere tra <code>H</code> e <code>L</code> e quindi
 un intero corrispondente all'importo del resto e quindi legge dal flusso di
-ingresso una sequenza di aggregati (uno per linea, nel formato descritto in
-precedenza) e per ciascuno di essi emette l'aggregato corrispondente al resto
-calcolato usando dapprima le monete di taglio più alto (se il carattere è <code>H</code>) o
-più basso (se il carattere è <code>L</code>). Dato che non sempre è possibile calcolare il
-resto, il client emette <code>value</code> se il valore totale dell'aggregato è minore
-dell'importo del resto, oppure <code>change</code> se pur avendo valore totale maggiore la
+ingresso una sequenza di aggregati, uno per linea (questa volta con i conteggi
+separati da <code>;</code> e monete e quantità separate da <code>é</code>) e per ciascuno di essi
+emette l'aggregato corrispondente al resto calcolato usando dapprima le monete
+di taglio più alto (se il carattere è <code>H</code>) o più basso (se il carattere è <code>L</code>).
+Dato che non sempre è possibile calcolare il resto, il client emette
+<code>insufficient-value</code> se il valore totale dell'aggregato è minore dell'importo
+del resto, oppure <code>change-not-possible</code> se pur avendo valore totale maggiore la
 strategia non è in grado di determinare il resto.</p>
 <p>Ad esempio, avendo <code>H 13.50</code> come argomenti sulla linea di comando, su input
-<div class="highlight"><pre><span></span><code>10 x .01, 10 x .02, 10 x .05, 10 x .10, 10 x .20, 10 x 1
-10 x 2
+<div class="highlight"><pre><span></span><code>10 * .01; 10 * .02; 10 * .05; 10 * .10; 10 * .20; 10 * 1
+10 * 2
 </code></pre></div>
 il client emette
 <div class="highlight"><pre><span></span><code>&lt;10 x 5 cents, 10 x 10 cents, 10 x 20 cents, 10 x 1 unit&gt;
-change
+change-not-possible
 </code></pre></div>
 dove la prima riga è un aggregato contenuto nell'aggregato di input che vale
-esattamente 13.50, mentre la seconda riga è <code>change</code> perché l'aggregato di input
-vale 20.00 ma non contiene monete che permettono di calcolare il resto di 13.50.</p>
+esattamente 13.50, mentre la seconda riga è <code>change-not-possible</code> perché
+l'aggregato di input vale 20.00 ma non contiene monete che permettono di
+calcolare il resto di 13.50.</p>
 <h3><code>OrdinaProdotti</code></h3>
 <p>Legge dal flusso di ingresso una sequenza di prodotti, uno per linea, ciascuno
-nella forma <code>nome|prezzo|taglia</code> (dove <code>taglia</code> è uno dei caratteri: <code>S</code>, <code>M</code> o
-<code>L</code>) ordinata in base all'ordinamento naturale dei prodotti.</p>
+nella forma <code>nome|prezzo|taglia</code> (dove <code>taglia</code> è una delle stringhe: <code>S</code>, <code>M</code>,
+<code>L</code> o <code>XL</code>) ordinata in base all'ordinamento naturale dei prodotti.</p>
 <p>Ad esempio, su input
 <div class="highlight"><pre><span></span><code>Bibita|2|S
 Crostata|1.50|M
@@ -1483,12 +1485,12 @@ il client emette
 &lt;Crostata, 1 unit 50 cents, M&gt;
 </code></pre></div></p>
 <h3><code>CaricaBinari</code></h3>
-<p>Data la capacità (data da un intero positivo) e la taglia (indicata da uno dei
-caratteri: <code>S</code>, <code>M</code> o <code>L</code>) di un binario come argomenti sulla linea di comando,
-costruisce tale binario (inizialmente vuoto) e ne emette nel flusso d'uscita la
-descrizione.</p>
-<p>Quindi legge dal flusso di ingresso una sequenza di coppie (separate da <code>,</code>)
-<code>quantità nome|prezzo|taglia</code> e per tenta di caricare la quantità specificata
+<p>Data la capacità (data da un intero positivo) e la taglia (indicata da una delle
+stringhe: <code>S</code>, <code>M</code>, <code>L</code> o <code>XL</code>) di un binario come argomenti sulla linea di
+comando, costruisce tale binario (inizialmente vuoto) e ne emette nel flusso
+d'uscita la descrizione.</p>
+<p>Quindi legge dal flusso di ingresso una sequenza di coppie (separate da <code>;</code>)
+<code>quantità nome@prezzo@taglia</code> e per tenta di caricare la quantità specificata
 del prodotto indicato nel binario, emettendo nel flusso d'uscita una
 rappresentazione del binario, se l'operazione ha avuto successo, oppure:</p>
 <ul>
@@ -1498,13 +1500,13 @@ rappresentazione del binario, se l'operazione ha avuto successo, oppure:</p>
 <li><code>size</code> se la taglia del prodotto da caricare eccede quella del binario.</li>
 </ul>
 <p>Ad esempio, avendo <code>100 M</code> come argomenti sulla linea di comando, su input
-<div class="highlight"><pre><span></span><code>1, Panino|4.50|L
-101, Snack|.50|S
-10, Acqua|1|M
-20, Bibita|1.50|S
-80, Acqua|1|M
-11, Acqua|1|M
-10, Acqua|1|M
+<div class="highlight"><pre><span></span><code>1; Panino @ 4.50 @ L
+101; Snack @ .50 @ S
+10; Acqua @ 1 @ M
+20; Bibita @ 1.50 @ S
+80; Acqua @ 1 @ M
+11; Acqua @ 1 @ M
+10; Acqua @ 1 @ M
 </code></pre></div>
 il client emette 
 <div class="highlight"><pre><span></span><code>&lt;-, M, 0, 100&gt;
@@ -1522,19 +1524,21 @@ bibita non può essere aggiunta ad un binario che contiene già l'acqua e nel
 binario dove ci sono già 90 unità di acqua non possono essere aggiunte altre 11
 unità perché si supererebbe la capacità.</p>
 <h3><code>UsaDistributore</code></h3>
-<p>Legge dal flusso di ingresso una linea contenente coppie <code>capacità|taglia</code> (separate
-da <code>,</code>) che descrivono un elenco di binari, quindi legge una linea che descrive
-un aggregato di monete e una contenente <code>H</code> o <code>L</code> che descrive la strategia di
-resto (da interpretare come nel client <em><code>CalcolaResti</code></em>); procede quindi col
-creare il distributore automatico con i binari dell'elenco, il fondo cassa dato
-dall'aggregato e la strategia di resto indicata.</p>
+<p>Legge dal flusso di ingresso una linea contenente coppie <code>capacità|taglia</code>
+(separate da <code>,</code>) che descrivono un elenco di binari, quindi legge una linea che
+descrive un aggregato di monete (dato da una sequenza di linee di coppie
+<code>quantità moneta</code>) seguito da una linea contenente <code>.</code>, quindi una contenente
+<code>H</code> o <code>L</code> che descrive la strategia di resto (da interpretare come nel client
+<em><code>CalcolaResti</code></em>); procede quindi col creare il distributore automatico con i
+binari dell'elenco, il fondo cassa dato dall'aggregato e la strategia di resto
+indicata.</p>
 <p>Quindi legge dal flusso di ingresso una sequenza di comandi, uno per linea, di
 una delle seguenti forme:</p>
 <ul>
-<li><code>+ quantità, nome|prezzo|taglia</code> per caricare il prodotto specificato nel
+<li><code>+ quantità ! nome;prezzo;taglia</code> per caricare il prodotto specificato nel
   distributore;</li>
-<li><code>- indice, aggregato</code> per erogare il prodotto dal binario di indice dato,
-  pagando con l'aggregato specificato;</li>
+<li><code>- indice ! aggregato</code> per erogare il prodotto dal binario di indice dato,
+  pagando con l'aggregato specificato (nel formato di <code>CalcolaResti</code>);</li>
 <li><code>?</code> per emettere nel flusso d'uscita lo stato corrente del distributore.</li>
 </ul>
 <p>A fronte del caricamento, emette nel flusso d'uscita il numero di prodotti
@@ -1552,23 +1556,27 @@ d'uscita:</p>
 </ul>
 <p>Ad esempio, su input
 <div class="highlight"><pre><span></span><code>30|S, 20|M, 10|L, 30|S, 20|M, 10|L, 30|S, 20|M, 10|L
-10 x .50, 10 x 1, 10 x 2
-+ 5, Bibita|2|S
-+ 5, Panino|3.20|L
-- 2, 2 x 2, 2 x 1
-+ 5, Patatine|2.50|M
+10 .50
+10 1
+10 2
+.
+H
++ 5 ! Bibita;2;S
++ 5 ! Panino;3.20;L
+- 2 ! 2 * 2; 2 * 1
++ 5 ! Patatine;2.50;M
 ?
-- 3, 1 x 1, 2 x .20, 1 x .10
-+ 10, Panino|3.20|L
-- 5, 3 x 2, 1 x .20
+- 3 ! 1 * 1; 2 * .20; 1 * .10
++ 10 ! Panino;3.20;L
+- 5 ! 3 * 2; 1 * .20
 ?
-- 1, 2 x 1, 5 x .20
-+ 10, Extra|10|L
+- 1 ! 2 * 1; 5 * .20
++ 10 ! Extra;10;L
 ?
-+ 2, Extra|10|L
-- 1, 1 x 1
++ 2 ! Extra;10;L
+- 1 ! 1 * 1
 ?
-- 10, 1 x 1
+- 10 ! 1 * 1
 </code></pre></div>
 il client emette
 <div class="highlight"><pre><span></span><code>+ 0
@@ -1602,12 +1610,12 @@ il client emette
 - slot
 </code></pre></div></p>
 <p>Se ci si limita ad esaminare le erogazioni
-<div class="highlight"><pre><span></span><code>- 2, 2 x 2, 2 x 1
-- 3, 1 x 1, 2 x .20, 1 x .10
-- 5, 3 x 2, 1 x .20
-- 1, 2 x 1, 5 x .20
-- 1, 1 x 1
-- 10, 1 x 1
+<div class="highlight"><pre><span></span><code>- 2 ! 2 * 2, 2 * 1
+- 3 ! 1 * 1, 2 * .20, 1 * .10
+- 5 ! 3 * 2, 1 * .20
+- 1 ! 2 * 1, 5 * .20
+- 1 ! 1 * 1
+- 10 ! 1 * 1
 </code></pre></div>
 e i relativi esiti
 <div class="highlight"><pre><span></span><code>- change

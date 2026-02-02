@@ -1,6 +1,6 @@
 5 cents
-invalid
+invalid-amount
 10 cents
 1 unit
-invalid
+invalid-amount
 2 units

@@ -22,7 +22,6 @@ package clients;
 
 import macchinette.Moneta;
 
-import java.util.Optional;
 import java.util.Scanner;
 
 public class RiconosciMonete {
@@ -39,13 +38,11 @@ public class RiconosciMonete {
                     continue;
                 }
 
-              
-                Optional<Moneta> moneta = Moneta.monetaGiusta(riga);
-
-                if (moneta.isPresent()) {
-                    System.out.println(moneta.get());
-                } else {
-                    System.out.println("invalid");
+                try {
+                    Moneta moneta = Moneta.monetaGiusta(riga);
+                    System.out.println(moneta);
+                } catch (IllegalArgumentException e) {
+                    System.out.println("invalid-amount");
                 }
             }
         }

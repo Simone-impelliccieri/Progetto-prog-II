@@ -21,9 +21,8 @@ package clients;
 
 import macchinette.Aggregato;
 import macchinette.Importo;
-import macchinette.StrategiaMassimo;
-import macchinette.StrategiaMinimo;
 import macchinette.StrategiaResto;
+import macchinette.Strategie;
 import macchinette.eccezioni.ComposizioneInsufficienteException;
 import macchinette.eccezioni.ValoreInsufficienteException;
 
@@ -39,9 +38,9 @@ public class CalcolaResti {
 
         StrategiaResto strategia;
         if (args[0].equals("H")) {
-            strategia = new StrategiaMassimo();
+            strategia = new Strategie('H');
         } else if (args[0].equals("L")) {
-            strategia = new StrategiaMinimo();
+            strategia = new Strategie('L');
         } else {
             return;
         }
@@ -64,16 +63,15 @@ public class CalcolaResti {
                 try {
                     disponibilita = Aggregato.daStringa(rigaPulita);
                 } catch (IllegalArgumentException e) {
-                    System.out.println("invalid");
                     continue;
                 }
 
                 try {
                     System.out.println(strategia.calcolaResto(restoDaDare, disponibilita));
                 } catch (ValoreInsufficienteException e) {
-                    System.out.println("value");
+                    System.out.println("insufficient-value");
                 } catch (ComposizioneInsufficienteException e) {
-                    System.out.println("change");
+                    System.out.println("change-not-possible");
                 }
             }
         }

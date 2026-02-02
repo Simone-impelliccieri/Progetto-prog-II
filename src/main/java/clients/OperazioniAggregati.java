@@ -43,7 +43,6 @@ public class OperazioniAggregati {
 
                 char segno = rigaPulita.charAt(0);
                 if (segno != '+' && segno != '-') {
-                    System.out.println("invalid");
                     continue;
                 }
 
@@ -51,7 +50,6 @@ public class OperazioniAggregati {
                 try {
                     operando = Aggregato.daStringa(rigaPulita.substring(1).trim());
                 } catch (IllegalArgumentException e) {
-                    System.out.println("invalid");
                     continue;
                 }
 
@@ -63,9 +61,9 @@ public class OperazioniAggregati {
                         aggregatoCorrente.rimuovi(operando);
                         System.out.println(aggregatoCorrente);
                     } catch (ValoreInsufficienteException e) {
-                        System.out.println("value");
+                        System.out.println("missing-value");
                     } catch (ComposizioneInsufficienteException e) {
-                        System.out.println("coins");
+                        System.out.println("missing-coins");
                     }
                 }
             }

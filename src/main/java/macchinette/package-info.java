@@ -10,9 +10,7 @@
  *   <li>{@code Binario} rappresenta un contenitore di prodotti all'interno del distributore</li>
  *   <li>{@code DistributoreAutomatico} rappresenta il distributore con binari, fondo cassa e strategia resto</li>
  *   <li>{@code StrategiaResto} interfaccia per le strategie di calcolo del resto</li>
- *   <li>{@code StrategiaMassimo} strategia che usa per prime le monete di valore maggiore</li>
- *   <li>{@code StrategiaMinimo} strategia che usa per prime le monete di valore minore</li>
- *   <li>{@code StrategiaPersonale} strategia che preserva le monete più utili </li>
+ *   <li>{@code Strategie} strategie raggruppate (massimo/minimo/personale)</li>
  * </ul>
  *
  * Ho utilizzato l'autocomplete di co-pilot per assistermi nella scrittura di

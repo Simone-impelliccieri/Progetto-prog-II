@@ -49,7 +49,7 @@ public class Prodotto implements Comparable<Prodotto> {
      * RI:
      * <ul>
      *   <li>{@code nome} è una stringa non vuota e senza spazi iniziali o finali</li>
-     *   <li>{@code importo} non è nullo</li>
+    *   <li>{@code prezzo} non è nullo</li>
      *   <li>{@code taglia} non è nulla</li>
      * </ul>
      */
@@ -123,7 +123,7 @@ public class Prodotto implements Comparable<Prodotto> {
             throw new IllegalArgumentException("descrizione nulla");
         }
 
-        String[] parti = descrizione.split("\\|", -1);
+        String[] parti = descrizione.split("\\s*[|;@]\\s*", -1);
 
         if (parti.length != 3) {
             throw new IllegalArgumentException("formato prodotto non valido");
@@ -133,11 +133,7 @@ public class Prodotto implements Comparable<Prodotto> {
 
         Importo prezzo = Importo.daStringa(parti[1].trim());
 
-        Taglia taglia = Taglia.daStringa(parti[2].trim()).orElse(null);
-
-        if (taglia == null) {
-            throw new IllegalArgumentException("taglia non valida");
-        }
+        Taglia taglia = Taglia.daStringa(parti[2].trim());
 
         return new Prodotto(nome, prezzo, taglia);
 

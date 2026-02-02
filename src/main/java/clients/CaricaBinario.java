@@ -37,14 +37,11 @@ public class CaricaBinario {
         try (Scanner scanner = new Scanner(System.in)) {
 
             int capacita;
+            Taglia taglia;
             try {
                 capacita = Integer.parseInt(args[0].trim());
-            } catch (NumberFormatException e) {
-                return;
-            }
-
-            Taglia taglia = Taglia.daStringa(args[1].trim()).orElse(null);
-            if (taglia == null) {
+                taglia = Taglia.daStringa(args[1].trim());
+            } catch (IllegalArgumentException e) {
                 return;
             }
 
@@ -57,9 +54,9 @@ public class CaricaBinario {
                     continue;
                 }
 
-                int indiceVirgola = rigaPulita.indexOf(',');
-                if (indiceVirgola < 0) {
-                    System.out.println("invalid");
+                int indiceSep = rigaPulita.indexOf(';');
+                if (indiceSep < 0) {
+                    System.out.println("invalid-amount");
                     continue;
                 }
 
@@ -67,10 +64,10 @@ public class CaricaBinario {
                 Prodotto prodotto;
 
                 try {
-                    quantita = Integer.parseInt(rigaPulita.substring(0, indiceVirgola).trim());
-                    prodotto = Prodotto.daStringa(rigaPulita.substring(indiceVirgola + 1).trim());
+                    quantita = Integer.parseInt(rigaPulita.substring(0, indiceSep).trim());
+                    prodotto = Prodotto.daStringa(rigaPulita.substring(indiceSep + 1).trim());
                 } catch (IllegalArgumentException e) {
-                    System.out.println("invalid");
+                    System.out.println("invalid-amount");
                     continue;
                 }
 

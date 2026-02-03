@@ -25,7 +25,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 import macchinette.Prodotto;
-import macchinette.parser;
+import macchinette.Parser;
 
 public class OrdinaProdotti {
 
@@ -45,7 +45,7 @@ public class OrdinaProdotti {
 
                 Prodotto p;
                 try {
-                    p = parser.daStringaProdotto(rigaPulita);
+                    p = Parser.daStringaProdotto(rigaPulita);
                 } catch (IllegalArgumentException e) {
                     continue;
                 }

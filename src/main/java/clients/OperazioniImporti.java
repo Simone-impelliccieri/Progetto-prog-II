@@ -24,7 +24,7 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import macchinette.Importo;
-import macchinette.parser;
+import macchinette.Parser;
 
 public class OperazioniImporti {
 
@@ -50,7 +50,7 @@ public class OperazioniImporti {
 
                 Importo importoSinistro;
                 try {
-                    importoSinistro = parser.daStringaImporto(sinistraStr);
+                    importoSinistro = Parser.daStringaImporto(sinistraStr);
                 } catch (IllegalArgumentException e) {
                     System.out.println("invalid-result");
                     continue;
@@ -78,7 +78,7 @@ public class OperazioniImporti {
                 } else {
                     Importo importoDestro;
                     try {
-                        importoDestro = parser.daStringaImporto(destraStr);
+                        importoDestro = Parser.daStringaImporto(destraStr);
                     } catch (IllegalArgumentException e) {
                         System.out.println("invalid-result");
                         continue;

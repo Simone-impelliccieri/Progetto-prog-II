@@ -24,7 +24,7 @@ import java.util.Scanner;
 import macchinette.Binario;
 import macchinette.Prodotto;
 import macchinette.Taglia;
-import macchinette.parser;
+import macchinette.Parser;
 import macchinette.eccezioni.*;
 
 public class CaricaBinario {
@@ -41,7 +41,7 @@ public class CaricaBinario {
             Taglia taglia;
             try {
                 capacita = Integer.parseInt(args[0].trim());
-                taglia = parser.daStringaTaglia(args[1].trim());
+                taglia = Parser.daStringaTaglia(args[1].trim());
             } catch (IllegalArgumentException e) {
                 return;
             }
@@ -66,7 +66,7 @@ public class CaricaBinario {
 
                 try {
                     quantita = Integer.parseInt(rigaPulita.substring(0, indiceSep).trim());
-                    prodotto = parser.daStringaProdotto(rigaPulita.substring(indiceSep + 1).trim());
+                    prodotto = Parser.daStringaProdotto(rigaPulita.substring(indiceSep + 1).trim());
                 } catch (IllegalArgumentException e) {
                     System.out.println("invalid-amount");
                     continue;

@@ -4,9 +4,9 @@ import java.math.BigDecimal;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public final class parser {
+public final class Parser {
 
-	private parser() {
+	private Parser() {
 	}
 
 	/**

@@ -49,7 +49,7 @@ public class UsaDistributore {
                 }
                 try {
                     int capacita = Integer.parseInt(parti[0].trim());
-                    Taglia taglia = parser.daStringaTaglia(parti[1].trim());
+                    Taglia taglia = Parser.daStringaTaglia(parti[1].trim());
                     binari.add(new Binario(taglia, capacita));
                 } catch (IllegalArgumentException e) {
                     return;
@@ -70,7 +70,7 @@ public class UsaDistributore {
                 if (parti.length > 1) {
                     try {
                         int quantita = Integer.parseInt(parti[0]);
-                        Moneta moneta = parser.daStringaMoneta(parti[1]);
+                        Moneta moneta = Parser.daStringaMoneta(parti[1]);
                         fondoCassa.aggiungi(moneta, quantita);
                     } catch (Exception e) {
                     }
@@ -133,7 +133,7 @@ public class UsaDistributore {
                     Prodotto prodotto;
                     try {
                         quantita = Integer.parseInt(primo);
-                        prodotto = parser.daStringaProdotto(secondo);
+                        prodotto = Parser.daStringaProdotto(secondo);
                     } catch (IllegalArgumentException e) {
                         continue;
                     }
@@ -144,7 +144,7 @@ public class UsaDistributore {
                     Aggregato pagamento;
                     try {
                         indice = Integer.parseInt(primo);
-                        pagamento = parser.daStringaAggregato(secondo);
+                        pagamento = Parser.daStringaAggregato(secondo);
                     } catch (IllegalArgumentException e) {
                         continue;
                     }

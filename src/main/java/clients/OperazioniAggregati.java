@@ -21,7 +21,7 @@ along with this file.  If not, see <https://www.gnu.org/licenses/>.
 package clients;
 
 import macchinette.Aggregato;
-import macchinette.parser;
+import macchinette.Parser;
 import macchinette.eccezioni.ComposizioneInsufficienteException;
 import macchinette.eccezioni.ValoreInsufficienteException;
 
@@ -49,7 +49,7 @@ public class OperazioniAggregati {
 
                 Aggregato operando;
                 try {
-                    operando = parser.daStringaAggregato(rigaPulita.substring(1).trim());
+                    operando = Parser.daStringaAggregato(rigaPulita.substring(1).trim());
                 } catch (IllegalArgumentException e) {
                     continue;
                 }

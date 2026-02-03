@@ -11,6 +11,8 @@
  *   <li>{@code DistributoreAutomatico} rappresenta il distributore con binari, fondo cassa e strategia resto</li>
  *   <li>{@code StrategiaResto} interfaccia per le strategie di calcolo del resto</li>
  *   <li>{@code Strategie} strategie raggruppate (massimo/minimo/personale)</li>
+ *   <li>{@code Parser} strategie raggruppate (massimo/minimo/personale)</li>
+ * 
  * </ul>
  *
  * Ho utilizzato l'autocomplete di co-pilot per assistermi nella scrittura di

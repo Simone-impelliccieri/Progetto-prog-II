@@ -7,14 +7,13 @@ import java.util.Objects;
  * 
  *  Ogni Taglia:
  * <ul>
- *   <li>è uno dei seguenti tipi:S, M ,L o XL</li>
+ *   <li>è uno dei seguenti tipi: S, M, L o XL</li>
  *   <li>possiede un ordinamento naturale dato dall'ordine S M L XL.</li>
  * </ul>
  *
  *
  * Operazioni implementate:
  * <ul>
- *   <li>riconoscere una taglia a partire da una stringa </li>
  *   <li>verificare se una taglia è minore o uguale di un'altra</li>
  * </ul>
  *
@@ -49,7 +48,7 @@ public enum Taglia {
 
     /**
     * Verifica se questa taglia è minore o uguale della taglia {@code altra} rispetto
-    * all'ordinamento naturale S poi M poi L po XL.
+    * all'ordinamento naturale S poi M poi L poi XL.
     *
     * @param altra, la taglia di confronto, non null.
     * @return true se questa taglia è minore o uguale ad {@code altra}, false in caso contrario.

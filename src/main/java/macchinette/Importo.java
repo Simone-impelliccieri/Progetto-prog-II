@@ -61,7 +61,7 @@ public class Importo implements Comparable<Importo> {
      * @param unita, deve essere non negativa.
      * @param centesimi, deve essere compresa tra 0 e 99.
      * @throws IllegalArgumentException se {@code unita < 0}, se {@code centesimi} non è nel range
-     *         consentito, oppure se unità + centesimi supera il valore massimo .
+     *         consentito, oppure se unità + centesimi supera il valore massimo.
      */
     public Importo(int unita, int centesimi) {
         if (unita < 0) {

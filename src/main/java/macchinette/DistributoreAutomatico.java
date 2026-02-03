@@ -10,7 +10,6 @@ import macchinette.eccezioni.*;
 
 /**
  * Un Distributore automatico rappresenta un sistema di vendita automatizzato a moneta.
-
  * Un Distributore automatico è mutabile perché le operazioni {@code svuotaFondoCassa},
  * {@code aggiungiAlFondoCassa}, {@code carica} e {@code eroga} modificano lo stato dell'istanza.
  *
@@ -65,22 +64,20 @@ public class DistributoreAutomatico {
      * </ul>
     */
 
-    //no ok QUA ha detto qualcosa riguardo ai binari che devo controllare prima se non siano pieni
-
     /**
      * Costruttore, crea un distributore automatico con i binari, il fondo cassa
      * e la strategia per il resto specificati.
      *
-    * I binari e il fondocassa vengono copiati per garantire l'indipendenza dallo stato esterno.
-    * I binari forniti devono essere inizialmente vuoti.
+     * I binari e il fondo cassa vengono copiati per garantire l'indipendenza dallo stato esterno.
+     * I binari forniti devono essere inizialmente vuoti.
      * 
      *
      * @param binari, lista dei binari del distributore, non nulla e senza elementi nulli.
      * @param fondoCassa,  aggregato iniziale del fondo cassa, non nullo.
      * @param strategiaResto, strategia per il calcolo del resto, non nulla.
-    * @throws NullPointerException se {@code binari}, {@code fondoCassa}, {@code strategiaResto}
-    *         o un elemento di {@code binari} è nullo.
-    * @throws IllegalArgumentException se un binario non è vuoto.
+     * @throws NullPointerException se {@code binari}, {@code fondoCassa}, {@code strategiaResto}
+     *         o un elemento di {@code binari} è nullo.
+     * @throws IllegalArgumentException se un binario non è vuoto.
      */
     public DistributoreAutomatico(List<Binario> binari, Aggregato fondoCassa, StrategiaResto strategiaResto) {
 
@@ -126,8 +123,6 @@ public class DistributoreAutomatico {
 
     /**
      * Crea una copia indipendente di un aggregato.
-     *
-     * Serve a garantire il disaccoppiamento tra lo stato interno del distributore e quello esterno.
      *
      * @param origine, aggregato da copiare, non nullo.
      * @return un nuovo aggregato con le stesse monete di {@code origine}.

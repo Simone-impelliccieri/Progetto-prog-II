@@ -13,25 +13,24 @@ import macchinette.eccezioni.ValoreInsufficienteException;
  *
  * Un aggregato non ha un ordinamento naturale.
  * 
- * Un aggregato è un entità mutabile perchè i metodi aggiungi(Moneta, int),
- *  aggiungi(Aggregato) e  rimuovi(Aggregato) modificano lo stato dell'istanza.
+ * Un aggregato è un'entità mutabile perché i metodi aggiungi(Moneta, int),
+ * aggiungi(Aggregato) e rimuovi(Aggregato) modificano lo stato dell'istanza.
  *
  * Operazioni implementate:
  * <ul>
  *   <li>aggiungere monete (di un dato tipo o a partire da un altro aggregato)</li>
  *   <li>rimuovere un aggregato</li>
  *   <li>calcolare il valore totale come Importo</li>
- *   <li>restituisce valore totale Aggregato </li>
+ *   <li>restituire il valore totale</li>
  * </ul>
  *
  */
 public class Aggregato {
 
     /**
-     * Campo interno dell'aggregato, composto da una mappa tipo di moneta-quantità posseduta
+     * Mappa tipo di moneta-quantità posseduta.
      */
     private final Map<Moneta, Integer> contenuto;
-
 
     /*
     * AF:
@@ -99,7 +98,6 @@ public class Aggregato {
         }
     }
 
-
     /**
      * Rimuove dall'aggregato tutte le monete contenute nell'Aggregato {@code daRimuovere}.
      *
@@ -157,7 +155,6 @@ public class Aggregato {
         return tot;
     }
 
-
     /**
      * Restituisce la quantità di un tipo specifico di moneta {@code m}.
      * 
@@ -174,7 +171,6 @@ public class Aggregato {
         }
 
     }
-
 
     @Override
     public String toString() {

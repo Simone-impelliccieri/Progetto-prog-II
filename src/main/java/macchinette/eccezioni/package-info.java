@@ -11,9 +11,9 @@
  * Eccezioni relative ai Binari:
  * <ul>
  *   <li>{@code BinarioVuotoException} tentativo di dispensare da un binario vuoto</li>
- *   <li>{@code CapacitaSuperataException} la quantità da caricare è superiore della capacità del binario</li>
+ *   <li>{@code CapacitaSuperataException} la quantità da caricare è superiore alla capacità del binario</li>
  *   <li>{@code ProdottoDiversoException} tentativo di caricare un prodotto diverso da quello del binario</li>
- *   <li>{@code TagliaNonCompatibileException} la taglia del prodotto è diversa da quella del binario</li>
+ *   <li>{@code TagliaNonCompatibileException} la taglia del prodotto non è compatibile con il binario</li>
  * </ul>
  *
  * Eccezioni relative al Distributore automatico:

@@ -10,9 +10,9 @@ package macchinette;
  *   <li>possiede un ordinamento naturale dato dal valore</li>
  * </ul>
  *
- * Operazioni implementate :
+ * Operazioni implementate:
  * <ul>
- *   <li>determinare la moneta il cui valore corrisponde ad una stringa fornita</li>
+ *   <li>ottenere il valore della moneta</li>
  * </ul>
  * 
  * 

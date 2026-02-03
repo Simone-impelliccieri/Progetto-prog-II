@@ -10,7 +10,7 @@ import macchinette.eccezioni.TagliaNonCompatibileException;
 /**
  * Un Binario rappresenta un contenitore di prodotti all'interno di un distributore automatico.
  * 
- * Un Binario è un'entità mutabile perchè le operazione carica e dispensa modificano lo stato dell'istanza.
+ * Un Binario è un'entità mutabile perché le operazioni carica e dispensa modificano lo stato dell'istanza.
  * 
  *
  * Ogni Binario è caratterizzato da:
@@ -46,7 +46,7 @@ public class Binario {
     private final int maxCapacita;
 
     /**
-     * Eventuale tipo di prodotto contenuto nel binario .
+    * Eventuale tipo di prodotto contenuto nel binario.
      */
     private Prodotto tipoProdotto;
 
@@ -94,7 +94,6 @@ public class Binario {
         this.numeroProdotti = 0;
     }
 
-
     /**
      * Costruttore di copia, costruisce un nuovo binario copiando lo stato di {@code altro}.
      *
@@ -138,7 +137,6 @@ public class Binario {
     int getSpazioRimanente() {
         return maxCapacita - numeroProdotti;
     }
-
 
     /**
      * Indica se il binario è vuoto.

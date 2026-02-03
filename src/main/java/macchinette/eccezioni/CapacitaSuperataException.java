@@ -1,7 +1,7 @@
 package macchinette.eccezioni;
 
 /**
- * Eccezione che indica che la quantità da caricare è superiore della capacità del binario
+ * Eccezione che indica che la quantità da caricare è superiore alla capacità del binario
  */
 public class CapacitaSuperataException extends Exception {
     /** Versione di serializzazione. */

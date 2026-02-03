@@ -1,7 +1,7 @@
 package macchinette.eccezioni;
 
 /**
- * Eccezione che indica che la taglia del prodotto è diversa da quella del binario  
+ * Eccezione che indica che la taglia del prodotto non è compatibile con il binario
  */
 public class TagliaNonCompatibileException extends Exception {
     /** Versione di serializzazione. */

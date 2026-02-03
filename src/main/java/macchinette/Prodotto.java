@@ -10,13 +10,14 @@ import java.util.Objects;
  * <ul>
  *   <li>un nome {@code nome}</li>
  *   <li>un prezzo (un importo non negativo){@code prezzo}</li>
- *   <li>una taglia (S, M o L) {@code taglia}</li>
+ *   <li>una taglia (S, M, L o XL) {@code taglia}</li>
  * </ul>
  * 
  * 
  * Operazioni implementate:
  * <ul>
- *   <li>costruzione di un prodotto a partire da una descrizione testuale</li>
+ *   <li>costruzione del prodotto</li>
+ *   <li>accesso ai campi</li>
  * </ul>
  *
  * L'ordinamento naturale dei prodotti è dato dall'ordine della tripla: taglia, nome e prezzo.
@@ -43,7 +44,7 @@ public class Prodotto implements Comparable<Prodotto> {
     /*
      * AF:
      * <ul>
-     *   <li>l'istanza costruita rappresenta il prodotto di nome {@code nome}, prezzo {@code importo} e taglia {@code taglia}.</li>
+    *   <li>l'istanza costruita rappresenta il prodotto di nome {@code nome}, prezzo {@code prezzo} e taglia {@code taglia}.</li>
      * </ul>
      *
      * RI:

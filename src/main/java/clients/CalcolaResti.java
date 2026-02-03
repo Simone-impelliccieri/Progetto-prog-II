@@ -39,9 +39,9 @@ public class CalcolaResti {
 
         StrategiaResto strategia;
         if (args[0].equals("H")) {
-            strategia = new Strategie('H');
+            strategia = Strategie.massimo;
         } else if (args[0].equals("L")) {
-            strategia = new Strategie('L');
+            strategia = Strategie.minimo;
         } else {
             return;
         }

@@ -4,8 +4,14 @@ import java.math.BigDecimal;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public final class Parser {
+/**
+ * Classe di utilità per il parsing di importi, monete, taglie, prodotti e aggregati.
+ */
+public class Parser {
 
+	/**
+	 * Costruttore privato 
+	 */
 	private Parser() {
 	}
 
@@ -41,7 +47,6 @@ public final class Parser {
 	/**
 	 * Cerca la moneta il cui valore è uguale alla stringa in input.
 	 *
-	 * La stringa viene interpretata tramite {@link #daStringaImporto(String)}.
 	 *
 	 * @param stringa, rappresentazione testuale dell'importo.
 	 * @return la moneta corrispondente.
@@ -77,30 +82,16 @@ public final class Parser {
 			throw new IllegalArgumentException("stringa nulla");
 		}
 
-		String testo = stringa.trim();
-
-		if ("XL".equals(testo)) {
-			return Taglia.XL;
-		}
-
-		if (testo.length() != 1) {
-			throw new IllegalArgumentException("taglia non valida");
-		}
-
-		switch (testo.charAt(0)) {
-			case 'S':
-				return Taglia.S;
-			case 'M':
-				return Taglia.M;
-			case 'L':
-				return Taglia.L;
-			default:
-				throw new IllegalArgumentException("taglia non valida");
+		String testo = stringa.trim().toUpperCase();
+		try {
+			return Taglia.valueOf(testo);
+		} catch (IllegalArgumentException e) {
+			throw new IllegalArgumentException("taglia non valida", e);
 		}
 	}
 
 	/**
-	 * Metodo factory statico, costruisce un prodotto a partire da una descrizione di tipo string.
+	 * Costruisce un prodotto a partire da una descrizione di tipo string.
 	 *
 	 * Il formato atteso è {@code nome|prezzo|taglia} (con separatori anche {@code ;} o {@code @}).
 	 * La taglia deve essere uno tra i caratteri {@code S}, {@code M}, {@code L} e {@code XL}.
@@ -131,7 +122,7 @@ public final class Parser {
 	}
 
 	/**
-	 * Metodo factory statico, legge una stringa e restituisce l'istanza di aggregato corrispondente.
+	 * Legge una stringa e restituisce l'istanza di aggregato corrispondente.
 	 *
 	 * Se {@code descrizione} è null o vuota viene restituito l'aggregato vuoto.
 	 *

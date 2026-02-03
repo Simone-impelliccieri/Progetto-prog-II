@@ -73,7 +73,7 @@ public enum Moneta {
      *
      * @return il valore della moneta come Importo .
      */
-    Importo getValore() {
+    public Importo getValore() {
         return valore;
     }
 

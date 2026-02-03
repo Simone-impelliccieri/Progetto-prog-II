@@ -72,8 +72,6 @@ public class Binario {
      * </ul>
     */
 
-    // il prof ha detto qualcosa del tipo " ah ma non controlli prima se non sono pieni i binari?"
-
     /**
      * Costruttore, crea un binario vuoto di taglia {@code taglia} e capacità massima {@code maxCapacita}.
      *
@@ -96,7 +94,6 @@ public class Binario {
         this.numeroProdotti = 0;
     }
 
-    //hanno senso per una copia tutti sti controlli? è solo una copia....
 
     /**
      * Costruttore di copia, costruisce un nuovo binario copiando lo stato di {@code altro}.
@@ -114,17 +111,10 @@ public class Binario {
         Objects.requireNonNull(altro, "binario non può essere null");
         this.taglia = altro.taglia;
         this.maxCapacita = altro.maxCapacita;
-
-        if (altro.numeroProdotti < 0 || altro.numeroProdotti > altro.maxCapacita) {
-            throw new IllegalStateException("binario non valido");
-        }
         if (altro.numeroProdotti == 0) {
             this.tipoProdotto = null;
             this.numeroProdotti = 0;
             return;
-        }
-        if (altro.tipoProdotto == null) {
-            throw new IllegalStateException("binario non correttamente inizializzato");
         }
 
         this.tipoProdotto = altro.tipoProdotto;
@@ -149,7 +139,6 @@ public class Binario {
         return maxCapacita - numeroProdotti;
     }
 
-    //perchè public?
 
     /**
      * Indica se il binario è vuoto.
@@ -167,7 +156,7 @@ public class Binario {
      *
      * @return il prodotto contenuto, oppure null se il binario è vuoto.
      */
-    Prodotto getTipoProdotto() {
+    public Prodotto getTipoProdotto() {
         return tipoProdotto;
     }
 

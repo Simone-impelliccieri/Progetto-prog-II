@@ -71,14 +71,16 @@ public class DistributoreAutomatico {
      * Costruttore, crea un distributore automatico con i binari, il fondo cassa
      * e la strategia per il resto specificati.
      *
-     * I binari e il fondocassa vengono copiati per garantire l'indipendenza dallo stato esterno.
+    * I binari e il fondocassa vengono copiati per garantire l'indipendenza dallo stato esterno.
+    * I binari forniti devono essere inizialmente vuoti.
      * 
      *
      * @param binari, lista dei binari del distributore, non nulla e senza elementi nulli.
      * @param fondoCassa,  aggregato iniziale del fondo cassa, non nullo.
      * @param strategiaResto, strategia per il calcolo del resto, non nulla.
-     * @throws NullPointerException se {@code binari}, {@code fondoCassa}, {@code strategiaResto}
-     *         o un elemento di {@code binari} è nullo.
+    * @throws NullPointerException se {@code binari}, {@code fondoCassa}, {@code strategiaResto}
+    *         o un elemento di {@code binari} è nullo.
+    * @throws IllegalArgumentException se un binario non è vuoto.
      */
     public DistributoreAutomatico(List<Binario> binari, Aggregato fondoCassa, StrategiaResto strategiaResto) {
 
@@ -91,6 +93,9 @@ public class DistributoreAutomatico {
         List<Binario> copiaBinari = new ArrayList<>(binari.size());
         for (Binario binario : binari) {
             Objects.requireNonNull(binario, "binario non può essere null");
+            if (!binario.eVuoto()) {
+                throw new IllegalArgumentException("binario non vuoto");
+            }
             copiaBinari.add(new Binario(binario));
         }
         this.binari = Collections.unmodifiableList(copiaBinari);
@@ -146,37 +151,16 @@ public class DistributoreAutomatico {
         this.fondoCassa.aggiungi(daAggiungere);
     }
 
-    //"meglio restituire gli oggetti e che siano i client a farsi la conversione a stringa " dice lui
-    // farei tipo public Map<Integer, Prodotto> statoProdotti
-
     /**
-     * Restituisce un iteratore sulle descrizioni dei prodotti disponibili.
+     * Restituisce un iteratore sui binari del distributore.
      *
-     * Per ciascun binario non vuoto viene prodotta una stringa nel formato
-     * {@code "? indice | nome | prezzo"}.
+     * Il client può usare l'indice di iterazione per ricostruire la descrizione
+     * dei prodotti disponibili.
      *
-     * @return un iteratore, sulle descrizioni dei binari non vuoti.
-     * @throws IllegalStateException se un binario non vuoto non possiede un tipo di prodotto.
+     * @return un iteratore sui binari (in ordine di indice).
      */
-    public Iterator<String> statoProdotti() {
-        List<String> righe = new ArrayList<>();
-
-        for (int indice = 0; indice < binari.size(); indice++) {
-            Binario binario = binari.get(indice);
-
-            if (binario.eVuoto()) {
-                continue;
-            }
-
-            Prodotto prodotto = binario.getTipoProdotto();
-            if (prodotto == null) {
-                throw new IllegalStateException("Binario non correttamente inizializzato");
-            }
-
-            righe.add("? " + indice + " | " + prodotto.getNome() + " | " + prodotto.getPrezzo());
-        }
-
-        return Collections.unmodifiableList(righe).iterator();
+    public Iterator<Binario> statoProdotti() {
+        return binari.iterator();
     }
 
     /**
@@ -283,9 +267,6 @@ public class DistributoreAutomatico {
         }
 
         Prodotto prodotto = binario.getTipoProdotto();
-        if (prodotto == null) {
-            throw new IllegalStateException("Binario non correttamente inizializzato");
-        }
         Importo prezzo = prodotto.getPrezzo();
         Importo valorePagamento = pagamento.getValoreTotale();
 
@@ -321,11 +302,7 @@ public class DistributoreAutomatico {
             throw new RestoNonDisponibileException();
         }
 
-        try {
-            binario.dispensa();
-        } catch (BinarioVuotoException e) {
-            throw new IllegalStateException("Binario incoerente: vuoto dopo i controlli");
-        }
+        binario.dispensa();
         this.fondoCassa = fondoNuovo;
         return resto;
     }

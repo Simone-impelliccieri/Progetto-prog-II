@@ -84,7 +84,7 @@ public class Prodotto implements Comparable<Prodotto> {
      *
      * @return il nome del prodotto.
      */
-    String getNome() {
+    public String getNome() {
         return nome;
     }
 
@@ -93,7 +93,7 @@ public class Prodotto implements Comparable<Prodotto> {
      *
      * @return il prezzo del prodotto.
      */
-    Importo getPrezzo() {
+    public Importo getPrezzo() {
         return prezzo;
     }
 
@@ -102,7 +102,7 @@ public class Prodotto implements Comparable<Prodotto> {
      *
      * @return la taglia del prodotto.
      */
-    Taglia getTaglia() {
+    public Taglia getTaglia() {
         return taglia;
     }
 

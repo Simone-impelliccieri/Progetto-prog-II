@@ -47,8 +47,6 @@ public enum Taglia {
     * </ul>
     */
 
-    // HO CAMBIATO DA TESTO.CHARAT(0) a SOLO TESTO
-
     /**
     * Verifica se questa taglia è minore o uguale della taglia {@code altra} rispetto
     * all'ordinamento naturale S poi M poi L po XL.
@@ -64,9 +62,6 @@ public enum Taglia {
 
     @Override
     public String toString() {
-        if (this == XL) {
-            return "XL";
-        }
-        return String.valueOf(name().charAt(0));
+        return name();
     }
 }

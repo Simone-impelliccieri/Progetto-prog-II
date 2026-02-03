@@ -30,23 +30,17 @@ import macchinette.eccezioni.*;
 public class UsaDistributore {
 
     public static void main(String[] args) {
-
         try (Scanner scanner = new Scanner(System.in)) {
-
-            if (!scanner.hasNextLine()) {
+            if (!scanner.hasNextLine())
                 return;
-            }
             String rigaBinari = scanner.nextLine();
-            if (rigaBinari == null || rigaBinari.trim().isEmpty()) {
+            if (rigaBinari == null || rigaBinari.trim().isEmpty())
                 return;
-            }
-
             List<Binario> binari = new ArrayList<>();
             for (String descrizione : rigaBinari.split(",")) {
                 String[] parti = descrizione.trim().split("\\|");
-                if (parti.length != 2) {
+                if (parti.length != 2)
                     return;
-                }
                 try {
                     int capacita = Integer.parseInt(parti[0].trim());
                     Taglia taglia = Parser.daStringaTaglia(parti[1].trim());
@@ -55,18 +49,13 @@ public class UsaDistributore {
                     return;
                 }
             }
-
-            if (!scanner.hasNextLine()) {
+            if (!scanner.hasNextLine())
                 return;
-            }
 
             Aggregato fondoCassa = new Aggregato();
-
             String riga = scanner.nextLine().trim();
-
             while (!riga.equals(".")) {
                 String[] parti = riga.split("\\s+");
-
                 if (parti.length > 1) {
                     try {
                         int quantita = Integer.parseInt(parti[0]);
@@ -75,56 +64,59 @@ public class UsaDistributore {
                     } catch (Exception e) {
                     }
                 }
+                if (!scanner.hasNextLine())
+                    return;
                 riga = scanner.nextLine().trim();
             }
-
             if (!scanner.hasNextLine())
                 return;
-            String rigaStrategia = scanner.nextLine().trim();
-            if (rigaStrategia.length() != 1) {
-                return;
-            }
 
+            String rigaStrategia = scanner.nextLine().trim();
+            if (rigaStrategia.length() != 1)
+                return;
             StrategiaResto strategiaResto;
             char tipo = rigaStrategia.charAt(0);
-            if (tipo == 'H') {
-                strategiaResto = new Strategie('H');
-            } else if (tipo == 'L') {
-                strategiaResto = new Strategie('L');
-            } else if (tipo == 'P') {
-                strategiaResto = new Strategie('P');
-            } else {
+            if (tipo == 'H')
+                strategiaResto = Strategie.massimo;
+            else if (tipo == 'L')
+                strategiaResto = Strategie.minimo;
+            else if (tipo == 'P')
+                strategiaResto = Strategie.personale;
+            else
                 return;
-            }
 
             DistributoreAutomatico distributore = new DistributoreAutomatico(binari, fondoCassa, strategiaResto);
-
             while (scanner.hasNextLine()) {
                 String rigaPulita = scanner.nextLine().trim();
-                if (rigaPulita.isEmpty()) {
+                if (rigaPulita.isEmpty())
                     continue;
-                }
-
                 char comando = rigaPulita.charAt(0);
-
                 if (comando == '?') {
                     if (rigaPulita.length() == 1) {
-                        Iterator<String> it = distributore.statoProdotti();
-                        while (it.hasNext())
-                            System.out.println(it.next());
+                        Iterator<Binario> it = distributore.statoProdotti();
+                        int indice = 0;
+                        while (it.hasNext()) {
+                            Binario binario = it.next();
+                            if (!binario.eVuoto()) {
+                                Prodotto prodotto = binario.getTipoProdotto();
+                                if (prodotto == null) {
+                                    throw new IllegalStateException("Binario non correttamente inizializzato");
+                                }
+                                System.out.println(
+                                        "? " + indice + " | " + prodotto.getNome() + " | " + prodotto.getPrezzo());
+                            }
+                            indice++;
+                        }
                     }
                     continue;
                 }
-
-                if (comando != '+' && comando != '-') {
+                if (comando != '+' && comando != '-')
                     continue;
-                }
 
                 String argomenti = rigaPulita.substring(1).trim();
                 int sep = argomenti.indexOf('!');
-                if (sep < 0) {
+                if (sep < 0)
                     continue;
-                }
                 String primo = argomenti.substring(0, sep).trim();
                 String secondo = argomenti.substring(sep + 1).trim();
 
@@ -138,7 +130,6 @@ public class UsaDistributore {
                         continue;
                     }
                     System.out.println("+ " + distributore.carica(prodotto, quantita));
-
                 } else {
                     int indice;
                     Aggregato pagamento;
@@ -148,7 +139,6 @@ public class UsaDistributore {
                     } catch (IllegalArgumentException e) {
                         continue;
                     }
-
                     try {
                         System.out.println("- " + distributore.eroga(indice, pagamento));
                     } catch (SlotInesistenteException e) {

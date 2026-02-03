@@ -32,13 +32,11 @@ public class Aggregato {
      */
     private final Map<Moneta, Integer> contenuto;
 
-    //AF critica: una moneta non presente ha quantità 0 è fuorviante, magari togliere
 
     /*
     * AF:
     * <ul>
     *   <li>La mappa {@code contenuto} associa a ogni {@code Moneta} la sua quantità nell'aggregato,</li>
-    *   <li>una moneta non presente in {@code contenuto} ha quantità 0.</li>
     * </ul>
     *
     * RI:
@@ -101,7 +99,6 @@ public class Aggregato {
         }
     }
 
-    //PROBLEMA! il metodo sottrare monete anche senza concludere l'operazione. evitare ciò... ma in realtà lo faccio già è il prof che non si è accorto
 
     /**
      * Rimuove dall'aggregato tutte le monete contenute nell'Aggregato {@code daRimuovere}.
@@ -160,7 +157,6 @@ public class Aggregato {
         return tot;
     }
 
-    // magari rendere getquantita moneta PUBLIC (dopo aver modificato AF naturalmente)
 
     /**
      * Restituisce la quantità di un tipo specifico di moneta {@code m}.
@@ -179,7 +175,6 @@ public class Aggregato {
 
     }
 
-    //qua ho cambiato per far si che accetti sia , che ; che x che *
 
     @Override
     public String toString() {

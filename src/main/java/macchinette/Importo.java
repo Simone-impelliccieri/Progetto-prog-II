@@ -1,6 +1,5 @@
 package macchinette;
 
-import java.math.BigDecimal;
 import java.util.Objects;
 
 /**
@@ -89,35 +88,6 @@ public class Importo implements Comparable<Importo> {
         int unita = totaleCentesimi / 100;
         int centesimi = totaleCentesimi % 100;
         return new Importo(unita, centesimi);
-    }
-
-    /**
-     * Legge una stringa e restituisce l'istanza di importo corrispondente
-     *
-     * La stringa può contenere spazi bianchi iniziali o finali, che vengono ignorati.
-     *
-     * @param str, è l'importo in stringa .
-     * @return l'importo corrispondente.
-     * @throws IllegalArgumentException se {@code str} è {@code null} o vuota,
-     *         se il formato non è valido, oppure se l'importo è negativo.
-     */
-    public static Importo daStringa(String str) {
-        if (str == null) {
-            throw new IllegalArgumentException("stringa nulla");
-        }
-        String s = str.trim();
-        if (s.isEmpty()) {
-            throw new IllegalArgumentException("stringa vuota");
-        }
-        try {
-            int totalCents = new BigDecimal(s).multiply(BigDecimal.valueOf(100)).intValueExact();
-            if (totalCents < 0) {
-                throw new IllegalArgumentException("importo negativo");
-            }
-            return daCentesimi(totalCents);
-        } catch (ArithmeticException | NumberFormatException e) {
-            throw new IllegalArgumentException("formato importo non valido", e);
-        }
     }
 
     /**

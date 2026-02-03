@@ -3,8 +3,6 @@ package macchinette;
 import java.util.EnumMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import macchinette.eccezioni.ComposizioneInsufficienteException;
 import macchinette.eccezioni.ValoreInsufficienteException;
@@ -182,42 +180,6 @@ public class Aggregato {
     }
 
     //qua ho cambiato per far si che accetti sia , che ; che x che *
-
-    /**
-     * Metodo factory statico, legge una stringa e restituisce l'istanza di aggregato corrispondente
-     *
-     *
-     * Se {@code descrizione} è null o vuota viene restituito l'aggregato vuoto.
-     *
-     * @param descrizione, descrizione testuale dell'aggregato.
-     * @return l'aggregato.
-     * @throws IllegalArgumentException se il formato non è valido o se una moneta non è riconosciuta.
-     */
-    public static Aggregato daStringa(String descrizione) {
-        Aggregato agg = new Aggregato();
-        if (descrizione == null || descrizione.isBlank()) {
-            return agg;
-        }
-
-        Pattern espressione = Pattern.compile("\\s*(\\d+)\\s*[x*é]\\s*(.+)\\s*");
-        for (String pezzo : descrizione.split("[,;]")) {
-            if (pezzo.isBlank()) {
-                continue;
-            }
-
-            Matcher m = espressione.matcher(pezzo);
-            if (!m.matches()) {
-                throw new IllegalArgumentException("Formato non valido: " + pezzo);
-            }
-
-            String testoMoneta = m.group(2).trim();
-
-            Moneta moneta = Moneta.monetaGiusta(testoMoneta);
-
-            agg.aggiungi(moneta, Integer.parseInt(m.group(1)));
-        }
-        return agg;
-    }
 
     @Override
     public String toString() {

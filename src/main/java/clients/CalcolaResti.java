@@ -21,6 +21,7 @@ package clients;
 
 import macchinette.Aggregato;
 import macchinette.Importo;
+import macchinette.parser;
 import macchinette.StrategiaResto;
 import macchinette.Strategie;
 import macchinette.eccezioni.ComposizioneInsufficienteException;
@@ -47,7 +48,7 @@ public class CalcolaResti {
 
         Importo restoDaDare;
         try {
-            restoDaDare = Importo.daStringa(args[1]);
+            restoDaDare = parser.daStringaImporto(args[1]);
         } catch (IllegalArgumentException e) {
             return;
         }
@@ -61,7 +62,7 @@ public class CalcolaResti {
 
                 Aggregato disponibilita;
                 try {
-                    disponibilita = Aggregato.daStringa(rigaPulita);
+                    disponibilita = parser.daStringaAggregato(rigaPulita);
                 } catch (IllegalArgumentException e) {
                     continue;
                 }

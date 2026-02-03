@@ -21,6 +21,7 @@ along with this file.  If not, see <https://www.gnu.org/licenses/>.
 package clients;
 
 import macchinette.Moneta;
+import macchinette.parser;
 
 import java.util.Scanner;
 
@@ -39,7 +40,7 @@ public class RiconosciMonete {
                 }
 
                 try {
-                    Moneta moneta = Moneta.monetaGiusta(riga);
+                    Moneta moneta = parser.daStringaMoneta(riga);
                     System.out.println(moneta);
                 } catch (IllegalArgumentException e) {
                     System.out.println("invalid-amount");

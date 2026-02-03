@@ -106,39 +106,6 @@ public class Prodotto implements Comparable<Prodotto> {
         return taglia;
     }
 
-    /**
-     * Metodo factory statico, costruisce un prodotto a partire da una descrizione di tipo string.
-     *
-     * Il formato atteso è {@code nome|prezzo|taglia}.
-     * La taglia deve essere uno tra i caratteri {@code S}, {@code M} e {@code L}.
-     *
-     * @param descrizione, descrizione del prodotto.
-     * @return il prodotto, corrispondente alla descrizione.
-     * @throws IllegalArgumentException se {@code descrizione} è null, se il formato non è valido, se il 
-     * prezzo non è un importo valido oppure se la taglia non è valida.
-     */
-    public static Prodotto daStringa(String descrizione) {
-
-        if (descrizione == null) {
-            throw new IllegalArgumentException("descrizione nulla");
-        }
-
-        String[] parti = descrizione.split("\\s*[|;@]\\s*", -1);
-
-        if (parti.length != 3) {
-            throw new IllegalArgumentException("formato prodotto non valido");
-        }
-
-        String nome = parti[0].trim();
-
-        Importo prezzo = Importo.daStringa(parti[1].trim());
-
-        Taglia taglia = Taglia.daStringa(parti[2].trim());
-
-        return new Prodotto(nome, prezzo, taglia);
-
-    }
-
     @Override
     public int compareTo(Prodotto altro) {
         Objects.requireNonNull(altro, "prodotto non può essere null");

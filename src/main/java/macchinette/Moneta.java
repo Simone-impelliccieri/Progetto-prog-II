@@ -77,30 +77,6 @@ public enum Moneta {
         return valore;
     }
 
-    /**
-     * Cerca la moneta il cui valore è uguale alla stringa in input.
-     *
-     * La stringa viene interpretata tramite Importo.daStringa(String).
-     *
-     * @param stringa, rappresentazione testuale dell'importo.
-     * @return la moneta corrispondente.
-     * @throws IllegalArgumentException se la stringa è nulla o non rappresenta una moneta valida.
-     */
-    public static Moneta monetaGiusta(String stringa) {
-        if (stringa == null) {
-            throw new IllegalArgumentException("stringa nulla");
-        }
-
-        Importo importo = Importo.daStringa(stringa);
-        for (Moneta moneta : values()) {
-            if (moneta.getValore().equals(importo)) {
-                return moneta;
-            }
-        }
-
-        throw new IllegalArgumentException("moneta non valida");
-    }
-
     @Override
     public String toString() {
         return valore.toString();

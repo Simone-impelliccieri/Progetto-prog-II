@@ -12,7 +12,7 @@ import macchinette.eccezioni.ValoreInsufficienteException;
  *       non è componibile senza queste monete, riprova consentendole.</li>
  * </ul>
  */
-public final class Strategie {
+public class Strategie {
 
     /**
      * Costruttore privato

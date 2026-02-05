@@ -104,7 +104,6 @@ public class Binario {
      *
      * @param altro, binario da copiare.
      * @throws NullPointerException se {@code altro} è null.
-     * @throws IllegalStateException se lo stato di {@code altro} non rispetta i vincoli interni.
      */
     Binario(Binario altro) {
         Objects.requireNonNull(altro, "binario non può essere null");

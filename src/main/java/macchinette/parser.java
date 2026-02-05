@@ -16,10 +16,10 @@ public class Parser {
 	}
 
 	/**
-	 * Legge una stringa e restituisce l'istanza di importo corrispondente.
-	 *
-	 * La stringa può contenere spazi bianchi iniziali o finali, che vengono ignorati.
-	 *
+	 * 
+	 * Legge una stringa e restituisce l'istanza di importo corrispondente.	 
+	 * 
+	 * 
 	 * @param str, è l'importo in stringa.
 	 * @return l'importo corrispondente.
 	 * @throws IllegalArgumentException se {@code str} è {@code null} o vuota,

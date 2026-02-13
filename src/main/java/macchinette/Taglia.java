@@ -40,10 +40,6 @@ public enum Taglia {
     * 
     * </ul>
     *
-    * RI:
-    * <ul>
-    *   <li>lo stato di una {@code Taglia} è determinato dalla costante enum</li>
-    * </ul>
     */
 
     /**

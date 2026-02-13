@@ -47,12 +47,6 @@ public enum Moneta {
      * <li>ogni costante rappresenta la moneta con valore {@code valore}.</li>
      * </ul>
      *
-     * RI:
-     * <ul>
-     * <li>{@code valore} != null</li>
-     * <li>{@code valore} rappresenta un importo non negativo</li>
-     * <li>{@code valore} è uno dei tipi di moneta definiti</li>
-     * </ul>
      */
 
     /**

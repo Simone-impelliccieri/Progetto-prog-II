@@ -87,15 +87,7 @@ public class DistributoreAutomatico {
 
         this.strategiaResto = strategiaResto;
 
-        List<Binario> copiaBinari = new ArrayList<>(binari.size());
-        for (Binario binario : binari) {
-            Objects.requireNonNull(binario, "binario non può essere null");
-            if (!binario.eVuoto()) {
-                throw new IllegalArgumentException("binario non vuoto");
-            }
-            copiaBinari.add(new Binario(binario));
-        }
-        this.binari = Collections.unmodifiableList(copiaBinari);
+        this.binari = copiaAggregato(binari);
         this.fondoCassa = copiaAggregato(fondoCassa);
     }
 
@@ -132,6 +124,31 @@ public class DistributoreAutomatico {
         Objects.requireNonNull(origine, "aggregato null");
         Aggregato copia = new Aggregato();
         copia.aggiungi(origine);
+        return copia;
+    }
+
+    /**
+     * Crea una copia indipendente della lista dei binari.
+     *
+     * I binari forniti devono essere vuoti.
+     *
+     * @param origine, lista di binari da copiare, non nulla e senza elementi nulli.
+     * @return una nuova lista con copie dei binari in {@code origine}.
+     * @throws NullPointerException se {@code origine} o un elemento è nullo.
+     * @throws IllegalArgumentException se un binario non è vuoto.
+     */
+    private static List<Binario> copiaAggregato(List<Binario> origine) {
+        Objects.requireNonNull(origine, "lista binari non può essere null");
+
+        List<Binario> copia = new ArrayList<>(origine.size());
+        for (Binario binario : origine) {
+            Objects.requireNonNull(binario, "binario non può essere null");
+            if (!binario.eVuoto()) {
+                throw new IllegalArgumentException("binario non vuoto");
+            }
+            copia.add(new Binario(binario));
+        }
+
         return copia;
     }
 

@@ -21,3 +21,6 @@
  *  
  */
 package macchinette;
+
+// ci sarebbe da correggere la asimmetrica nei metodi aggiungi/sottrai in aggregato. 
+// Per il resto il progetto è affine ai i gusti del professore
